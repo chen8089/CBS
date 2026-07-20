@@ -1,0 +1,51 @@
+manifest_id,action,path,final_status,blocker_or_boundary
+M001,MODIFY,force-app/main/default/objects/Contact/fields/Full_Name__c.field-meta.xml,BLOCKED,Baseline drift and atomic M009 package
+M002,MODIFY,force-app/main/default/objects/Contact/fields/ID_Type__c.field-meta.xml,BLOCKED,Baseline drift and atomic M009 package
+M003,MODIFY,force-app/main/default/objects/Contact/fields/ID_Number__c.field-meta.xml,BLOCKED,Baseline drift and atomic M009 package
+M004,MODIFY,force-app/main/default/objects/Contact/fields/Employment_Status__c.field-meta.xml,BLOCKED,Baseline and history conflict
+M005|M025,MODIFY,force-app/main/default/objects/Contact/fields/Portal_Role__c.field-meta.xml,BLOCKED,Owner review and R09
+M006,MODIFY,force-app/main/default/objects/Contact/recordTypes/Client_User.recordType-meta.xml,BLOCKED,Owner review and no Client User population
+M007,ADD,force-app/main/default/objects/Contact/validationRules/CBS_CU_Required_Core.validationRule-meta.xml,BLOCKED,Approval and tests
+M008A,ADD,force-app/main/default/objects/Contact/validationRules/CBS_CU_Prohibit_Identity_PII.validationRule-meta.xml,BLOCKED,R02 owner review
+M008B,ADD,force-app/main/default/objects/Contact/validationRules/CBS_CU_Prohibit_Consent_Data.validationRule-meta.xml,BLOCKED,R02 owner review
+M008C,ADD,force-app/main/default/objects/Contact/validationRules/CBS_CU_Prohibit_Processing_Data.validationRule-meta.xml,BLOCKED,R02 owner review
+M009A,ADD,force-app/main/default/objects/Contact/validationRules/CBS_DS_Required_Identity_By_Stage.validationRule-meta.xml,BLOCKED,Category B stage regression and atomic package
+M009B,ADD,force-app/main/default/objects/Contact/validationRules/CBS_SP_Required_Identity_By_Stage.validationRule-meta.xml,BLOCKED,Singpass regression and atomic package
+M009C,ADD,force-app/main/default/objects/Contact/validationRules/CBS_NSP_Required_Identity_By_Stage.validationRule-meta.xml,BLOCKED,Non-Singpass regression and atomic package
+M010,ADD,force-app/main/default/objects/Contact/validationRules/CBS_DS_Prohibit_Client_Access_Data.validationRule-meta.xml,BLOCKED,R04 117 affected records
+M011,ADD,force-app/main/default/objects/Contact/validationRules/CBS_CU_Role_Approval_Consistency.validationRule-meta.xml,BLOCKED,Role dry-run unavailable
+M012|M013D|M014,MODIFY,force-app/main/default/flows/contactApproveCreateConsentRequest.flow-meta.xml,BLOCKED,R06 R09 M030 and Category B-I regression
+M012|M013D|M014,REVIEW_ONLY,force-app/main/default/flowDefinitions/contactApproveCreateConsentRequest.flowDefinition-meta.xml,BLOCKED,Do not change unless approved versioning requires it
+M013A,ADD,force-app/main/default/objects/Consent_Request_Item__c/fields/Consent_Purpose__c.field-meta.xml,BLOCKED,R06 and backfill quality
+M013B,ADD,force-app/main/default/objects/Consent_Request_Item__c/fields/Active_Request_Key__c.field-meta.xml,BLOCKED,R06 cross-status gap
+M013C,ADD,force-app/main/default/flows/Consent_Request_Item_Maintain_Active_Key.flow-meta.xml,BLOCKED,R06 cross-status gap
+M015,MODIFY,force-app/main/default/classes/BatchExcelUploadController.cls,BLOCKED,R04 owner disposition and regression
+M016,MODIFY,force-app/main/default/classes/BatchExcelUploadControllerTest.cls,BLOCKED,M030 exact API names and regression
+M017,MODIFY,force-app/main/default/layouts/Contact-CBS Contact - Client User Layout.layout-meta.xml,BLOCKED,M008 M019 and UI QA
+M018,MODIFY,force-app/main/default/layouts/Contact-CBS Contact - Data Subject Layout.layout-meta.xml,BLOCKED,R04 and Category B-I regression
+M018,MODIFY,force-app/main/default/layouts/Contact-CBS Contact - SingPass.layout-meta.xml,BLOCKED,R04 baseline drift and regression
+M018,MODIFY,force-app/main/default/layouts/Contact-CBS Contact - Non-SingPass.layout-meta.xml,BLOCKED,R04 baseline drift and regression
+M018,MODIFY,force-app/main/default/layouts/Contact-CBS Contact - SingPass- Community User.layout-meta.xml,BLOCKED,R04 baseline drift and regression
+M018,MODIFY,force-app/main/default/layouts/Contact-CBS Contact - Non-SingPass - Community User.layout-meta.xml,BLOCKED,R04 baseline drift and regression
+M018,PENDING_APPROVAL,N/A,BLOCKED,Exact sixth layout API unresolved
+M019,ADD,force-app/main/default/flexipages/CBS_Client_User_Record_Page.flexipage-meta.xml,BLOCKED,M017 M020 approval and QA
+M020,MODIFY,force-app/main/default/applications/Credit_Bureau.app-meta.xml,BLOCKED,Baseline drift M019 and A-IMP-08 boundary
+M021,RETAIN,force-app/main/default/profiles/Customer Community Plus User.profile-meta.xml,DEFERRED_AIMP09,Current-state regression only
+M022,MODIFY,force-app/main/default/matchingRules/Contact.matchingRule-meta.xml,BLOCKED,R05 owner review and tests
+M023,ADD,force-app/main/default/duplicateRules/Contact.CBS_Client_User_Email_Account_Duplicate.duplicateRule-meta.xml,BLOCKED,R05 owner review and tests
+M024|M025,MODIFY,force-app/main/default/objects/Contact/Contact.object-meta.xml,BLOCKED,Baseline conflict and R09
+M025,MODIFY,force-app/main/default/objects/Contact/fields/AccountId.field-meta.xml,BLOCKED,R09
+M025,MODIFY,force-app/main/default/objects/Contact/fields/Email.field-meta.xml,BLOCKED,R09
+M025,MODIFY,force-app/main/default/objects/Contact/fields/Department.field-meta.xml,BLOCKED,R09
+M025,MODIFY,force-app/main/default/objects/Contact/fields/Can_Approve__c.field-meta.xml,BLOCKED,R09
+M025,MODIFY,force-app/main/default/objects/Contact/fields/Is_Active_Client_User__c.field-meta.xml,BLOCKED,R09
+M026,RETAIN,force-app/main/default/permissionsets/Set_Custom_Object_To_Partner.permissionset-meta.xml,DEFERRED_AIMP08_AIMP09,No permission reduction in A-IMP-02
+M026,RETAIN,force-app/main/default/permissionsets/partner_community_User_Permissions_set.permissionset-meta.xml,DEFERRED_AIMP08_AIMP09,No permission reduction in A-IMP-02
+M027,RETAIN,force-app/main/default/experiences/PartnerCommunity2/routes/contactList.json,DEFERRED_AIMP09,Current-state regression only
+M027,RETAIN,force-app/main/default/experiences/PartnerCommunity2/routes/contactDetail.json,DEFERRED_AIMP09,Current-state regression only
+M027,RETAIN,force-app/main/default/experiences/PartnerCommunity2/routes/contactRelatedList.json,DEFERRED_AIMP09,Current-state regression only
+M028,RETAIN,force-app/main/default/sharingRules/Contact.sharingRules-meta.xml,DEFERRED_AIMP09,No sharing change
+M028,RETAIN,force-app/main/default/sharingSets/AccountSharing.sharingSet-meta.xml,DEFERRED_AIMP09,No sharing change
+M028,RETAIN,force-app/main/default/settings/Sharing.settings-meta.xml,DEFERRED_AIMP09,No sharing change
+M029,READ_ONLY,cursor-output/runtime-evidence/,ANALYSIS_INCOMPLETE,R09 and owner approvals missing
+M030,PENDING_APPROVAL,N/A,BLOCKED,Exact test API names unresolved

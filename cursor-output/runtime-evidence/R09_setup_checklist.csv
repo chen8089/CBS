@@ -1,0 +1,6 @@
+Check_ID,Org_ID,执行用户,执行时间,检查项,证据文件,结论,风险等级,复核人,状态
+R09-01,00DBK00000C9kEP2AZ,cbsneworg@creditbureau.com.sg.chentest,,Contact history capacity and tracked fields,,待执行,,未指定,PENDING_OPERATOR_EXECUTION
+R09-02,00DBK00000C9kEP2AZ,cbsneworg@creditbureau.com.sg.chentest,,Shield retention policy,,待执行,,未指定,PENDING_OPERATOR_EXECUTION
+R09-03,00DBK00000C9kEP2AZ,cbsneworg@creditbureau.com.sg.chentest,,CBS Processing Queue active membership,,待执行,,未指定,PENDING_OPERATOR_EXECUTION
+R09-04,00DBK00000C9kEP2AZ,cbsneworg@creditbureau.com.sg.chentest,,Case create permission and required FLS,,待执行,,未指定,PENDING_OPERATOR_EXECUTION
+R09-05,00DBK00000C9kEP2AZ,cbsneworg@creditbureau.com.sg.chentest,,Relevant licence and feature availability,,待执行,,未指定,PENDING_OPERATOR_EXECUTION

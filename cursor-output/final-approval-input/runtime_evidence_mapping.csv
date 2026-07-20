@@ -1,0 +1,10 @@
+evidence_id,org_id,executing_user,row_count,result_summary,manifest_rows,review_status,gate_effect
+R01,00DBK00000C9kEP2AZ,cbsneworg@creditbureau.com.sg.chentest,3,"122 Contacts; Data_Subject 1; Singpass 119; Non_Singpass 2; Client_User 0",M001-M004|M007|M009A-M009C|M012|M017,COLLECTED_PENDING_OWNER_REVIEW,Does not prove Client User behavior or stage completeness
+R02,00DBK00000C9kEP2AZ,cbsneworg@creditbureau.com.sg.chentest,0,"No Client User prohibited-data rows because R01 found no Client_User",M002-M004|M008A-M008C|M029,COLLECTED_PENDING_OWNER_REVIEW,Runtime gates remain unapproved
+R03,00DBK00000C9kEP2AZ,cbsneworg@creditbureau.com.sg.chentest,0,"No Client Admin rows; no Client_User population",M005|M006|M011|M029,COLLECTED_PENDING_OWNER_REVIEW,Role gates remain unapproved
+R04,00DBK00000C9kEP2AZ,cbsneworg@creditbureau.com.sg.chentest,117,"115 Singpass; 1 Non_Singpass; 1 Data_Subject; roles Approver 81 Subject 31 HR 5; Active Client User true 2",M010|M015|M016|M018|M029,HIGH_RISK_STOP,Blocks access-field validation and layout activation
+R05,00DBK00000C9kEP2AZ,cbsneworg@creditbureau.com.sg.chentest,0,"No duplicate Client User groups; no Client_User population",M022|M023|M029,COLLECTED_PENDING_OWNER_REVIEW,Duplicate controls remain unapproved and untested
+R06,00DBK00000C9kEP2AZ,cbsneworg@creditbureau.com.sg.chentest,0,"No groups under controlled query; cross-status duplicates can be missed",M013A-M013D|M029,INCOMPLETE_QUERY_COVERAGE,Blocks active-key and reuse implementation
+R07,00DBK00000C9kEP2AZ,cbsneworg@creditbureau.com.sg.chentest,2,"Two active Customer Community Plus users; both linked Contacts occur in R04",M020|M021|M026-M029,HIGH_RISK_STOP,Requires current-state external exposure review
+R08,00DBK00000C9kEP2AZ,cbsneworg@creditbureau.com.sg.chentest,4,"Both external users hold both legacy permission sets",M020|M021|M026-M029,HIGH_RISK_STOP,Confirms broad effective assignment concern
+R09,00DBK00000C9kEP2AZ,cbsneworg@creditbureau.com.sg.chentest,,"Setup screenshots or exports not supplied",M014|M024|M025|M029,PENDING_OPERATOR_EVIDENCE,Blocks fault Case and history controls

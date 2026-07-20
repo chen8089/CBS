@@ -1,0 +1,19 @@
+risk_id,severity,category,finding,evidence,affected_manifest_rows,required_decision,status
+RC01,P1,Baseline,"HEAD contains approximately 295 Salesforce/project file changes not reconciled to approved baseline","baseline-A-IMP-02..HEAD",M001-M030,Reconcile or approve a clean implementation baseline,STOP
+RC02,P1,RuntimeData,"117 of 122 Data Subject-family Contacts carry client-access values","R04",M010|M015|M016|M018|M029,Business and privacy owner record-level disposition,STOP
+RC03,P1,ExternalAccess,"Two active external users are linked to R04-affected Contacts","R07",M021|M026-M029,Security and data-owner review,STOP
+RC04,P1,ExternalAccess,"Both external users hold both broad legacy permission sets","R08",M021|M026-M029,Current-state exposure assessment without A-IMP-08/A-IMP-09 expansion,STOP
+RC05,HIGH,RuntimeMismatch,"31 Contacts contain Portal Role Subject which is not in reviewed repository picklist metadata","R04|Portal_Role__c.field-meta.xml",M005|M006|M010|M018|M029,Explain and reconcile Org-to-baseline difference,STOP
+RC06,HIGH,SetupEvidence,"R09 history capacity Shield queue Case permission and licence evidence is missing","R09",M014|M024|M025|M029,Authorised operator Setup evidence,STOP
+RC07,HIGH,QueryCoverage,"Controlled R06 groups by Current_Status and can miss cross-status active duplicates","R06",M013A-M013D|M029,Approve corrected evidence rule without silent query change,STOP
+RC08,HIGH,NameMismatch,"M018 says six layouts but only five distinct physical Data Subject-family layouts are controlled","Static scan",M018,Approve exact sixth API or revise row,STOP
+RC09,HIGH,NameMismatch,"M030 provides no exact Apex test class API names","Static scan",M016|M030,Approve exact test API names,STOP
+RC10,HIGH,Regression,"Category B-I regressions have not been executed","Test plan",M009A-M020|M027|M030,Complete approved regression suite,STOP
+RC11,HIGH,ExperienceCloud,"No evidence proves Experience Cloud exposure is no broader than the current approved baseline","R07|R08|static routes",M021|M026-M028|M030,Current-state no-regression verification,STOP
+RC12,HIGH,OwnerApproval,"Business privacy and security owners have not confirmed runtime evidence or zero-row registers","Disposition register status",M005-M006|M008A-M008C|M010|M013A-M013D|M022-M023|M029,Named owner approval,PENDING
+RC13,MEDIUM,PopulationGap,"R02 R03 and R05 are zero because the target Org has no Client_User Contacts","R01-R05",M005-M008C|M011|M022-M023,Do not treat zero rows as functional proof,OPEN
+RC14,HIGH,History,"Contact history is enabled early; 17 non-target fields are tracked while approved governance fields are not","Static metadata|R09 pending",M004|M024|M025,Reconcile baseline and complete capacity/privacy gate,STOP
+RC15,HIGH,ManifestExternalDependency,"CRI trigger handler resolver email service related Flows validation service and page dependencies are outside change rows","Static dependency scan",M009A|M012-M016|M019-M020|M030,Retain for regression or approve Manifest revision before any change,STOP_CHANGE_ONLY
+RC16,CONTROLLED,Scope,"Business Development permission implementation remains deferred",D08|M020|M026,M020|M026,A-IMP-08 only,DEFERRED_AIMP08
+RC17,CONTROLLED,Scope,"Full Experience Cloud isolation remains deferred; A-IMP-02 is current-state regression only",D08|M021|M027|M028,M021|M027|M028,A-IMP-09 only,DEFERRED_AIMP09
+RC18,CONTROLLED,Design,"No new object API rename automatic merge deletion record conversion or cross-Category change is proposed","Updated Manifest and file list",M001-M030,Maintain prohibition,CONFIRMED

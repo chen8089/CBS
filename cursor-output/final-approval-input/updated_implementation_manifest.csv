@@ -1,0 +1,38 @@
+id,api_or_logical_name,static_status,approved_disposition,runtime_evidence,evidence_result,final_gate_status,impact
+M001,Contact.Full_Name__c,FOUND,READY_AFTER_APPROVAL,R01,"122 Contacts; no Client_User",BLOCKED_BASELINE_AND_ATOMIC_GATE,Must remain atomic with M009A-M009C
+M002,Contact.ID_Type__c,FOUND,READY_AFTER_APPROVAL,R01|R02,"R02 zero; no Client_User",BLOCKED_BASELINE_AND_ATOMIC_GATE,Zero result does not validate future Client Users
+M003,Contact.ID_Number__c,FOUND,READY_AFTER_APPROVAL,R01|R02,"R02 zero; no Client_User",BLOCKED_BASELINE_AND_ATOMIC_GATE,Zero result does not validate future Client Users
+M004,Contact.Employment_Status__c,FOUND,READY_AFTER_APPROVAL,R01|R02,"R02 zero; conflicting history drift",BLOCKED_BASELINE_AND_ATOMIC_GATE,Current HEAD tracks a non-governance field
+M005,Contact.Portal_Role__c,FOUND,READY_RUNTIME_GATED,R03,"0 legacy Client Admin rows",BLOCKED_OWNER_CONFIRMATION,Role label change not authorised until evidence is reviewed
+M006,Contact.Client_User,FOUND,READY_RUNTIME_GATED,R03,"0 legacy Client Admin rows",BLOCKED_OWNER_CONFIRMATION,No Client_User records exist in target Org
+M007,Contact.CBS_CU_Required_Core,NOT FOUND,READY_AFTER_APPROVAL,R01,"Client_User count 0",BLOCKED_APPROVAL_AND_TESTS,Create item absent as expected
+M008A,Contact.CBS_CU_Prohibit_Identity_PII,NOT FOUND,READY_RUNTIME_GATED,R02,"0 rows; Client_User count 0",BLOCKED_OWNER_CONFIRMATION,No remediation rows but future behavior untested
+M008B,Contact.CBS_CU_Prohibit_Consent_Data,NOT FOUND,READY_RUNTIME_GATED,R02,"0 rows; Client_User count 0",BLOCKED_OWNER_CONFIRMATION,No remediation rows but future behavior untested
+M008C,Contact.CBS_CU_Prohibit_Processing_Data,NOT FOUND,READY_RUNTIME_GATED,R02,"0 rows; Client_User count 0",BLOCKED_OWNER_CONFIRMATION,No remediation rows but future behavior untested
+M009A,Contact.CBS_DS_Required_Identity_By_Stage,NOT FOUND,READY_AFTER_APPROVAL,R01,"Data_Subject 1; stage completeness not queried",BLOCKED_REGRESSION_AND_ATOMIC_GATE,Category B stage dry-run missing
+M009B,Contact.CBS_SP_Required_Identity_By_Stage,NOT FOUND,READY_AFTER_APPROVAL,R01,"Singpass 119; stage completeness not queried",BLOCKED_REGRESSION_AND_ATOMIC_GATE,Singpass stage regression missing
+M009C,Contact.CBS_NSP_Required_Identity_By_Stage,NOT FOUND,READY_AFTER_APPROVAL,R01,"Non_Singpass 2; stage completeness not queried",BLOCKED_REGRESSION_AND_ATOMIC_GATE,Non-Singpass regression missing
+M010,Contact.CBS_DS_Prohibit_Client_Access_Data,NOT FOUND,READY_RUNTIME_GATED,R04,"117 affected Contacts",BLOCKED_HIGH_RISK_RUNTIME,Owner and privacy disposition required
+M011,Contact.CBS_CU_Role_Approval_Consistency,NOT FOUND,READY_AFTER_APPROVAL,R03,"0 Client Admin; no Client_User",BLOCKED_ROLE_DRY_RUN,No role-consistency population available for testing
+M012,contactApproveCreateConsentRequest,FOUND,READY_AFTER_APPROVAL,R01|R06,"No Client_User; R06 zero with coverage gap",BLOCKED_M013_M014_M030,Category B-I regression not executed
+M013A,Consent_Request_Item__c.Consent_Purpose__c,NOT FOUND,READY_AFTER_APPROVAL,R06,"0 groups under controlled query",BLOCKED_R06_COVERAGE,Backfill quality and owner review missing
+M013B,Consent_Request_Item__c.Active_Request_Key__c,NOT FOUND,READY_RUNTIME_GATED,R06,"0 groups; cross-status gap",BLOCKED_R06_COVERAGE,Uniqueness evidence is incomplete
+M013C,Consent_Request_Item_Maintain_Active_Key,NOT FOUND,READY_RUNTIME_GATED,R06,"0 groups; cross-status gap",BLOCKED_R06_COVERAGE,Activation and backfill rehearsal prohibited
+M013D,contactApproveCreateConsentRequest - active request reuse,NOT FOUND_LOGIC,READY_RUNTIME_GATED,R06,"0 groups; cross-status gap",BLOCKED_R06_COVERAGE,Logical child of M012
+M014,contactApproveCreateConsentRequest - fault Case,NOT FOUND_LOGIC,READY_AFTER_APPROVAL,R09,R09 not complete,BLOCKED_R09,Queue membership and Case permission unproven
+M015,BatchExcelUploadController,FOUND,READY_AFTER_APPROVAL,R04,"117 affected Contacts",BLOCKED_M010_AND_REGRESSION,Current upload logic still writes Portal Role
+M016,BatchExcelUploadControllerTest,FOUND,READY_AFTER_APPROVAL,R04,"117 affected Contacts",BLOCKED_M030_AND_REGRESSION,Exact regression suite API names unresolved
+M017,Contact-CBS Contact - Client User Layout,FOUND,READY_AFTER_APPROVAL,R01,"No Client_User runtime records",BLOCKED_M008_M019_AND_QA,No visual or permission-context test
+M018,Contact data-subject layouts (6),FOUND_NAME_MISMATCH,READY_AFTER_APPROVAL,R04,"117 affected Contacts; sixth API unresolved",BLOCKED_NAME_RUNTIME_REGRESSION,Do not infer sixth layout
+M019,CBS_Client_User_Record_Page,NOT FOUND,READY_AFTER_APPROVAL,N/A,Static dependency only,BLOCKED_M017_M020_AND_APPROVAL,Create item absent as expected
+M020,Credit_Bureau,FOUND,READY_AFTER_APPROVAL,R07|R08,"2 external users; 4 broad assignments",BLOCKED_BASELINE_M019_AND_AIMP08,Do not implement Business Development permissions
+M021,Customer Community Plus User - Client_User layout assignment,FOUND,DEFERRED,R07|R08,"2 active external users on R04 records",DEFERRED_AIMP09_HIGH_RISK,Retain only and escalate exposure
+M022,Contact.CBS_Client_User_Email_Account_Match,NOT FOUND,READY_RUNTIME_GATED,R05,"0 groups; no Client_User",BLOCKED_OWNER_AND_TESTS,Zero result does not prove matching behavior
+M023,Contact.CBS_Client_User_Email_Account_Duplicate,NOT FOUND,READY_RUNTIME_GATED,R05,"0 groups; no Client_User",BLOCKED_OWNER_AND_TESTS,Admin exception and coexistence tests missing
+M024,Contact,FOUND_PARTIAL_DRIFT,READY_RUNTIME_GATED,R09,R09 not complete,BLOCKED_BASELINE_AND_R09,History enabled before capacity evidence
+M025,Contact governance fields,FOUND_TARGET_NOT_IMPLEMENTED,READY_RUNTIME_GATED,R09,R09 not complete,BLOCKED_BASELINE_AND_R09,17 non-target fields tracked and target fields untracked
+M026,Legacy external Contact permissions,FOUND,DEFERRED,R08,"4 assignments across 2 active users",DEFERRED_AIMP08_AIMP09_HIGH_RISK,No permission reduction in A-IMP-02
+M027,PartnerCommunity2 Contact routes,FOUND,DEFERRED,R07|R08,"2 active external users; UI regression not executed",DEFERRED_AIMP09_HIGH_RISK,Current-state no-regression only
+M028,Contact OWD and AccountSharing,FOUND,DEFERRED,R07|R08,"Runtime users and assignments confirmed",DEFERRED_AIMP09,No sharing change in A-IMP-02
+M029,Client User and Data Subject records,FOUND_ANALYSIS,ANALYSIS_ONLY,R01-R09,"R01-R08 collected; R09 missing; owner approvals missing",ANALYSIS_INCOMPLETE,No data action authorised
+M030,A-IMP-02 regression suite,NOT FOUND_NAME_MISMATCH,READY_AFTER_APPROVAL,R01-R09,"No test execution; exact API names absent",BLOCKED_NAME_AND_REGRESSION,No new test class may be invented
