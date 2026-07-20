@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Portal_Role__c</fullName>
+    <label>门户角色</label>
+    <required>false</required>
+    <trackFeedHistory>true</trackFeedHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>HR</fullName>
+                <default>false</default>
+                <label>HR</label>
+            </value>
+            <value>
+                <fullName>Approver</fullName>
+                <default>false</default>
+                <label>Approver</label>
+            </value>
+            <value>
+                <fullName>Client Admin</fullName>
+                <default>false</default>
+                <label>Client Admin</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

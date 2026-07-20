@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label><!-- Report Eligibility Status --></label>
+    <name>Report_Eligibility_Status__c</name>
+    <picklistValues>
+        <masterLabel>Blocked</masterLabel>
+        <translation><!-- Blocked --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Consent Consumed</masterLabel>
+        <translation><!-- Consent Consumed --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Consent Declined</masterLabel>
+        <translation><!-- Consent Declined --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Consent Expired</masterLabel>
+        <translation><!-- Consent Expired --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Consent Withdrawn</masterLabel>
+        <translation><!-- Consent Withdrawn --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Eligible</masterLabel>
+        <translation><!-- Eligible --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Not Eligible</masterLabel>
+        <translation><!-- Not Eligible --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Pending Consent</masterLabel>
+        <translation><!-- Pending Consent --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Under Review</masterLabel>
+        <translation><!-- Under Review --></translation>
+    </picklistValues>
+</CustomFieldTranslation>

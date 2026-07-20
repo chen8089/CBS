@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label><!-- SLA Status --></label>
+    <name>SLA_Status__c</name>
+    <picklistValues>
+        <masterLabel>Breached</masterLabel>
+        <translation><!-- Breached --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Near Due</masterLabel>
+        <translation><!-- Near Due --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Overdue</masterLabel>
+        <translation><!-- Overdue --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Within SLA</masterLabel>
+        <translation><!-- Within SLA --></translation>
+    </picklistValues>
+</CustomFieldTranslation>

@@ -1,0 +1,23 @@
+/* Common guest-site baseline styles.
+   Keep this file logic-agnostic: presentation only. */
+
+:root {
+    --cbs-font-family: Arial, sans-serif;
+    --cbs-text-color: #333333;
+    --cbs-background-color: #ffffff;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    font-family: var(--cbs-font-family);
+    color: var(--cbs-text-color);
+    background: var(--cbs-background-color);
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}

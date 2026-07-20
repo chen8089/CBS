@@ -1,0 +1,173 @@
+<template>
+    <div class="bud-root">
+        <div class="bud-header">
+            <div class="bud-header-left">
+                <div class="bud-header-icon-wrap" aria-hidden="true">
+                    <lightning-icon icon-name="standard:dataset" size="small" alternative-text=""></lightning-icon>
+                </div>
+                <div class="bud-header-title-wrap">
+                    <p class="bud-subtitle">{subtitle}</p>
+                    <h1 class="bud-title">{title}</h1>
+                </div>
+            </div>
+            <div class="bud-header-right">
+                <lightning-button label="Upload New Batch" variant="brand" onclick={openUploadModal}></lightning-button>
+            </div>
+        </div>
+
+        <div class="bud-cards" role="list">
+            <template for:each={cards} for:item="card">
+                <div
+                    key={card.key}
+                    class={card.className}
+                    data-filter={card.key}
+                    role="listitem"
+                    onclick={handleCardClick}
+                >
+                    <template if:true={card.selected}>
+                        <div class="bud-card-corner" aria-hidden="true"></div>
+                    </template>
+                    <div class="bud-card-value">{card.value}</div>
+                    <div class="bud-card-label">{card.label}</div>
+                </div>
+            </template>
+        </div>
+
+        <div class="bud-panel">
+            <div class="bud-panel-header">
+                <div>
+                    <h2 class="bud-panel-title">Consent Upload Batches</h2>
+                    <p class="bud-panel-subtitle">{tableSubtitle}</p>
+                </div>
+                <div class="bud-panel-actions">
+                    <lightning-input
+                        type="search"
+                        variant="label-hidden"
+                        placeholder="Search Results"
+                        value={searchInput}
+                        class="bud-search"
+                        onchange={handleSearchChange}
+                    ></lightning-input>
+
+                    <lightning-button-icon
+                        icon-name="utility:refresh"
+                        variant="border-filled"
+                        alternative-text="Refresh"
+                        aria-label="Refresh"
+                        title="Refresh"
+                        onclick={handleRefresh}
+                    ></lightning-button-icon>
+
+                    <div class="bud-filter-wrap">
+                        <div class={filterTriggerClass}>
+                            <lightning-button-icon
+                                icon-name="utility:filterList"
+                                variant="border-filled"
+                                alternative-text="Filter list"
+                                aria-label="Filter list"
+                                title="Filter list"
+                                onclick={toggleFilter}
+                            ></lightning-button-icon>
+                        </div>
+
+                        <template if:true={isFilterOpen}>
+                            <section class="bud-filter-popover">
+                                <div class="bud-filter-field">
+                                    <lightning-combobox
+                                        name="ownership"
+                                        label="Ownership"
+                                        value={draftFilterValues.ownership}
+                                        options={ownershipOptions}
+                                        onchange={handleFilterChange}
+                                    ></lightning-combobox>
+                                </div>
+                                <div class="bud-filter-field">
+                                    <lightning-combobox
+                                        name="status"
+                                        label="Status"
+                                        value={draftFilterValues.status}
+                                        options={statusOptions}
+                                        onchange={handleFilterChange}
+                                    ></lightning-combobox>
+                                </div>
+                                <div class="bud-filter-field">
+                                    <lightning-combobox
+                                        name="dateType"
+                                        label="Date Type"
+                                        value={draftFilterValues.dateType}
+                                        options={dateTypeOptions}
+                                        onchange={handleFilterChange}
+                                    ></lightning-combobox>
+                                </div>
+                                <div class="bud-filter-field">
+                                    <lightning-combobox
+                                        name="dateRange"
+                                        label="Date Range"
+                                        value={draftFilterValues.dateRange}
+                                        options={dateRangeOptions}
+                                        onchange={handleDateRangeChange}
+                                    ></lightning-combobox>
+                                </div>
+                                <div class="bud-filter-field">
+                                    <lightning-input
+                                        type="date"
+                                        label="Start Date"
+                                        value={draftFilterValues.startDate}
+                                        disabled={dateInputsDisabled}
+                                        onchange={handleStartDateChange}
+                                    ></lightning-input>
+                                </div>
+                                <div class="bud-filter-field">
+                                    <lightning-input
+                                        type="date"
+                                        label="End Date"
+                                        value={draftFilterValues.endDate}
+                                        disabled={dateInputsDisabled}
+                                        onchange={handleEndDateChange}
+                                    ></lightning-input>
+                                </div>
+                                <div class="bud-filter-footer">
+                                    <lightning-button label="Clear All" variant="neutral" onclick={clearFilters}></lightning-button>
+                                    <lightning-button label="Apply" variant="brand" onclick={applyFilters}></lightning-button>
+                                </div>
+                            </section>
+                        </template>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bud-table-wrap">
+                <template if:true={loading}>
+                    <div class="bud-spinner-overlay">
+                        <lightning-spinner size="medium" alternative-text="Loading"></lightning-spinner>
+                    </div>
+                </template>
+
+                <template if:true={showEmpty}>
+                    <div class="bud-empty-state">
+                        <lightning-icon icon-name="utility:info" size="large" alternative-text=""></lightning-icon>
+                        <p class="bud-empty-title">No batch records found</p>
+                        <p class="bud-empty-text">Try another search keyword or adjust filters.</p>
+                    </div>
+                </template>
+
+                <template if:false={showEmpty}>
+                    <div class="bud-datatable-scroll">
+                        <lightning-datatable
+                            key-field="id"
+                            data={batches}
+                            columns={columns}
+                            onsort={handleSort}
+                            onrowaction={handleRowAction}
+                            hide-checkbox-column
+                            sorted-by={sortedBy}
+                            sorted-direction={sortDirection}
+                        ></lightning-datatable>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+
+    <c-batch-excel-upload-modal onsuccess={handleUploadSuccess}></c-batch-excel-upload-modal>
+</template>

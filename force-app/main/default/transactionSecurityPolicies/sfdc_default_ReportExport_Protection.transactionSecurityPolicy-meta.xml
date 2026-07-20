@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TransactionSecurityPolicy xmlns="http://soap.sforce.com/2006/04/metadata">
+    <action>
+        <block>true</block>
+        <endSession>false</endSession>
+        <freezeUser>false</freezeUser>
+        <notifications>
+            <inApp>true</inApp>
+            <sendEmail>true</sendEmail>
+            <user>chencai@frensworkz.com.creditbureau</user>
+        </notifications>
+        <twoFactorAuthentication>false</twoFactorAuthentication>
+    </action>
+    <active>true</active>
+    <blockMessage>CBS policy blocks large report exports for UAT Gate 42.</blockMessage>
+    <description>CBS Gate 42 default large ReportEvent export protection. Blocks large report export operations for UAT evidence.</description>
+    <developerName>sfdc_default_ReportExport_Protection</developerName>
+    <eventName>ReportEvent</eventName>
+    <flow>sfdc_default_ReportExport_Protection_Flow</flow>
+    <masterLabel>Default Report Export Transaction Security Policy</masterLabel>
+    <type>CustomConditionBuilderPolicy</type>
+</TransactionSecurityPolicy>

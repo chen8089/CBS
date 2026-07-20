@@ -1,0 +1,227 @@
+<apex:page controller="CBSConsentAlreadyActionedController" action="{!init}" showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0" cache="false" expires="0">
+    <apex:stylesheet value="{!URLFOR($Resource.cbsGuestCommonCss)}"/>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>CBS - Consent Request Already Actioned</title>
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #F5F5F5;
+            color: #000000;
+            font-family: Arial, Helvetica, sans-serif;
+            box-sizing: border-box;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        .header {
+            background-color: #FFFFFF;
+            padding: 15px 5%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .header img {
+            max-height: 60px;
+            width: auto;
+        }
+
+        .main-container {
+            display: flex;
+            justify-content: center;
+            padding: 40px 20px 80px;
+        }
+
+        .content-box {
+            background-color: #FFFFFF;
+            border: 1px solid #000000;
+            max-width: 850px;
+            padding: 32px 36px;
+            width: 100%;
+        }
+
+        .page-title {
+            font-size: 16px;
+            font-weight: bold;
+            line-height: 1.4;
+            margin: 0 0 24px;
+            text-align: left;
+        }
+
+        .body-text {
+            font-size: 14px;
+            line-height: 1.4;
+            margin: 0 0 24px;
+            text-align: left;
+            word-wrap: break-word;
+        }
+
+        .reason-list,
+        .meaning-list {
+            font-size: 14px;
+            line-height: 1.4;
+            margin: 0 0 24px;
+            padding-left: 24px;
+            text-align: left;
+        }
+
+        .reason-item,
+        .meaning-item {
+            margin: 0 0 8px;
+        }
+
+        .section-title {
+            font-size: 14px;
+            font-weight: bold;
+            line-height: 1.4;
+            margin: 0 0 24px;
+            text-align: left;
+        }
+
+        .hr-email {
+            color: #000000;
+            font-size: 14px;
+            font-weight: bold;
+            line-height: 1.4;
+            margin: 0 0 24px;
+            text-align: left;
+            word-break: break-word;
+        }
+
+        .hr-email a {
+            color: #000000;
+            text-decoration: underline;
+        }
+
+        .button-row {
+            display: flex;
+            justify-content: center;
+            margin-top: 8px;
+            text-align: center;
+        }
+
+        .singpass-btn {
+            appearance: none;
+            background-color: #D93841;
+            border: none;
+            border-radius: 8px;
+            color: #FFFFFF;
+            cursor: pointer;
+            display: inline-block;
+            font-family: Poppins, Arial, sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            height: 48px;
+            line-height: 48px;
+            min-width: 220px;
+            padding: 0 20px;
+            text-align: center;
+            transition: background-color 0.2s;
+        }
+
+        .singpass-btn:hover {
+            background-color: #B0262D;
+            color: #FFFFFF;
+        }
+
+        .footer {
+            display: block;
+            line-height: 0;
+            width: 100%;
+        }
+
+        .footer img {
+            display: block;
+            height: auto;
+            width: 100%;
+        }
+
+        @media (max-width: 680px) {
+            .content-box {
+                padding: 24px 18px;
+            }
+
+            .reason-list,
+            .meaning-list {
+                padding-left: 20px;
+            }
+
+            .singpass-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <c:CbsGuestHeader />
+
+    <div class="main-container">
+        <apex:outputPanel rendered="{!showPage}">
+            <div class="content-box">
+                <h1 class="page-title">{!pageTitle}</h1>
+
+                <apex:outputPanel rendered="{!showActionedContent}">
+                    <p class="body-text">{!openingMessage}</p>
+
+                    <p class="body-text">{!currentConsentStatusLine}</p>
+
+                    <p class="body-text">{!reasonIntroText}</p>
+                    <ul class="reason-list">
+                        <apex:repeat value="{!reasonBullets}" var="reasonBullet">
+                            <li class="reason-item">{!reasonBullet}</li>
+                        </apex:repeat>
+                    </ul>
+
+                    <div class="section-title">{!whatThisMeansTitle}</div>
+                    <ul class="meaning-list">
+                        <apex:repeat value="{!whatThisMeansItems}" var="meaningItem">
+                            <li class="meaning-item">{!meaningItem}</li>
+                        </apex:repeat>
+                    </ul>
+
+                    <div class="hr-email">
+                        {!contactHrPrefix}
+                        <apex:outputPanel rendered="{!showHrEmailLink}" layout="none">
+                            <a href="mailto:{!hrSupportEmailDisplay}">{!hrSupportEmailDisplay}</a>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!NOT(showHrEmailLink)}" layout="none">
+                            {!hrSupportEmailDisplay}
+                        </apex:outputPanel>.
+                    </div>
+                </apex:outputPanel>
+
+                <apex:outputPanel rendered="{!NOT(showActionedContent)}">
+                    <p class="body-text">{!mainMessage}</p>
+                </apex:outputPanel>
+
+                <div class="button-row">
+                    <button type="button" class="singpass-btn" onclick="closePage();">{!closeButtonLabel}</button>
+                </div>
+            </div>
+        </apex:outputPanel>
+    </div>
+
+    <c:CbsGuestFooter />
+
+    <script>
+        function closePage() {
+            window.open('', '_self');
+            window.close();
+
+            setTimeout(function() {
+                if (window.history.length > 1) {
+                    window.history.back();
+                }
+            }, 120);
+        }
+    </script>
+</body>
+</html>
+</apex:page>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <name>SignpassPrehireConsentEmail</name>
+    <style>none</style>
+    <subject>Action Required: Consent Submission to CBS for Release of Your Credit Information</subject>
+    <textOnly>Dear {!Contact.Name},
+
+As part of {!Contact.Account}&apos;s pre-employment screening and background checking procedures, your consent is required to authorise Credit Bureau (Singapore) Pte Ltd (&quot;CBS&quot;) to provide your consumer credit report(s) and/or credit information held by CBS to {!Contact.Account}.
+
+Upon submission of your consent, it shall remain valid for a period of one (1) month from the submission date, unless withdrawn earlier. You will receive notification(s) for any credit information request(s) made by {!Contact.Account} to CBS during the consent validity period. To complete this process, please access the secure consent link below and authenticate using your Singpass account:
+
+[CONSENT LINK]
+{!Consent_Request_Item__c.Email_Authorize_Url__c}
+
+If you do not wish to provide consent, you may decline by using the link below:
+[DECLINE LINK]
+{!Consent_Request_Item__c.Email_Decline_Url__c}
+
+If you had already provided consent previously, you may withdraw your consent at any time by accessing the withdrawal link below and authenticating via Singpass:
+[WITHDRAWAL LINK]
+{!Consent_Request_Item__c.Email_Withdraw_Url__c}
+
+Note: {!Contact.Account} will be notified of your consent status if you choose to decline or withdraw your consent from CBS. As a result, {!Contact.Account} will not be able to request for your credit information from CBS unless valid consent has been provided.
+
+If you are unsure of this email, you may contact [NAME OF BANK AND DEPARTMENT] at {!Contact.Account}.
+
+Thank you.
+
+[NAME OF BANK AND DEPARTMENT]</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

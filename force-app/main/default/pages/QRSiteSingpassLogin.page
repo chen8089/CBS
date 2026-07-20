@@ -1,0 +1,206 @@
+<apex:page controller="QRSiteSingpassLoginController" showHeader="false" sidebar="false" standardStylesheets="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0">
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Singpass QR Sign-In</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        background: #f5f7fb;
+        color: #172033;
+        font-family: Arial, sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      .page {
+        display: flex;
+        min-height: 100vh;
+        justify-content: center;
+        align-items: center;
+        padding: 32px 16px;
+      }
+
+      .card {
+        width: 100%;
+        max-width: 560px;
+        padding: 36px;
+        border: 1px solid #e2e8f0;
+        border-radius: 24px;
+        background: #ffffff;
+        box-shadow: 0 24px 70px rgba(15, 23, 42, 0.1);
+      }
+
+      .eyebrow {
+        margin: 0 0 12px;
+        color: #d71920;
+        font-size: 12px;
+        font-weight: bold;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: 40px;
+        line-height: 1;
+      }
+
+      .description {
+        margin: 18px 0 24px;
+        color: #526070;
+        font-size: 16px;
+        line-height: 1.65;
+      }
+
+      .status {
+        min-height: 48px;
+        padding: 14px 16px;
+        border: 1px solid #dbe4ef;
+        border-radius: 14px;
+        background: #f8fafc;
+        color: #344054;
+      }
+
+      .status.success {
+        border-color: #bbf7d0;
+        background: #f0fdf4;
+        color: #166534;
+      }
+
+      .status.error {
+        border-color: #fecaca;
+        background: #fff1f2;
+        color: #b42318;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 24px;
+      }
+
+      .button {
+        min-height: 46px;
+        padding: 0 18px;
+        border: 0;
+        border-radius: 999px;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+        font-weight: bold;
+        text-decoration: none;
+        cursor: pointer;
+      }
+
+      .primary {
+        color: #ffffff;
+        background: #d71920;
+      }
+
+      .secondary {
+        color: #172033;
+        background: #e6ecf3;
+      }
+
+      .note {
+        margin: 18px 0 0;
+        color: #667085;
+        font-size: 13px;
+        line-height: 1.5;
+      }
+
+      .qr {
+        display: flex;
+        width: 180px;
+        height: 180px;
+        justify-content: center;
+        align-items: center;
+        margin: 24px auto;
+        border: 12px solid #111827;
+        border-radius: 18px;
+        background: repeating-linear-gradient(45deg, #111827 0, #111827 8px, #ffffff 8px, #ffffff 16px);
+        color: #ffffff;
+        font-weight: bold;
+      }
+
+      .user-panel {
+        overflow: auto;
+        margin: 24px 0 0;
+        padding: 16px;
+        border-radius: 14px;
+        background: #0f172a;
+        color: #e2e8f0;
+        font-size: 13px;
+        line-height: 1.5;
+      }
+
+      @media (max-width: 600px) {
+        .card {
+          padding: 24px;
+        }
+
+        h1 {
+          font-size: 32px;
+        }
+
+        .actions {
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <section class="card">
+        <p class="eyebrow">Singapore National Digital Identity</p>
+        <h1>Singpass QR Sign-In</h1>
+        <p class="description">
+          This page handles the sign-in flow using Visualforce and Apex. During development, you can use the built-in Salesforce Mock Singpass / MyInfo flow.
+        </p>
+
+        <apex:pageMessages />
+
+        <div class="status {!IF(isLoggedIn, 'success', IF(hasError, 'error', ''))}">
+          {!statusMessage}
+        </div>
+
+        <apex:outputPanel rendered="{!isMockApprovalStep}">
+          <div class="qr">QR</div>
+          <p class="note">
+            This is a simulated Singpass app scan-and-confirm screen. It does not connect to the real Singpass service.
+          </p>
+        </apex:outputPanel>
+
+        <apex:outputPanel rendered="{!isLoggedIn}">
+          <pre class="user-panel">sub: {!userInfo.sub}
+name: {!userInfo.name}
+given_name: {!userInfo.givenName}
+family_name: {!userInfo.familyName}
+email: {!userInfo.email}
+uinfin: {!userInfo.uinfin}
+mobileno: {!userInfo.mobileNo}</pre>
+        </apex:outputPanel>
+
+        <apex:form >
+          <div class="actions">
+            <apex:commandButton rendered="{!NOT(isMockApprovalStep)}" styleClass="button primary" action="{!startMockLogin}" value="Sign in with Mock Singpass" />
+            <apex:commandButton rendered="{!isMockApprovalStep}" styleClass="button primary" action="{!approveMockLogin}" value="Confirm sign-in" />
+            <apex:commandButton styleClass="button secondary" action="{!startRealSingpassLogin}" value="Sign in with real Singpass" />
+            <apex:commandButton styleClass="button secondary" action="{!clearStatus}" value="Clear status" />
+          </div>
+        </apex:form>
+
+        <p class="note">
+          Real Singpass FAPI still requires an Apex backend for PAR, DPoP, private_key_jwt, and token exchange. Private keys must not be placed in browser scripts.
+        </p>
+      </section>
+    </main>
+  </body>
+</html>
+</apex:page>

@@ -1,0 +1,127 @@
+{
+  "appPageId" : "adf3cabf-4635-4f0a-bd31-b7c844e608b2",
+  "componentName" : "siteforce:sldsTwoCol84Layout",
+  "dataProviders" : [ ],
+  "id" : "e3c09a2d-1388-4710-916b-03669b934a97",
+  "label" : "Contact Detail",
+  "regions" : [ {
+    "components" : [ {
+      "componentAttributes" : {
+        "recordId" : "{!recordId}"
+      },
+      "componentName" : "forceCommunity:recordHeadline",
+      "id" : "53d52413-b691-4249-ace6-72615ae631f5",
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "d55c1ac9-af46-455d-8702-df063814257e",
+    "regionName" : "header",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "tabsetConfig" : {
+          "UUID" : "69b6f809-7df6-45e5-8213-fdc272114c07",
+          "activeTab" : "",
+          "tabs" : [ {
+            "UUID" : "6c036f17-a3a1-45ba-9643-024173908232",
+            "allowGuestUser" : true,
+            "locked" : false,
+            "seedComponents" : [ ],
+            "tabKey" : "1",
+            "tabName" : "DATAIL"
+          }, {
+            "UUID" : "1ce6f24e-e593-4584-929f-e2484271e106",
+            "allowGuestUser" : true,
+            "locked" : false,
+            "seedComponents" : [ ],
+            "tabKey" : "2",
+            "tabName" : "APPROVAL"
+          } ],
+          "useOverflowMenu" : true
+        }
+      },
+      "componentName" : "forceCommunity:tabLayout",
+      "id" : "69b6f809-7df6-45e5-8213-fdc272114c07",
+      "regions" : [ {
+        "components" : [ {
+          "componentAttributes" : {
+            "recordId" : "{!recordId}"
+          },
+          "componentName" : "forceCommunity:recordDetail",
+          "id" : "d748a99d-e651-4fc0-bad0-73ed638027e2",
+          "renderPriority" : "NEUTRAL",
+          "renditionMap" : { },
+          "type" : "component"
+        } ],
+        "id" : "6c036f17-a3a1-45ba-9643-024173908232",
+        "regionLabel" : "DATAIL",
+        "regionName" : "1",
+        "renditionMap" : { },
+        "type" : "region"
+      }, {
+        "components" : [ {
+          "componentAttributes" : {
+            "relatedListApiName" : "ProcessSteps",
+            "relatedListComponentOverride" : "ADVGRID",
+            "width" : "MEDIUM"
+          },
+          "componentName" : "forceCommunity:responsiveRelatedListSingle",
+          "id" : "0ea494b4-01b9-4f98-9632-4b039dc6db65",
+          "renderPriority" : "NEUTRAL",
+          "renditionMap" : { },
+          "type" : "component"
+        } ],
+        "id" : "1ce6f24e-e593-4584-929f-e2484271e106",
+        "regionLabel" : "APPROVAL",
+        "regionName" : "2",
+        "renditionMap" : { },
+        "type" : "region"
+      } ],
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "13514b6e-bdd3-44e8-9812-03ec664b8452",
+    "regionName" : "content",
+    "type" : "region"
+  }, {
+    "id" : "c7e7fa0b-977d-4949-8d28-2a3cca9ac97c",
+    "regionName" : "footer",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "customHeadTags" : "",
+        "description" : "",
+        "title" : "{!Record._Object}: {!Record._Title}"
+      },
+      "componentName" : "forceCommunity:seoAssistant",
+      "id" : "5591fd3d-155f-438f-b6e9-49f7788f10e5",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "e731c467-03fd-4d54-bb14-d265ee6414f4",
+    "regionName" : "sfdcHiddenRegion",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "contactId" : "{!recordId}",
+        "maxItems" : 20
+      },
+      "componentName" : "c:recentActivityContactRecord",
+      "id" : "e02e17f7-9075-44d3-812b-ee88d6af1e79",
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "e8d8dd73-ef49-430a-ac2a-c68a4cbf307c",
+    "regionName" : "sidebar",
+    "type" : "region"
+  } ],
+  "themeLayoutType" : "Inner",
+  "type" : "view",
+  "viewType" : "detail-003"
+}

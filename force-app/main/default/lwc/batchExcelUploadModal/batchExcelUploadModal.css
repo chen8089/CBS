@@ -1,0 +1,76 @@
+.beum-container {
+    max-width: 52rem;
+    width: 95%;
+}
+
+.beum-content {
+    position: relative;
+    min-height: 8rem;
+}
+
+.beum-spinner {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.6);
+    z-index: 2;
+}
+
+.beum-file-section {
+    margin-top: 0.75rem;
+}
+
+.beum-file-name {
+    margin: 0.35rem 0 0;
+    font-size: 0.8125rem;
+    color: #3e3e3c;
+}
+
+.beum-hint {
+    margin: 0.5rem 0 0;
+    font-size: 0.75rem;
+    color: #706e6b;
+}
+
+.beum-summary {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+}
+
+.beum-summary-item {
+    background: #f3f2f2;
+    border-radius: 0.25rem;
+    padding: 0.5rem 0.75rem;
+    min-width: 6rem;
+}
+
+.beum-summary-valid .beum-summary-value {
+    color: #2e844a;
+}
+
+.beum-summary-error .beum-summary-value {
+    color: #ba0517;
+}
+
+.beum-summary-label {
+    display: block;
+    font-size: 0.75rem;
+    color: #706e6b;
+}
+
+.beum-summary-value {
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.beum-error-table {
+    margin-top: 1rem;
+    max-height: 240px;
+    overflow: auto;
+    border: 1px solid #dddbda;
+    border-radius: 0.25rem;
+}

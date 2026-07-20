@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <layouts>
+        <layout>CBS Case - Consent Request Layout</layout>
+        <sections>
+            <label><!-- Batch Information --></label>
+            <section>Batch Information</section>
+        </sections>
+        <sections>
+            <label><!-- Reminder Management --></label>
+            <section>Reminder Management</section>
+        </sections>
+        <sections>
+            <label><!-- Status Summary --></label>
+            <section>Status Summary</section>
+        </sections>
+        <sections>
+            <label><!-- Upload Summary --></label>
+            <section>Upload Summary</section>
+        </sections>
+        <sections>
+            <label><!-- Web Info --></label>
+            <section>Web Info</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>CBS Case - Exception Layout</layout>
+        <sections>
+            <label><!-- Exception Info --></label>
+            <section>Exception Info</section>
+        </sections>
+        <sections>
+            <label><!-- Notification and Handling --></label>
+            <section>Notification and Handling</section>
+        </sections>
+        <sections>
+            <label><!-- Related Records --></label>
+            <section>Related Records</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>CBS Case - Report Request Layout</layout>
+        <sections>
+            <label><!-- Completion Info --></label>
+            <section>Completion Info</section>
+        </sections>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Notification and Delivery --></label>
+            <section>Notification and Delivery</section>
+        </sections>
+        <sections>
+            <label><!-- Request Info --></label>
+            <section>Request Info</section>
+        </sections>
+        <sections>
+            <label><!-- SLA Management --></label>
+            <section>SLA Management</section>
+        </sections>
+    </layouts>
+    <quickActions>
+        <label><!-- CloseCaseLightning --></label>
+        <name>CloseCaseLightning</name>
+    </quickActions>
+    <quickActions>
+        <label><!-- NewChildCase --></label>
+        <name>NewChildCase</name>
+    </quickActions>
+    <recordTypes>
+        <label><!-- CBS Consent Request --></label>
+        <name>CBS_Consent</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- CBS Report Request --></label>
+        <name>CBS_Report_Request</name>
+    </recordTypes>
+    <webLinks>
+        <label>Download Latest Authorized List</label>
+        <name>Download_Latest_Authorized_Whitelist</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- UpsellCrosssellOpportunity --></label>
+        <name>UpsellCrosssellOpportunity</name>
+    </webLinks>
+</CustomObjectTranslation>

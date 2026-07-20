@@ -1,0 +1,71 @@
+{
+  "type" : "sfdc_cms__view",
+  "title" : "Home",
+  "contentBody" : {
+    "component" : {
+      "children" : [ {
+        "children" : [ {
+          "attributes" : {
+            "backgroundImageConfig" : "",
+            "backgroundImageOverlay" : "rgba(0,0,0,0)",
+            "componentSpacerSize" : "",
+            "layoutDirectionDesktop" : "row",
+            "layoutDirectionMobile" : "column",
+            "layoutDirectionTablet" : "column",
+            "maxContentWidth" : "",
+            "sectionColumnGutterWidth" : "",
+            "sectionConfig" : "{\"UUID\":\"9da2d824-c2d7-4210-9991-58a304edc840\",\"columns\":[{\"UUID\":\"ef7c74a8-f60f-44ac-bd5b-b42164e383cb\",\"columnName\":\"Column 1\",\"columnKey\":\"col1\",\"columnWidth\":\"12\",\"seedComponents\":null}]}",
+            "sectionMinHeight" : "",
+            "sectionVerticalAlign" : "flex-start"
+          },
+          "children" : [ {
+            "children" : [ {
+              "attributes" : {
+                "bannerDescription" : "Empowering better credit decisions with trusted data and insights.",
+                "bannerTitle" : "Credit Bureau Singapore",
+                "buttonLabel" : "Learn More"
+              },
+              "definition" : "c:cbsHomeLandingSection",
+              "id" : "d66c7517-1f0e-4e6a-97c0-50ea6d380055",
+              "type" : "component"
+            } ],
+            "id" : "ef7c74a8-f60f-44ac-bd5b-b42164e383cb",
+            "name" : "col1",
+            "title" : "Column 1",
+            "type" : "region"
+          } ],
+          "definition" : "community_layout:section",
+          "id" : "9da2d824-c2d7-4210-9991-58a304edc840",
+          "type" : "component"
+        } ],
+        "id" : "34df2e3d-d7ff-4628-8253-c6aa96132a46",
+        "name" : "content",
+        "title" : "Content",
+        "type" : "region"
+      }, {
+        "children" : [ {
+          "attributes" : {
+            "customHeadTags" : "",
+            "description" : "",
+            "pageTitle" : "Home",
+            "recordId" : "{!recordId}"
+          },
+          "definition" : "community_builder:seoAssistant",
+          "id" : "a738680c-f4d1-469e-8371-7b1e08ebf8f6",
+          "type" : "component"
+        } ],
+        "id" : "48e7e82b-acf2-4e9c-be1e-827cb4b03010",
+        "name" : "sfdcHiddenRegion",
+        "title" : "sfdcHiddenRegion",
+        "type" : "region"
+      } ],
+      "definition" : "community_layout:sldsFlexibleLayout",
+      "id" : "40928027-0604-41d4-8f4d-0cd537db3a0c",
+      "type" : "component"
+    },
+    "dataProviders" : [ ],
+    "themeLayoutType" : "Inner",
+    "viewType" : "home"
+  },
+  "urlName" : "home"
+}

@@ -1,0 +1,108 @@
+{
+  "type" : "sfdc_cms__themeLayout",
+  "title" : "Scoped Header and Footer",
+  "contentBody" : {
+    "component" : {
+      "attributes" : {
+        "hideThemeFooter" : false,
+        "showThemeFooterAtBottom" : true,
+        "stickyThemeHeader" : false
+      },
+      "children" : [ {
+        "children" : [ {
+          "attributes" : {
+            "backgroundImageConfig" : "",
+            "backgroundImageOverlay" : "rgba(0,0,0,0)",
+            "componentSpacerSize" : "",
+            "layoutDirectionDesktop" : "row",
+            "layoutDirectionMobile" : "column",
+            "layoutDirectionTablet" : "column",
+            "maxContentWidth" : "",
+            "sectionColumnGutterWidth" : "",
+            "sectionConfig" : "{\"UUID\":\"4056afa8-018d-4142-9ef1-826456863656\",\"columns\":[{\"UUID\":\"cde1ff41-4575-48b0-9a9e-450746202370\",\"columnName\":\"Column 1\",\"columnKey\":\"headerSection\",\"columnWidth\":\"12\",\"seedComponents\":null}]}",
+            "sectionMinHeight" : "",
+            "sectionVerticalAlign" : "flex-start"
+          },
+          "children" : [ {
+            "children" : [ {
+              "attributes" : {
+                "homeUrl" : "/s/",
+                "logoUrl" : "",
+                "logoutUrl" : "/secur/logout.jsp",
+                "officialSiteUrl" : "https://www.creditbureau.com.sg",
+                "showStickyHeader" : true,
+                "showUserMenu" : true
+              },
+              "definition" : "c:cbsPortalHeader",
+              "id" : "f089118c-acf3-4891-a6df-dae1833fe78e",
+              "type" : "component"
+            }, {
+              "attributes" : {
+                "homePageName" : "Home",
+                "homeUrl" : "/s/",
+                "navItemsJson" : "[{\"label\":\"Home\",\"pageName\":\"Home\"},{\"label\":\"Consent\",\"pageName\":\"Consent\"},{\"label\":\"Resignation / Departure\",\"pageName\":\"Resignation_Departure\"},{\"label\":\"Report Requests\",\"pageName\":\"Report_Requests\"},{\"label\":\"Batch\",\"pageName\":\"Batch\"},{\"label\":\"Exceptions\",\"pageName\":\"Exceptions\"}]"
+              },
+              "definition" : "c:cbsPortalNavigation",
+              "id" : "46f14a95-d356-4687-920b-64b8233a743c",
+              "type" : "component"
+            } ],
+            "id" : "cde1ff41-4575-48b0-9a9e-450746202370",
+            "name" : "headerSection",
+            "title" : "Theme Header",
+            "type" : "region"
+          } ],
+          "definition" : "community_layout:section",
+          "id" : "4056afa8-018d-4142-9ef1-826456863656",
+          "type" : "component"
+        } ],
+        "id" : "1807b321-93e7-40e1-8895-d58f8086fee1",
+        "name" : "header",
+        "title" : "Theme Header",
+        "type" : "region"
+      }, {
+        "children" : [ {
+          "attributes" : {
+            "backgroundImageConfig" : "",
+            "backgroundImageOverlay" : "rgba(0,0,0,0)",
+            "componentSpacerSize" : "",
+            "layoutDirectionDesktop" : "row",
+            "layoutDirectionMobile" : "column",
+            "layoutDirectionTablet" : "column",
+            "maxContentWidth" : "",
+            "sectionColumnGutterWidth" : "",
+            "sectionConfig" : "{\"UUID\":\"7de70790-6d27-47fc-86e6-75bb2bb3f6ff\",\"columns\":[{\"UUID\":\"f9ae6406-914c-43ef-aeaf-4f086cd63ad7\",\"columnName\":\"Column 1\",\"columnKey\":\"footerSection\",\"columnWidth\":\"12\",\"seedComponents\":null}]}",
+            "sectionMinHeight" : "",
+            "sectionVerticalAlign" : "flex-start"
+          },
+          "children" : [ {
+            "children" : [ {
+              "attributes" : {
+                "contactUsUrl" : "/contact-us",
+                "privacyUrl" : "/privacy-policy",
+                "termsUrl" : "/terms-of-use"
+              },
+              "definition" : "c:cbsPortalFooter",
+              "id" : "9d476288-8fda-4dde-8bfe-9450b87fcef5",
+              "type" : "component"
+            } ],
+            "id" : "f9ae6406-914c-43ef-aeaf-4f086cd63ad7",
+            "name" : "footerSection",
+            "title" : "Theme Footer",
+            "type" : "region"
+          } ],
+          "definition" : "community_layout:section",
+          "id" : "7de70790-6d27-47fc-86e6-75bb2bb3f6ff",
+          "type" : "component"
+        } ],
+        "id" : "1cc8a722-9682-4b3a-a8d7-0b764363b200",
+        "name" : "footer",
+        "title" : "Theme Footer",
+        "type" : "region"
+      } ],
+      "definition" : "community_byo:scopedHeaderAndFooter",
+      "id" : "3a18e7e9-a5a8-47e1-bb87-0e108dbe64f1",
+      "type" : "component"
+    }
+  },
+  "urlName" : "scoped-header-and-footer"
+}

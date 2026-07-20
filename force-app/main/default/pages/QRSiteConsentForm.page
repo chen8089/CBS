@@ -1,0 +1,502 @@
+<apex:page controller="QRSiteApprovalController" showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0" cache="false" expires="0">
+    <apex:stylesheet value="{!URLFOR($Resource.cbsGuestCommonCss)}"/>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>CBS - Explicit Authorization and Consent</title>
+
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #F4F5F7;
+            color: #333333;
+            font-family: Arial, sans-serif;
+        }
+
+        .header {
+            background-color: #FFFFFF;
+            padding: 15px 5%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .header img {
+            max-height: 60px;
+            width: auto;
+        }
+
+        .main-container {
+            display: flex;
+            justify-content: center;
+            padding: 40px 20px 80px;
+        }
+
+        .card {
+            background-color: #FFFFFF;
+            width: 100%;
+            max-width: 700px;
+            padding: 40px 50px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .card-title {
+            color: #000000;
+            font-size: 18px;
+            font-weight: bold;
+            line-height: 1.4;
+            margin-bottom: 25px;
+        }
+
+        .text-blue {
+            color: #2946A3;
+        }
+
+        .date-row {
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 25px;
+        }
+
+        .form-row {
+            align-items: center;
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+        }
+
+        .form-label {
+            color: #666666;
+            font-size: 13px;
+            line-height: 1.2;
+            width: 80px;
+        }
+
+        .read-only-box {
+            background-color: #DCDCDC;
+            border: 1px solid #A9A9A9;
+            border-radius: 4px;
+            color: #000000;
+            flex: 1;
+            font-size: 13px;
+            font-weight: bold;
+            min-height: 16px;
+            padding: 6px 12px;
+        }
+
+        .editable-input {
+            background-color: transparent;
+            border: none;
+            box-sizing: border-box;
+            color: #000000;
+            font-family: Arial, sans-serif;
+            font-size: 13px;
+            font-weight: bold;
+            outline: none;
+            padding: 0;
+            width: 100%;
+        }
+
+        .editable-textarea {
+            min-height: 42px;
+            resize: vertical;
+        }
+
+        .col-right-label {
+            padding-left: 20px;
+            width: 80px;
+        }
+
+        .dob-group {
+            display: flex;
+            flex: 1;
+            gap: 8px;
+        }
+
+        .dob-group .read-only-box {
+            flex: 1;
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 14px;
+            font-weight: bold;
+            margin: 30px 0 15px;
+        }
+
+        .consent-box {
+            align-items: flex-start;
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .consent-box input[type="checkbox"] {
+            cursor: pointer;
+            margin-top: 4px;
+            transform: scale(1.6);
+        }
+
+        .consent-text {
+            font-size: 12px;
+            line-height: 1.5;
+            text-align: justify;
+        }
+
+        .consent-text p {
+            margin: 0 0 12px;
+        }
+
+        .disclaimer-list {
+            font-size: 12px;
+            line-height: 1.5;
+            margin-bottom: 40px;
+            padding-left: 15px;
+            text-align: justify;
+        }
+
+        .disclaimer-list li {
+            margin-bottom: 8px;
+        }
+
+        .page-message {
+            color: #C81E2B;
+            font-size: 13px;
+            margin-bottom: 16px;
+        }
+
+        .completion-message {
+            color: #333333;
+            font-size: 13px;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        .completion-message strong {
+            color: #2946A3;
+            font-size: 14px;
+        }
+
+        .completion-title {
+            color: #2946A3;
+            font-size: 18px;
+            font-weight: bold;
+            line-height: 1.4;
+            margin: 0 0 20px;
+            text-align: center;
+        }
+
+        .completion-message p {
+            margin: 0 0 14px;
+        }
+
+        .completion-footer-text {
+            font-weight: bold;
+            margin-top: 24px;
+            text-align: center;
+        }
+
+        .success-summary-card {
+            background: #F9FAFB;
+            border: 1px solid #D1D5DB;
+            border-radius: 8px;
+            margin: 18px 0;
+            padding: 14px;
+            text-align: left;
+        }
+
+        .success-summary-grid {
+            display: grid;
+            gap: 10px;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .success-summary-item {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .success-summary-label {
+            color: #6B7280;
+            font-size: 12px;
+        }
+
+        .success-summary-value {
+            color: #111827;
+            font-size: 13px;
+            font-weight: bold;
+            word-break: break-word;
+        }
+
+        .success-note {
+            margin: 0 0 12px;
+            text-align: left;
+        }
+
+        .btn-container {
+            text-align: center;
+        }
+
+        .submit-btn {
+            background-color: #1F389A;
+            border: none;
+            border-radius: 8px;
+            color: #FFFFFF;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 12px 40px;
+            text-decoration: none;
+            transition: background-color 0.2s;
+        }
+
+        .submit-btn:hover {
+            background-color: #15276D;
+        }
+
+        .submit-btn:disabled,
+        .submit-btn[disabled] {
+            background-color: #A0A0A0;
+            cursor: not-allowed;
+        }
+
+        .submit-btn:disabled:hover,
+        .submit-btn[disabled]:hover {
+            background-color: #A0A0A0;
+        }
+
+        .footer {
+            display: block;
+            line-height: 0;
+            width: 100%;
+        }
+
+        .footer img {
+            display: block;
+            height: auto;
+            width: 100%;
+        }
+
+        @media (max-width: 600px) {
+            .card {
+                padding: 25px 20px;
+            }
+
+            .col-right-label {
+                margin-top: 12px;
+                padding-left: 0;
+            }
+
+            .form-row {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .form-label,
+            .col-right-label {
+                margin-bottom: 5px;
+                width: 100%;
+            }
+
+            .read-only-box,
+            .dob-group {
+                box-sizing: border-box;
+                width: 100%;
+            }
+
+            .success-summary-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <c:CbsGuestHeader />
+
+    <div class="main-container">
+        <div class="card">
+            <apex:form >
+                <div class="page-message">
+                    <apex:pageMessages />
+                </div>
+                <apex:outputPanel rendered="{!showCompletionMessage}">
+                    <div class="completion-message">
+                        <div class="completion-title">{!completionMessageLine1}</div>
+                        <apex:repeat value="{!completionMessageLines}" var="messageLine">
+                            <p>{!messageLine}</p>
+                        </apex:repeat>
+
+                        <apex:outputPanel rendered="{!showSuccessSummary}">
+                            <div class="success-summary-card">
+                                <div class="success-summary-grid">
+                                    <div class="success-summary-item">
+                                        <div class="success-summary-label">Consent Status</div>
+                                        <div class="success-summary-value">{!consentStatus}</div>
+                                    </div>
+                                    <div class="success-summary-item">
+                                        <div class="success-summary-label">Submission Date &amp; Time</div>
+                                        <div class="success-summary-value">{!submissionDateTime}</div>
+                                    </div>
+                                    <div class="success-summary-item">
+                                        <div class="success-summary-label">Employer / Bank Name</div>
+                                        <div class="success-summary-value">{!employerBankName}</div>
+                                    </div>
+                                    <div class="success-summary-item">
+                                        <div class="success-summary-label">Data Subject Name</div>
+                                        <div class="success-summary-value">{!dataSubjectName}</div>
+                                    </div>
+                                    <apex:outputPanel rendered="{!consentExpiryDate != ''}" layout="none">
+                                        <div class="success-summary-item">
+                                            <div class="success-summary-label">Consent Expiry Date</div>
+                                            <div class="success-summary-value">{!consentExpiryDate}</div>
+                                        </div>
+                                    </apex:outputPanel>
+                                </div>
+                            </div>
+
+                            <apex:outputPanel rendered="{!showDuplicateSubmissionWarning}">
+                                <p class="success-note"><strong>{!duplicateSubmissionText}</strong></p>
+                            </apex:outputPanel>
+
+                            <apex:outputPanel rendered="{!showNonSingpassManualVerificationNote}">
+                                <p class="success-note">
+                                    Your consent has been submitted. CBS may perform manual identity verification based on the information and documents you provided.
+                                </p>
+                            </apex:outputPanel>
+
+                            <p class="success-note">{!withdrawalGuidanceText}</p>
+                            <apex:outputPanel rendered="{!NOT(isActiveConsentPage)}">
+                                <p class="success-note">{!confirmationEmailText}</p>
+                            </apex:outputPanel>
+                            <p class="success-note">{!helpText}</p>
+
+                            <div class="btn-container">
+                                <button type="button" class="submit-btn" onclick="closeConsentWindow();">Close</button>
+                            </div>
+                            <div class="completion-footer-text" id="closeHint" style="display:none;">
+                                You may now close this browser window.
+                            </div>
+                        </apex:outputPanel>
+                    </div>
+                </apex:outputPanel>
+
+                <apex:outputPanel rendered="{!showConsentForm}">
+                    <div class="card-title">
+                        Individual's Explicit Authorization and Consent for Disclosure of Personal Credit Information to
+                        <span class="text-blue">{!bankName}</span>
+                    </div>
+
+                    <div class="date-row">
+                        Date: {!currentDateString}
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-label">Name</div>
+                        <div class="read-only-box">
+                            <apex:inputText value="{!inputName}" styleClass="editable-input"/>
+                        </div>
+
+                        <div class="form-label col-right-label">Nationality</div>
+                        <div class="read-only-box">
+                            <apex:inputText value="{!inputNationality}" styleClass="editable-input"/>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-label">NRIC<br/>number</div>
+                        <div class="read-only-box" style="display: flex; align-items: center;">
+                            <apex:inputText value="{!inputNric}" styleClass="editable-input"/>
+                        </div>
+
+                        <div class="form-label col-right-label" style="display: flex; align-items: center;">Date of<br/>Birth</div>
+                        <div class="dob-group">
+                            <div class="read-only-box">
+                                <apex:inputText value="{!inputDobDay}" styleClass="editable-input" html-placeholder="DD"/>
+                            </div>
+                            <div class="read-only-box">
+                                <apex:inputText value="{!inputDobMonth}" styleClass="editable-input" html-placeholder="Month"/>
+                            </div>
+                            <div class="read-only-box">
+                                <apex:inputText value="{!inputDobYear}" styleClass="editable-input" html-placeholder="YYYY"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row" style="margin-top: 5px;">
+                        <div class="form-label">Address</div>
+                        <div class="read-only-box">
+                            <apex:inputTextarea value="{!inputResidentialAddress}" styleClass="editable-input editable-textarea"/>
+                        </div>
+                    </div>
+
+                    <div class="section-title">
+                        Consent and Authorisation <span style="font-weight: normal;">(Select <u>one</u> of the following options)</span>
+                    </div>
+
+                    <div class="consent-box">
+                        <apex:inputCheckbox value="{!isConsented}" id="consentCheckbox" html-data-role="consent-checkbox"/>
+
+                        <div class="consent-text">
+                            <p>I <strong>AUTHORISE AND GIVE MY CONSENT</strong> for Credit Bureau (Singapore) Pte Ltd ("CBS") to collect, receive and use my personal data to generate and process my personal credit report(s), and to release and disclose my personal credit information to <strong class="text-blue">{!bankName}</strong> for the purpose of employment screening and/or background check.</p>
+
+                            <p>I agree to indemnify and hold you, CBS, harmless for and/or in respect of all or any loss or damage arising from the disclosure of my credit information as requested by <strong class="text-blue">{!bankName}</strong> and/or provided by CBS arising from my aforesaid authorization and consent.</p>
+
+                            <p>By submitting my Consent and Authorization, I am aware that this consent will be made valid until the day I have withdrawn my consent to CBS via this electronic form.</p>
+                        </div>
+                    </div>
+
+                    <div class="section-title">Disclaimer</div>
+                    <ol class="disclaimer-list">
+                        <li>I understand that the information contained in my credit reports has been collated from and/or provided to Credit Bureau (Singapore) Pte Ltd ("CBS") by various third parties, and as such CBS shall not be liable for the accuracy of such information and/or the score and/or any other product(s) derived therefrom.</li>
+                        <li>I understand the above matters and confirm that the information I give is correct and that I accept the terms of the indemnity and disclaimer set out in this consent form.</li>
+                    </ol>
+
+                    <div class="btn-container">
+                        <apex:commandButton value="SUBMIT" action="{!submitForm}" styleClass="submit-btn" html-data-role="submit-button"/>
+                    </div>
+                </apex:outputPanel>
+            </apex:form>
+        </div>
+    </div>
+
+    <c:CbsGuestFooter />
+    <script>
+        function closeConsentWindow() {
+            try {
+                window.close();
+            } catch (e) {
+                // Fallback below.
+            }
+            setTimeout(function() {
+                if (!window.closed) {
+                    var hint = document.getElementById('closeHint');
+                    if (hint) {
+                        hint.style.display = 'block';
+                    }
+                }
+            }, 120);
+        }
+
+        (function() {
+            var checkbox = document.querySelector('[data-role="consent-checkbox"]');
+            var submitButton = document.querySelector('[data-role="submit-button"]');
+
+            function toggleSubmitButton() {
+                if (!checkbox || !submitButton) {
+                    return;
+                }
+
+                submitButton.disabled = !checkbox.checked;
+            }
+
+            if (checkbox && submitButton) {
+                toggleSubmitButton();
+                checkbox.addEventListener('change', toggleSubmitButton);
+            }
+        })();
+    </script>
+</body>
+</html>
+</apex:page>

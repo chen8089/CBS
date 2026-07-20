@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Exception_Type__c</fullName>
+    <label>异常类型</label>
+    <required>true</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>File Validation</fullName>
+                <default>false</default>
+                <label>File Validation</label>
+            </value>
+            <value>
+                <fullName>Unauthorized Consent</fullName>
+                <default>false</default>
+                <label>Unauthorized Consent</label>
+            </value>
+            <value>
+                <fullName>Unmatched Authorization</fullName>
+                <default>false</default>
+                <label>Unmatched Authorization</label>
+            </value>
+            <value>
+                <fullName>Match Failed</fullName>
+                <default>false</default>
+                <label>Match Failed</label>
+            </value>
+            <value>
+                <fullName>Reminder Review</fullName>
+                <default>false</default>
+                <label>Reminder Review</label>
+            </value>
+            <value>
+                <fullName>Other</fullName>
+                <default>false</default>
+                <label>Other</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

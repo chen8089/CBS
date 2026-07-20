@@ -1,0 +1,11 @@
+{
+  "activeViewId" : "30a3163b-7c66-4d81-a192-8b5e9ac3d2c9",
+  "appPageId" : "adf3cabf-4635-4f0a-bd31-b7c844e608b2",
+  "configurationTags" : [ ],
+  "devName" : "Messages",
+  "id" : "2e6455ad-4ab8-4925-881a-932d1ccb8505",
+  "label" : "Messages",
+  "routeType" : "messages",
+  "type" : "route",
+  "urlPrefix" : "messages"
+}

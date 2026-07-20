@@ -1,0 +1,201 @@
+<apex:page controller="CBSDeclineConsentConfirmationController" action="{!initPage}" showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0" cache="false" expires="0">
+    <apex:stylesheet value="{!URLFOR($Resource.cbsGuestCommonCss)}"/>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Decline to Give Consent</title>
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #F4F5F7;
+            color: #333333;
+            font-family: Arial, sans-serif;
+        }
+
+        .header {
+            background-color: #FFFFFF;
+            padding: 15px 5%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .header img {
+            max-height: 60px;
+            width: auto;
+        }
+
+        .main-container {
+            display: flex;
+            justify-content: center;
+            padding: 50px 20px 80px;
+        }
+
+        .card {
+            background-color: #FFFFFF;
+            width: 100%;
+            max-width: 650px;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .card-title {
+            color: #222222;
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 25px;
+        }
+
+        .intro-text {
+            color: #111827;
+            font-size: 13px;
+            line-height: 1.6;
+            margin-bottom: 16px;
+            text-align: justify;
+        }
+
+        .notes-list {
+            color: #000000;
+            font-size: 13px;
+            line-height: 1.6;
+            list-style-type: disc;
+            margin-bottom: 16px;
+            padding-left: 20px;
+        }
+
+        .notes-list li {
+            margin-bottom: 12px;
+            text-align: justify;
+        }
+
+        .content-block {
+            margin-bottom: 40px;
+        }
+
+        .page-message {
+            color: #C81E2B;
+            font-size: 13px;
+            margin-bottom: 16px;
+        }
+
+        .button-row {
+            display: flex;
+            justify-content: center;
+        }
+
+        .singpass-btn,
+        input.singpass-btn {
+            background-color: #E32636;
+            border: none;
+            border-radius: 6px;
+            color: #FFFFFF;
+            cursor: pointer;
+            display: inline-block;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 10px 25px;
+            text-align: center;
+            text-decoration: none;
+            transition: background-color 0.2s;
+        }
+
+        .singpass-btn:hover,
+        input.singpass-btn:hover {
+            background-color: #C81E2B;
+            color: #FFFFFF;
+            text-decoration: none;
+        }
+
+        .singpass-btn:disabled,
+        input.singpass-btn:disabled,
+        input.singpass-btn[disabled] {
+            background-color: #A0A0A0;
+            color: #FFFFFF;
+            cursor: not-allowed;
+        }
+
+        .footer {
+            display: block;
+            line-height: 0;
+            width: 100%;
+        }
+
+        .footer img {
+            display: block;
+            height: auto;
+            width: 100%;
+        }
+
+        @media (max-width: 600px) {
+            .header {
+                padding: 15px 20px;
+            }
+
+            .card {
+                padding: 25px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <c:CbsGuestHeader />
+
+    <div class="main-container">
+        <div class="card">
+            <apex:form id="declineForm">
+                <apex:actionStatus id="processingStatus" startText="">
+                    <apex:facet name="start">
+                        <script type="text/javascript">
+                            (function () {
+                                var buttons = document.querySelectorAll('.js-submit-decline');
+                                for (var i = 0; i &lt; buttons.length; i++) {
+                                    buttons[i].disabled = true;
+                                }
+                            })();
+                        </script>
+                    </apex:facet>
+                </apex:actionStatus>
+
+                <apex:outputPanel rendered="{!hasError}">
+                    <div class="page-message">{!errorMessage}</div>
+                </apex:outputPanel>
+
+                <apex:outputPanel rendered="{!showPage}">
+                    <div class="card-title">{!pageTitle}</div>
+
+                    <div class="content-block">
+                        <p class="intro-text">{!openingStatement}</p>
+
+                        <p class="intro-text">{!consequencesIntro}</p>
+
+                        <ul class="notes-list">
+                            <li>CBS will record your consent status as <strong>Declined</strong>.</li>
+                            <li>{!consequenceBullet2}</li>
+                            <li>{!consequenceBullet3}</li>
+                            <li>{!consequenceBullet4}</li>
+                        </ul>
+
+                        <p class="intro-text">
+                            <apex:outputText value="{!proceedInstructionHtml}" escape="false"/>
+                        </p>
+                    </div>
+
+                    <div class="button-row">
+                        <apex:commandButton value="{!confirmDeclineButtonLabel}"
+                            action="{!submitDeclination}"
+                            styleClass="singpass-btn js-submit-decline"
+                            status="processingStatus"
+                            disabled="{!isProcessing}"
+                            rerender="declineForm"/>
+                    </div>
+                </apex:outputPanel>
+            </apex:form>
+        </div>
+    </div>
+
+    <c:CbsGuestFooter />
+</body>
+</html>
+</apex:page>

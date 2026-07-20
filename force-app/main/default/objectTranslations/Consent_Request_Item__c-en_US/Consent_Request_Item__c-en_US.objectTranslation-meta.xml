@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Consent Request</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Consent Requests</value>
+    </caseValues>
+    <layouts>
+        <layout>CBS Consent Request Item Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Link and Status --></label>
+            <section>Link and Status</section>
+        </sections>
+        <sections>
+            <label><!-- Upload Fields --></label>
+            <section>Upload Fields</section>
+        </sections>
+        <sections>
+            <label><!-- Validation and Dedup --></label>
+            <section>Validation and Dedup</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>Consent Request 明细 布局</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

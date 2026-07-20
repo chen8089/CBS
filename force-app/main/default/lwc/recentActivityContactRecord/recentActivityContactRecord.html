@@ -1,0 +1,67 @@
+<template>
+    <section class="recent-activity-card slds-card slds-card_boundary">
+        <header class="recent-activity-header">
+            <div class="header-icon">
+                <lightning-icon
+                    icon-name="standard:recent"
+                    size="small"
+                    alternative-text="Recent Activity"
+                ></lightning-icon>
+            </div>
+            <h2 class="header-title">{cardTitle}</h2>
+        </header>
+
+        <div class="timeline-container">
+            <template lwc:if={isLoading}>
+                <lightning-spinner alternative-text="Loading tracking activity" size="small"></lightning-spinner>
+            </template>
+
+            <template lwc:elseif={errorMessage}>
+                <div class="empty-state">{errorMessage}</div>
+            </template>
+
+            <template lwc:elseif={hasActivities}>
+                <ul class="activity-timeline">
+                    <template for:each={activitiesToDisplay} for:item="activity">
+                        <li key={activity.id} class="activity-item">
+                            <div class="activity-icon-column">
+                                <div class="activity-icon-wrapper">
+                                    <lightning-icon
+                                        icon-name={activity.iconName}
+                                        size="xx-small"
+                                        alternative-text={activity.title}
+                                    ></lightning-icon>
+                                </div>
+                            </div>
+
+                            <div class="activity-content">
+                                <div class="activity-heading-row">
+                                    <h3 class="activity-title">{activity.title}</h3>
+                                    <span class="activity-date">{activity.displayDate}</span>
+                                </div>
+
+                                <div class="activity-description">
+                                    <lightning-formatted-rich-text
+                                        value={activity.description}
+                                    ></lightning-formatted-rich-text>
+                                </div>
+
+                                <a
+                                    class="view-link"
+                                    href="#"
+                                    onclick={handleViewClick}
+                                >
+                                    View
+                                </a>
+                            </div>
+                        </li>
+                    </template>
+                </ul>
+            </template>
+
+            <template lwc:else>
+                <div class="empty-state">No tracking activity to display for this contact.</div>
+            </template>
+        </div>
+    </section>
+</template>

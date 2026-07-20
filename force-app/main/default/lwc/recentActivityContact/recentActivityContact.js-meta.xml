@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>66.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>Contact Recent Activity</masterLabel>
+    <description>Recent Contact activity feed for Experience Cloud and Lightning pages.</description>
+    <targets>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+        <target>lightning__AppPage</target>
+        <target>lightning__RecordPage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightningCommunity__Default,lightning__AppPage,lightning__RecordPage">
+            <property name="maxItems" type="Integer" label="Max Items" default="20" />
+            <property name="trackedFieldApiName" type="String" label="Deprecated - Not Used" />
+            <property name="trackedFieldLabel" type="String" label="Deprecated - Not Used" />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

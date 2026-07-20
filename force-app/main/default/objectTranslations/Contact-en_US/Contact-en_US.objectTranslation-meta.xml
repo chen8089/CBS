@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <layouts>
+        <layout>CBS Contact - Client User Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- 基础信息 --></label>
+            <section>基础信息</section>
+        </sections>
+        <sections>
+            <label><!-- 门户权限与状态 --></label>
+            <section>门户权限与状态</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>CBS Contact - Data Subject Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Original uploaded information --></label>
+            <section>Original uploaded information</section>
+        </sections>
+        <sections>
+            <label><!-- Status Summary --></label>
+            <section>Status Summary</section>
+        </sections>
+        <sections>
+            <label><!-- matching information --></label>
+            <section>matching information</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>CBS Contact - Non-SingPass</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Data Subjects --></label>
+            <section>Data Subjects</section>
+        </sections>
+        <sections>
+            <label><!-- Status Summary --></label>
+            <section>Status Summary</section>
+        </sections>
+        <sections>
+            <label><!-- Uploaded information --></label>
+            <section>Uploaded information</section>
+        </sections>
+        <sections>
+            <label><!-- matching information --></label>
+            <section>matching information</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>CBS Contact - Non-SingPass - Community User</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Status Summary --></label>
+            <section>Status Summary</section>
+        </sections>
+        <sections>
+            <label><!-- Uploaded information --></label>
+            <section>Uploaded information</section>
+        </sections>
+        <sections>
+            <label><!-- matching information --></label>
+            <section>matching information</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>CBS Contact - SingPass</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Matching Information --></label>
+            <section>Matching Information</section>
+        </sections>
+        <sections>
+            <label><!-- MyInfo Details --></label>
+            <section>MyInfo Details</section>
+        </sections>
+        <sections>
+            <label><!-- Status Summary --></label>
+            <section>Status Summary</section>
+        </sections>
+        <sections>
+            <label><!-- Uploaded Information --></label>
+            <section>Uploaded Information</section>
+        </sections>
+    </layouts>
+    <layouts>
+        <layout>CBS Contact - SingPass- Community User</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Status Summary --></label>
+            <section>Status Summary</section>
+        </sections>
+        <sections>
+            <label><!-- Uploaded information --></label>
+            <section>Uploaded information</section>
+        </sections>
+        <sections>
+            <label><!-- matching information --></label>
+            <section>matching information</section>
+        </sections>
+    </layouts>
+    <recordTypes>
+        <label><!-- Client User --></label>
+        <name>Client_User</name>
+    </recordTypes>
+    <recordTypes>
+        <label><!-- Data Subject --></label>
+        <name>Data_Subject</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Data subjects authenticated via Non-Singpass methods (Passport/Other). --></description>
+        <label><!-- Non-Singpass --></label>
+        <name>Non_Singpass</name>
+    </recordTypes>
+    <recordTypes>
+        <description><!-- Data subjects authenticated via Singpass (NRIC/FIN). --></description>
+        <label><!-- Singpass --></label>
+        <name>Singpass</name>
+    </recordTypes>
+    <webLinks>
+        <label><!-- GoogleMaps --></label>
+        <name>GoogleMaps</name>
+    </webLinks>
+    <webLinks>
+        <label><!-- GoogleSearch --></label>
+        <name>GoogleSearch</name>
+    </webLinks>
+</CustomObjectTranslation>

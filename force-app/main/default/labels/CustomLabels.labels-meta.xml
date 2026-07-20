@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>CBS_Group_Mail_Recipients</fullName>
+        <categories>CBS,UAT Gate 25,Notification</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>CBS group mail recipients for report request submissions</shortDescription>
+        <value>cbsneworg@creditbureau.com.sg</value>
+    </labels>
+    <labels>
+        <fullName>CBS_Guest_Site_Base_Url</fullName>
+        <categories>CBS,Guest Site</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Guest Site base URL for consent email links (no trailing slash)</shortDescription>
+        <value>CONFIGURE_IN_CBS_RUNTIME_CONFIG_MDT</value>
+    </labels>
+    <labels>
+        <fullName>CBS_MyInfo_Api_Base_Url</fullName>
+        <categories>CBS,Singpass,MyInfo</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MyInfo API base URL</shortDescription>
+        <value>https://cbs.frensworkz.com</value>
+    </labels>
+    <labels>
+        <fullName>CBS_MyInfo_Basic_Auth_Password</fullName>
+        <categories>CBS,Singpass,MyInfo</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MyInfo API basic auth password</shortDescription>
+        <value>gqnkiAvM43Dz70gF</value>
+    </labels>
+    <labels>
+        <fullName>CBS_MyInfo_Basic_Auth_Username</fullName>
+        <categories>CBS,Singpass,MyInfo</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>MyInfo API basic auth username</shortDescription>
+        <value>cbs</value>
+    </labels>
+    <labels>
+        <fullName>Singpass_Login_Config_Json</fullName>
+        <categories>SingPass,Authentication</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>SingPass Login runtime configuration JSON</shortDescription>
+        <value>{&quot;discoveryUrl&quot;:&quot;https://stg-id.singpass.gov.sg/fapi/.well-known/openid-configuration&quot;,&quot;parEndpoint&quot;:&quot;https://stg-id.singpass.gov.sg/fapi/par&quot;,&quot;clientId&quot;:&quot;cZfR36RYmPK7UM1BpTchYZS21zIzgI37&quot;,&quot;redirectUri&quot;:&quot;https://cbs.frensworkz.com/api/v1/myinfo/callback&quot;,&quot;scope&quot;:&quot;dob email marital name nationality openid passportnumber passtype regadd sex uinfin&quot;,&quot;signingCertificateName&quot;:&quot;CHANGE_ME_SALESFORCE_CERT_FOR_MYINFO_SIGNING_KEY&quot;,&quot;signingKid&quot;:&quot;myinfo-signing-key&quot;,&quot;dpopCertificateName&quot;:&quot;CHANGE_ME_SALESFORCE_DPOP_CERT&quot;,&quot;dpopPublicJwk&quot;:&quot;{\&quot;kty\&quot;:\&quot;EC\&quot;,\&quot;crv\&quot;:\&quot;P-256\&quot;,\&quot;alg\&quot;:\&quot;ES256\&quot;,\&quot;use\&quot;:\&quot;sig\&quot;,\&quot;x\&quot;:\&quot;CHANGE_ME_DPOP_X\&quot;,\&quot;y\&quot;:\&quot;CHANGE_ME_DPOP_Y\&quot;}&quot;,&quot;authenticationContextType&quot;:&quot;APP_AUTHENTICATION_DEFAULT&quot;,&quot;authenticationContextMessage&quot;:&quot;Login to your account&quot;,&quot;jwtTtlSeconds&quot;:60,&quot;stateTtlSeconds&quot;:600,&quot;discoveryCacheSeconds&quot;:3600}</value>
+    </labels>
+</CustomLabels>

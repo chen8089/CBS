@@ -1,0 +1,12 @@
+{
+  "activeViewId" : "d2c55bf3-719f-4ece-9674-886a6a8c7451",
+  "appPageId" : "adf3cabf-4635-4f0a-bd31-b7c844e608b2",
+  "configurationTags" : [ ],
+  "devName" : "Exception_Related_List__c",
+  "id" : "fa4ba123-88ff-4bc1-a11b-12d290261a85",
+  "label" : "Exception Related List",
+  "objectApiName" : "Exception__c",
+  "routeType" : "relatedlist-a05",
+  "type" : "route",
+  "urlPrefix" : "exception"
+}

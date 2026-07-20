@@ -1,0 +1,61 @@
+{
+  "appPageId" : "adf3cabf-4635-4f0a-bd31-b7c844e608b2",
+  "componentName" : "siteforce:sldsOneColLayout",
+  "dataProviders" : [ ],
+  "id" : "33c29128-cf2f-4564-a154-e66dc5e73aee",
+  "label" : "Data Subjects",
+  "regions" : [ {
+    "components" : [ {
+      "componentAttributes" : {
+        "currentPageLabel" : "Data Subjects",
+        "currentPageName" : "Data_Subjects",
+        "moduleLabel" : "Consent",
+        "modulePageName" : "Consent",
+        "navItemsJson" : "[{\"label\":\"Data Subjects\",\"pageName\":\"Data_Subjects\"},{\"label\":\"Batch\",\"pageName\":\"Batch\"},{\"label\":\"Exceptions\",\"pageName\":\"Exceptions\"}]",
+        "showSubNavigation" : true
+      },
+      "componentName" : "c:partnerCentralHeaderNav",
+      "id" : "eaec82fb-2c9d-4373-b28f-d34b67d3ca99",
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "ffb6428c-8264-452c-8832-1fe88f26a305",
+    "regionName" : "header",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : { },
+      "componentName" : "c:dataSubjectConsentWorkspace",
+      "id" : "306c3c15-03df-4f3e-955c-ac3a02a23917",
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "0bc7602a-f999-4d50-8abe-7810e892cb37",
+    "regionName" : "content",
+    "type" : "region"
+  }, {
+    "id" : "0fa011f6-65ce-4e54-ac63-a6ec3c2ca306",
+    "regionName" : "footer",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "customHeadTags" : "",
+        "description" : "",
+        "title" : "Data Subjects"
+      },
+      "componentName" : "forceCommunity:seoAssistant",
+      "id" : "873986e6-d40e-4e18-a022-6c9f6010172c",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "5b019115-6ab5-400e-9ca4-91d02a35ce1a",
+    "regionName" : "sfdcHiddenRegion",
+    "type" : "region"
+  } ],
+  "themeLayoutType" : "Inner",
+  "type" : "view",
+  "viewType" : "custom-data-subjects"
+}

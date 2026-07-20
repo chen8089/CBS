@@ -1,0 +1,22 @@
+:host {
+    display: block;
+}
+
+.workspace-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 4fr) minmax(0, 1fr);
+    gap: 1rem;
+    align-items: start;
+    width: 100%;
+}
+
+.workspace-main,
+.workspace-activity {
+    min-width: 0;
+}
+
+@media (max-width: 1024px) {
+    .workspace-layout {
+        grid-template-columns: 1fr;
+    }
+}

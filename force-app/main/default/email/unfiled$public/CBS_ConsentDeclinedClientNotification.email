@@ -1,0 +1,28 @@
+<div style="font-family: Arial, sans-serif; color: #333333; line-height: 1.5; font-size: 14px; max-width: 800px; margin: 0 auto;">
+    <p>Dear Client User,</p>
+
+    <p>
+        This is an automated failed consent collection notification from Credit Bureau (Singapore) Pte Ltd ("CBS").
+    </p>
+
+    <p>
+        The Data Subject has declined consent for this request.
+    </p>
+
+    <p>
+        <strong>Data Subject:</strong> {!Contact.Name}<br/>
+        <strong>Bank / Client:</strong> {!Contact.Account}<br/>
+        <strong>Consent Request Reference:</strong> {!Consent_Request_Item__c.Id}<br/>
+        <strong>Consent Status:</strong> Declined
+    </p>
+
+    <p>
+        As consent has been declined, report request processing under this consent request should be treated as ineligible.
+    </p>
+
+    <p>Thank you.</p>
+
+    <p>
+        CBS Service Team
+    </p>
+</div>

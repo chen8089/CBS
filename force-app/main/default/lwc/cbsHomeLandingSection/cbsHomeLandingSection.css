@@ -1,0 +1,139 @@
+:host {
+    display: block;
+    color: #1e1e1e;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+.bannerWrapper {
+    position: relative;
+    width: 100%;
+}
+
+.banner-slide {
+    position: relative;
+    min-height: 520px;
+}
+
+.home-banner-img {
+    min-height: 520px;
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.banner_caption {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+}
+
+.container {
+    box-sizing: border-box;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.container-lg {
+    max-width: 1200px;
+}
+
+.banner_caption-inner {
+    max-width: 576px;
+    color: #ffffff;
+}
+
+.banner_caption-inner h1 {
+    margin: 0 0 1rem;
+    font-size: clamp(2rem, 3vw, 3rem);
+    line-height: 1.2;
+    font-weight: 700;
+}
+
+.banner_caption-inner p {
+    margin: 0 0 1.5rem;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.92);
+}
+
+.button-holder .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 0.7rem 1.25rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.button-holder .btn-primary {
+    color: #ffffff;
+    background: #0076bc;
+    box-shadow: 0 8px 20px rgba(0, 118, 188, 0.3);
+}
+
+.button-holder .btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 24px rgba(0, 118, 188, 0.4);
+}
+
+.fullcontainer.home-sec-1 {
+    padding: 3rem 0;
+    background: #f6f9fc;
+}
+
+.row {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.counter-box {
+    height: 100%;
+    padding: 1.25rem;
+    border: 1px solid #e7edf3;
+    border-radius: 10px;
+    background: #ffffff;
+    box-shadow: 0 6px 18px rgba(12, 40, 80, 0.06);
+}
+
+.counter-info h4 {
+    margin: 0 0 0.55rem;
+    color: #082454;
+    font-size: 1.12rem;
+    font-weight: 700;
+}
+
+.counter-info p {
+    margin: 0;
+    color: #4f5f75;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+@media (max-width: 1024px) {
+    .row {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 767px) {
+    .banner-slide,
+    .home-banner-img {
+        min-height: 520px;
+    }
+
+    .banner_caption-inner h1 {
+        font-size: 1.9rem;
+    }
+
+    .row {
+        grid-template-columns: 1fr;
+    }
+}

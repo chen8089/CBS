@@ -1,0 +1,12 @@
+{
+  "activeViewId" : "ff86d2bc-51a4-44a3-9dcc-5b4d2a69c3db",
+  "appPageId" : "adf3cabf-4635-4f0a-bd31-b7c844e608b2",
+  "configurationTags" : [ ],
+  "devName" : "Batch_Detail__c",
+  "id" : "366a99a3-edd9-4424-951b-13b7be5b19cc",
+  "label" : "Batch Detail",
+  "objectApiName" : "Batch__c",
+  "routeType" : "detail-a01",
+  "type" : "route",
+  "urlPrefix" : "batch"
+}

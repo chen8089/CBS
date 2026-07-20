@@ -1,0 +1,329 @@
+<apex:page controller="QRSiteSingpassPrehireConsentCtrl" action="{!initPage}" showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0" cache="false" expires="0">
+    <apex:stylesheet value="{!URLFOR($Resource.cbsGuestCommonCss)}"/>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Submission of Consent and Personal Information</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            background-color: #F4F5F7;
+            color: #333333;
+            font-family: Arial, sans-serif;
+        }
+        .header {
+            background-color: #FFFFFF;
+            padding: 15px 5%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        .header img {
+            max-height: 60px;
+            width: auto;
+        }
+        .main-container {
+            display: flex;
+            justify-content: center;
+            padding: 30px 16px 80px;
+        }
+        .card {
+            background-color: #FFFFFF;
+            width: 100%;
+            max-width: 900px;
+            padding: 26px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            border-radius: 10px;
+        }
+        .card-title {
+            color: #000000;
+            font-size: 20px;
+            font-weight: bold;
+            line-height: 1.4;
+            margin-bottom: 10px;
+        }
+        .greeting {
+            font-size: 14px;
+            margin: 0 0 14px;
+        }
+        .intro-text {
+            font-size: 13px;
+            line-height: 1.6;
+            margin: 0 0 18px;
+        }
+        .section {
+            margin-top: 18px;
+            border-top: 1px solid #E5E7EB;
+            padding-top: 16px;
+        }
+        .section-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin: 0 0 10px;
+            color: #000000;
+        }
+        .paragraph {
+            font-size: 13px;
+            line-height: 1.6;
+            margin: 0 0 10px;
+            text-align: justify;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .info-label {
+            font-size: 12px;
+            color: #666666;
+        }
+        .info-value {
+            background-color: #F0F2F5;
+            border: 1px solid #D1D5DB;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: bold;
+            padding: 8px 10px;
+            min-height: 18px;
+            word-break: break-word;
+        }
+        .info-wide {
+            grid-column: 1 / -1;
+        }
+        .consent-box {
+            align-items: flex-start;
+            display: flex;
+            gap: 12px;
+            margin-top: 8px;
+        }
+        .consent-box input[type="checkbox"] {
+            margin-top: 3px;
+            transform: scale(1.4);
+        }
+        .consent-text {
+            font-size: 13px;
+            line-height: 1.6;
+            text-align: justify;
+        }
+        .clause-list {
+            font-size: 13px;
+            line-height: 1.6;
+            margin: 0;
+            padding-left: 20px;
+            text-align: justify;
+        }
+        .clause-list li {
+            margin-bottom: 8px;
+        }
+        .subclause-list {
+            list-style-type: lower-alpha;
+            margin-top: 8px;
+            padding-left: 20px;
+        }
+        .disclaimer-list {
+            font-size: 13px;
+            line-height: 1.6;
+            margin: 0;
+            padding-left: 20px;
+            text-align: justify;
+        }
+        .disclaimer-list li {
+            margin-bottom: 8px;
+        }
+        .page-message {
+            color: #C81E2B;
+            font-size: 13px;
+            margin-bottom: 12px;
+        }
+        .button-row {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 22px;
+            flex-wrap: wrap;
+        }
+        .btn {
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-family: Poppins, Arial, sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            height: 48px;
+            padding: 12px 20px;
+            width: 320px;
+        }
+        .btn-primary {
+            background-color: #D93841;
+            color: #FFFFFF;
+        }
+        .btn-primary:hover {
+            background-color: #B0262D;
+        }
+        .btn-primary:disabled,
+        .btn-primary[disabled] {
+            background-color: #A0A0A0;
+            cursor: not-allowed;
+        }
+        .footer {
+            display: block;
+            line-height: 0;
+            width: 100%;
+        }
+        .footer img {
+            display: block;
+            height: auto;
+            width: 100%;
+        }
+        @media (max-width: 740px) {
+            .card {
+                padding: 20px 14px;
+            }
+            .button-row {
+                flex-direction: column-reverse;
+                align-items: stretch;
+            }
+            .btn {
+                max-width: 320px;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <c:CbsGuestHeader />
+
+    <div class="main-container">
+        <div class="card">
+            <apex:form >
+                <div class="page-message">
+                    <apex:pageMessages />
+                </div>
+
+                <apex:outputPanel rendered="{!showConsentForm}">
+                    <div class="card-title">
+                        Submission of Consent and Personal Information
+                    </div>
+
+                    <p class="greeting">Dear {!candidateFullName},</p>
+                    <p class="intro-text">{!singpassAuthNotice}</p>
+
+                    <div class="section">
+                        <div class="section-title">1. Personal Information</div>
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <div class="info-label">Full Name</div>
+                                <div class="info-value"><apex:outputText value="{!principalName}"/></div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">ID Type</div>
+                                <div class="info-value"><apex:outputText value="{!passType}"/></div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">ID Number</div>
+                                <div class="info-value"><apex:outputText value="{!idNumber}"/></div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Passport Number</div>
+                                <div class="info-value"><apex:outputText value="{!passportNumber}"/></div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Date of Birth</div>
+                                <div class="info-value"><apex:outputText value="{!dateOfBirthDisplay}"/></div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Nationality</div>
+                                <div class="info-value"><apex:outputText value="{!nationality}"/></div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Gender</div>
+                                <div class="info-value"><apex:outputText value="{!gender}"/></div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Marital Status</div>
+                                <div class="info-value"><apex:outputText value="{!maritalStatus}"/></div>
+                            </div>
+                            <div class="info-item info-wide">
+                                <div class="info-label">Registered Address</div>
+                                <div class="info-value"><apex:outputText value="{!registeredAddress}"/></div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Email Address</div>
+                                <div class="info-value"><apex:outputText value="{!emailAddress}"/></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <div class="section-title">2. Consent and Authorisation</div>
+                        <div class="consent-box">
+                            <apex:inputCheckbox value="{!hasAcceptedConsent}" id="consentCheckbox" html-data-role="consent-checkbox"/>
+                            <div class="consent-text">By selecting the checkbox and submitting this form, I authorise and give my consent for:</div>
+                        </div>
+                        <ol class="clause-list">
+                            <li>
+                                Credit Bureau (Singapore) Pte Ltd ("CBS") to collect, receive and use my personal data to generate and process my consumer credit report(s), and to release and disclose my consumer credit report(s) and/or any credit information, data or extracts derived from my consumer credit report(s) or otherwise held by CBS (including but not limited to current and historical credit information and any personal data contained therein) to {!bankName}, for the purpose of employment screening and/or background check.
+                            </li>
+                            <li>
+                                I agree to indemnify and hold you, CBS, harmless for and/or in respect of all or any loss or damage arising from the disclosure of my credit information as requested by {!bankName} and/or provided by CBS arising from my aforesaid authorization and consent.
+                            </li>
+                            <li>
+                                {!bankName} may submit credit report requests to CBS under this consent while this consent remains valid.
+                            </li>
+                            <li>
+                                By submitting my Consent and Authorisation, I acknowledge and agree that such consent and authorisation shall remain valid and in effect until the earlier of:
+                                <ol class="subclause-list">
+                                    <li>the date falling ten (10) business days after such consent and authorisation is revoked by me or by {!bankName}; or</li>
+                                    <li>the expiry of the applicable period, being one (1) month from the date of this consent, unless withdrawn earlier.</li>
+                                </ol>
+                            </li>
+                        </ol>
+                    </div>
+
+                    <div class="section">
+                        <div class="section-title">3. Disclaimer</div>
+                        <ul class="disclaimer-list">
+                            <li>I understand that the information contained in my credit report has been provided by various third parties to and/or collated by Credit Bureau (Singapore) Pte Ltd and shall not hold Credit Bureau (Singapore) Pte Ltd for the accuracy of such information and/or the Score derived therefrom.</li>
+                            <li>I understand the above matters and confirm that the information I give is correct and that I accept the terms of the indemnity and disclaimer set out in this consent form.</li>
+                        </ul>
+                    </div>
+
+                    <div class="button-row">
+                        <apex:commandButton value="Submit Consent" action="{!submitConsent}" styleClass="btn btn-primary" html-data-role="submit-button"/>
+                    </div>
+                </apex:outputPanel>
+            </apex:form>
+        </div>
+    </div>
+
+    <c:CbsGuestFooter />
+
+    <script>
+        (function() {
+            var checkbox = document.querySelector('[data-role="consent-checkbox"]');
+            var submitButton = document.querySelector('[data-role="submit-button"]');
+
+            function toggleSubmitButton() {
+                if (!checkbox || !submitButton) {
+                    return;
+                }
+                submitButton.disabled = !checkbox.checked;
+            }
+
+            if (checkbox && submitButton) {
+                toggleSubmitButton();
+                checkbox.addEventListener('change', toggleSubmitButton);
+            }
+        })();
+    </script>
+</body>
+</html>
+</apex:page>

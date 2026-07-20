@@ -1,0 +1,50 @@
+{
+  "appPageId" : "adf3cabf-4635-4f0a-bd31-b7c844e608b2",
+  "componentName" : "siteforce:sldsOneColLayout",
+  "dataProviders" : [ ],
+  "id" : "8a934559-230d-4d81-90b8-ea513b87e7a9",
+  "label" : "Exception",
+  "regions" : [ {
+    "id" : "24212a7f-f043-4b68-93ac-8d110f2c1e0d",
+    "regionName" : "header",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "subtitle" : "Manage",
+        "tableTitle" : "Exceptions",
+        "title" : "Exceptions"
+      },
+      "componentName" : "c:exceptionDashboard",
+      "id" : "10a5bd89-3231-4277-98db-24cd6766a5dc",
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "81a4a2fd-68e4-4875-ac4a-d5dd7b813333",
+    "regionName" : "content",
+    "type" : "region"
+  }, {
+    "id" : "63268fb7-9dc6-4974-be2d-aaa46e8ddd1b",
+    "regionName" : "footer",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "customHeadTags" : "",
+        "description" : "",
+        "title" : "Exception"
+      },
+      "componentName" : "forceCommunity:seoAssistant",
+      "id" : "1871877a-153a-4f88-97b8-631010f1223f",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "0fa4a278-f43e-4fc3-9bf5-c1cbf6842cee",
+    "regionName" : "sfdcHiddenRegion",
+    "type" : "region"
+  } ],
+  "themeLayoutType" : "Inner",
+  "type" : "view",
+  "viewType" : "custom-exception"
+}

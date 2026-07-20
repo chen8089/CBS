@@ -1,0 +1,5 @@
+<apex:component >
+    <div class="header">
+        <img src="{!$Resource.LOGO}" alt="CBS Logo"/>
+    </div>
+</apex:component>

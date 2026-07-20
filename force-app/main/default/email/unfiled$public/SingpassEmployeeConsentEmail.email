@@ -1,0 +1,86 @@
+<div style="font-family: Arial, sans-serif; color: #333333; line-height: 1.5; font-size: 14px; max-width: 800px; margin: 0 auto;">
+
+    <p>Dear {!Contact.Name},</p>
+
+    <p>
+        As part of {!Contact.Account}’s employment-related credit assessment / background screening process,
+        you are required to indicate whether you consent to Credit Bureau (Singapore) Pte Ltd (“CBS”) collecting,
+        receiving, using, releasing and disclosing your personal credit information to {!Contact.Account}.
+    </p>
+
+    <p>
+        To complete this process, please access the secure consent link below and authenticate using Singpass:
+    </p>
+
+    <div style="margin: 10px 0 22px 0;">
+        <a href="{!Consent_Request_Item__c.Email_Authorize_Url__c}"
+           style="background-color: #808285; color: #ffffff; text-decoration: none; display: inline-block; font-family: Arial, sans-serif; font-size: 15px; line-height: 20px; padding: 14px 0; border-radius: 8px; border: 2px solid #333333; width: 260px; text-align: center;">
+            I accept and authorize<br>
+            and give my consent to<br>
+            CBS
+        </a>
+    </div>
+
+    <p>
+        Upon successful Singpass authentication, selected personal information from Myinfo will be retrieved and
+        used to populate the consent form. This may include your name, NRIC / FIN, pass type, passport number,
+        date of birth, nationality, gender, marital status and registered address, where applicable.
+    </p>
+
+    <p>
+        Please review the consent form carefully before submission.
+    </p>
+
+    <p>
+        By submitting the consent form, you confirm that you explicitly authorise and consent to CBS collecting,
+        receiving, using, releasing and disclosing your personal credit information to {!Contact.Account}
+        for employment-related credit assessment / background screening purposes.
+    </p>
+
+    <p>
+        Your consent will remain valid for <strong>5 years</strong> from the date of submission, unless withdrawn earlier.
+    </p>
+
+    <p>
+        If you do not wish to provide consent, you may decline by using the link below:
+    </p>
+
+    <div style="margin: 10px 0 22px 0;">
+        <a href="{!Consent_Request_Item__c.Email_Decline_Url__c}"
+           style="background-color: #808285; color: #ffffff; text-decoration: none; display: inline-block; font-family: Arial, sans-serif; font-size: 15px; line-height: 20px; padding: 14px 0; border-radius: 8px; border: 2px solid #333333; width: 260px; text-align: center;">
+            I decline to give consent<br>
+            to CBS
+        </a>
+    </div>
+
+    <p>
+        If you have already provided consent, you may withdraw your consent at any time by accessing the withdrawal
+        link below and authenticating via Singpass:
+    </p>
+
+    <div style="margin: 10px 0 22px 0;">
+        <a href="{!Consent_Request_Item__c.Email_Withdraw_Url__c}"
+           style="background-color: #808285; color: #ffffff; text-decoration: none; display: inline-block; font-family: Arial, sans-serif; font-size: 15px; line-height: 20px; padding: 14px 0; border-radius: 8px; border: 2px solid #333333; width: 260px; text-align: center;">
+            Proceed to the withdrawal form
+        </a>
+    </div>
+
+    <p>
+        Please note that if you decline or withdraw your consent, {!Contact.Account} will be notified of your consent status.
+        {!Contact.Account} will not be able to submit a new request to CBS for your credit report under this consent request
+        unless valid consent is provided.
+    </p>
+
+    <p>
+        Please do not proceed if you are unsure why you received this email. Contact {!Contact.Account} Human Resources
+        at [BANK HR SUPPORT EMAIL] before authenticating with Singpass.
+    </p>
+
+    <p>Thank you.</p>
+
+    <p style="margin-top: 20px;">
+        {!Contact.Account} Human Resources<br>
+        {!Contact.Account}
+    </p>
+
+</div>

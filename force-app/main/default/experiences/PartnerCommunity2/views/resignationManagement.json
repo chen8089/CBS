@@ -1,0 +1,46 @@
+{
+  "appPageId" : "adf3cabf-4635-4f0a-bd31-b7c844e608b2",
+  "componentName" : "siteforce:sldsOneColLayout",
+  "dataProviders" : [ ],
+  "id" : "05b4bfc2-2842-4b91-a71a-9fedaccc1848",
+  "label" : "Resignation Management",
+  "regions" : [ {
+    "id" : "0addc923-a4c0-4ba0-904d-3a241f07f2ef",
+    "regionName" : "header",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : { },
+      "componentName" : "c:batchDeparturesWorkspace",
+      "id" : "16d49a27-8c45-45af-ae41-b76f8b3d755e",
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "b86e576c-47d6-4397-b12f-2a8693a67c72",
+    "regionName" : "content",
+    "type" : "region"
+  }, {
+    "id" : "3c4be437-c342-4027-ad1f-6f0b799c47ff",
+    "regionName" : "footer",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "customHeadTags" : "",
+        "description" : "",
+        "title" : "Resignation Management"
+      },
+      "componentName" : "forceCommunity:seoAssistant",
+      "id" : "8ac3f23f-e795-4fbb-a0ea-750aace659cf",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "7106853a-1014-4be4-b202-066bbc340ba3",
+    "regionName" : "sfdcHiddenRegion",
+    "type" : "region"
+  } ],
+  "themeLayoutType" : "Inner",
+  "type" : "view",
+  "viewType" : "custom-resignation-management"
+}

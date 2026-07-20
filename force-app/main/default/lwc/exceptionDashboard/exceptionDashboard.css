@@ -1,0 +1,281 @@
+:host {
+    --exd-blue: #0176d3;
+    --exd-border: #dddbda;
+    --exd-bg: #f3f2f2;
+    --exd-muted: #706e6b;
+    --exd-datatable-visible-rows: 10;
+    --exd-datatable-row-height: 3rem;
+    --exd-datatable-header-height: 2.75rem;
+    --exd-datatable-max-height: calc(
+        var(--exd-datatable-header-height) + (var(--exd-datatable-row-height) * var(--exd-datatable-visible-rows))
+    );
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+}
+
+.exd-root {
+    background: var(--exd-bg);
+    border-radius: 0.25rem;
+    padding: 0.75rem;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+.exd-header {
+    align-items: center;
+    background: #f8f9fb;
+    border: 1px solid var(--exd-border);
+    border-radius: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+    padding: 0.9rem 1rem;
+}
+
+.exd-header-left {
+    align-items: center;
+    display: flex;
+    gap: 0.75rem;
+}
+
+.exd-header-right {
+    min-height: 1px;
+}
+
+.exd-header-icon-wrap {
+    align-items: center;
+    background: var(--exd-blue);
+    border-radius: 0.25rem;
+    display: flex;
+    height: 2.3rem;
+    justify-content: center;
+    min-height: 2.3rem;
+    min-width: 2.3rem;
+    width: 2.3rem;
+}
+
+.exd-header-icon-wrap lightning-icon {
+    --slds-c-icon-color-foreground-default: #fff;
+}
+
+.exd-subtitle {
+    margin: 0;
+    font-size: 0.8rem;
+    color: #3e3e3c;
+}
+
+.exd-title {
+    margin: 0.1rem 0 0;
+    font-size: 1.25rem;
+    color: #080707;
+    font-weight: 700;
+}
+
+.exd-cards {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+    overflow-x: auto;
+    padding-bottom: 0.2rem;
+}
+
+.exd-card {
+    background: #fff;
+    border: 1px solid var(--exd-border);
+    border-radius: 0.5rem;
+    cursor: pointer;
+    flex: 1 1 0;
+    min-width: 140px;
+    overflow: hidden;
+    padding: 0.7rem 0.5rem 0.8rem;
+    position: relative;
+    text-align: center;
+    transition: box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.exd-card:hover {
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.exd-card_selected {
+    border: 2px solid var(--exd-blue);
+    box-shadow: 0 0 0 1px rgba(1, 118, 211, 0.15);
+}
+
+.exd-card-corner {
+    border-color: transparent var(--exd-blue) transparent transparent;
+    border-style: solid;
+    border-width: 0 26px 26px 0;
+    height: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 0;
+}
+
+.exd-card-value {
+    color: #052f5f;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.exd-card-label {
+    color: var(--exd-blue);
+    font-size: 0.75rem;
+    margin-top: 0.35rem;
+}
+
+.exd-panel {
+    background: #fff;
+    border: 1px solid var(--exd-border);
+    border-radius: 0.5rem;
+    padding: 0.75rem 1rem 1rem;
+    position: relative;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.exd-panel-header {
+    align-items: flex-end;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.exd-panel-title {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.exd-panel-subtitle {
+    margin: 0.2rem 0 0;
+    color: var(--exd-muted);
+    font-size: 0.81rem;
+}
+
+.exd-panel-actions {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+}
+
+.exd-search {
+    min-width: 12rem;
+}
+
+.exd-filter-wrap {
+    position: relative;
+}
+
+.filter-trigger-wrap {
+    align-items: center;
+    border: 2px solid transparent;
+    border-radius: 0.25rem;
+    display: inline-flex;
+    justify-content: center;
+}
+
+.filter-trigger-wrap_active {
+    border-color: var(--exd-blue);
+}
+
+.exd-filter-popover {
+    background: #fff;
+    border: 1px solid var(--exd-border);
+    border-radius: 0.4rem;
+    box-shadow: 0 5px 16px rgba(0, 0, 0, 0.12);
+    max-width: 420px;
+    min-width: 290px;
+    padding: 1rem 1rem 0.25rem;
+    position: absolute;
+    right: 0;
+    top: calc(100% + 0.35rem);
+    width: min(100vw - 2rem, 390px);
+    z-index: 10050;
+}
+
+.exd-filter-field {
+    margin-bottom: 0.65rem;
+}
+
+.exd-filter-footer {
+    border-top: 1px solid var(--exd-border);
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.3rem;
+    padding: 0.75rem 0;
+}
+
+.exd-table-wrap {
+    width: 100%;
+    min-height: 8rem;
+    max-height: var(--exd-datatable-max-height);
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: relative;
+    min-width: 0;
+    max-width: 100%;
+    -webkit-overflow-scrolling: touch;
+}
+
+.exd-spinner-overlay {
+    align-items: center;
+    background: rgba(255, 255, 255, 0.55);
+    display: flex;
+    inset: 0;
+    justify-content: center;
+    position: absolute;
+    z-index: 3;
+}
+
+.exd-empty-state {
+    color: var(--exd-muted);
+    padding: 2rem 1rem;
+    text-align: center;
+}
+
+.exd-empty-title {
+    margin: 0.75rem 0 0.2rem;
+    font-weight: 600;
+}
+
+.exd-empty-text {
+    margin: 0;
+}
+
+.exd-datatable-scroll {
+    width: 100%;
+}
+
+.exd-datatable-scroll lightning-datatable {
+    display: block;
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .exd-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .exd-panel-actions {
+        width: 100%;
+    }
+
+    .exd-search {
+        flex: 1 1 13rem;
+    }
+}

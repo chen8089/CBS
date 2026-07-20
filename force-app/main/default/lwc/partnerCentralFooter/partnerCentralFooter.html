@@ -1,0 +1,23 @@
+<template>
+    <footer class="pcf-root">
+        <div class="pcf-main">
+            <div class="pcf-brand">
+                <p class="pcf-company">Credit Bureau (Singapore) Pte Ltd</p>
+                <p class="pcf-address">{officeAddress}</p>
+            </div>
+
+            <div class="pcf-links">
+                <a href={officialSiteUrl} target="_blank" rel="noopener noreferrer">Official Website</a>
+                <a href={faqUrl} target="_blank" rel="noopener noreferrer">FAQs</a>
+                <a href={contactMailTo}>{supportEmail}</a>
+                <span>Hotline: {supportHotline}</span>
+            </div>
+        </div>
+
+        <div class="pcf-bottom">
+            <span>{copyrightText}</span>
+            <span class="pcf-separator" aria-hidden="true">|</span>
+            <span>For authorised users only.</span>
+        </div>
+    </footer>
+</template>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label><!-- Data Subject Lifecycle Stage --></label>
+    <name>Data_Subject_Lifecycle_Stage__c</name>
+    <picklistValues>
+        <masterLabel>Active Consent</masterLabel>
+        <translation><!-- Active Consent --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Consent Declined</masterLabel>
+        <translation><!-- Consent Declined --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Consent Expired</masterLabel>
+        <translation><!-- Consent Expired --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Consent Request</masterLabel>
+        <translation><!-- Consent Request --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Consent Withdrawn</masterLabel>
+        <translation><!-- Consent Withdrawn --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Consumed</masterLabel>
+        <translation><!-- Consumed --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Departure</masterLabel>
+        <translation><!-- Departure --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Processing</masterLabel>
+        <translation><!-- Processing --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Report Fulfilment</masterLabel>
+        <translation><!-- Report Fulfilment --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Report Request</masterLabel>
+        <translation><!-- Report Request --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Upload</masterLabel>
+        <translation><!-- Upload --></translation>
+    </picklistValues>
+</CustomFieldTranslation>

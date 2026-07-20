@@ -1,0 +1,115 @@
+:host {
+    display: block;
+}
+
+.cbs-header {
+    background: var(--cbs-white, #ffffff);
+    border-bottom: 1px solid var(--cbs-border, #d9dee7);
+    box-shadow: 0 2px 8px rgba(15, 35, 95, 0.06);
+    z-index: 25;
+}
+
+.cbs-header.sticky {
+    position: sticky;
+    top: 0;
+}
+
+.header-inner {
+    width: min(1280px, calc(100% - 2rem));
+    margin: 0 auto;
+    min-height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+    min-width: 0;
+}
+
+.brand-logo {
+    width: auto;
+    height: 42px;
+    object-fit: contain;
+}
+
+.brand-copy {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.brand-title {
+    color: var(--cbs-deep-blue, #002b55);
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.brand-subtitle {
+    color: var(--cbs-text-muted, #667085);
+    font-size: 0.75rem;
+    line-height: 1.2;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.official-link {
+    color: var(--cbs-primary-blue, #003b71);
+    text-decoration: none;
+    font-size: 0.8125rem;
+    font-weight: 600;
+}
+
+.official-link:hover,
+.official-link:focus {
+    color: var(--cbs-accent-red, #c8102e);
+    text-decoration: underline;
+}
+
+.logout-button {
+    border: 1px solid var(--cbs-border, #d9dee7);
+    background: var(--cbs-white, #ffffff);
+    color: var(--cbs-deep-blue, #002b55);
+    border-radius: 0.375rem;
+    padding: 0.35rem 0.75rem;
+    font-size: 0.8125rem;
+    cursor: pointer;
+}
+
+.logout-button:hover,
+.logout-button:focus {
+    border-color: var(--cbs-accent-red, #c8102e);
+    color: var(--cbs-accent-red, #c8102e);
+}
+
+@media (max-width: 900px) {
+    .brand-subtitle,
+    .official-link {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .header-inner {
+        width: min(1280px, calc(100% - 1rem));
+        min-height: 64px;
+    }
+
+    .brand-logo {
+        height: 34px;
+    }
+
+    .brand-title {
+        font-size: 0.9375rem;
+    }
+}

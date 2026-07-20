@@ -1,0 +1,219 @@
+<apex:page controller="NoActiveConsentController" action="{!initPage}" showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0" cache="false" expires="0">
+    <apex:stylesheet value="{!URLFOR($Resource.cbsGuestCommonCss)}"/>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>CBS - No Active Consent Found</title>
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #F5F5F5;
+            color: #000000;
+            font-family: Arial, Helvetica, sans-serif;
+            box-sizing: border-box;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        .header {
+            background-color: #FFFFFF;
+            padding: 15px 5%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .header img {
+            max-height: 60px;
+            width: auto;
+        }
+
+        .main-container {
+            display: flex;
+            justify-content: center;
+            padding: 40px 20px 80px;
+        }
+
+        .content-box {
+            background-color: #FFFFFF;
+            border: 1px solid #000000;
+            max-width: 850px;
+            padding: 32px 36px;
+            width: 100%;
+        }
+
+        .page-title {
+            font-size: 16px;
+            font-weight: bold;
+            line-height: 1.4;
+            margin: 0 0 24px;
+            text-align: left;
+        }
+
+        .body-text {
+            font-size: 14px;
+            line-height: 1.4;
+            margin: 0 0 24px;
+            text-align: left;
+            word-wrap: break-word;
+        }
+
+        .reason-list {
+            font-size: 14px;
+            line-height: 1.4;
+            margin: 0 0 24px;
+            padding-left: 24px;
+            text-align: left;
+        }
+
+        .reason-item {
+            margin: 0 0 8px;
+        }
+
+        .section-title {
+            font-size: 14px;
+            font-weight: bold;
+            line-height: 1.4;
+            margin: 0 0 24px;
+            text-align: left;
+        }
+
+        .hr-email {
+            color: #000000;
+            font-size: 14px;
+            font-weight: bold;
+            line-height: 1.4;
+            margin: 0 0 24px;
+            text-align: left;
+            word-break: break-word;
+        }
+
+        .hr-email a {
+            color: #000000;
+            text-decoration: underline;
+        }
+
+        .action-row {
+            margin-top: 8px;
+            text-align: center;
+        }
+
+        .close-btn {
+            appearance: none;
+            background-color: #D93841;
+            border: none;
+            border-radius: 8px;
+            color: #FFFFFF;
+            cursor: pointer;
+            display: inline-block;
+            font-family: Poppins, Arial, sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            line-height: 1.2;
+            min-height: 48px;
+            min-width: 220px;
+            padding: 12px 24px;
+            text-align: center;
+            transition: background-color 0.2s;
+        }
+
+        .close-btn:hover {
+            background-color: #B0262D;
+        }
+
+        .close-hint {
+            color: #666666;
+            display: none;
+            font-size: 13px;
+            line-height: 1.4;
+            margin-top: 16px;
+            text-align: center;
+        }
+
+        .footer {
+            display: block;
+            line-height: 0;
+            width: 100%;
+        }
+
+        .footer img {
+            display: block;
+            height: auto;
+            width: 100%;
+        }
+
+        @media (max-width: 680px) {
+            .content-box {
+                padding: 24px 18px;
+            }
+
+            .reason-list {
+                padding-left: 20px;
+            }
+
+            .close-btn {
+                min-width: 100%;
+            }
+        }
+    </style>
+    <script>
+        function closePage() {
+            window.close();
+            window.setTimeout(function () {
+                var closeHint = document.getElementById('closeHint');
+                if (closeHint) {
+                    closeHint.style.display = 'block';
+                }
+            }, 300);
+        }
+    </script>
+</head>
+<body>
+    <c:CbsGuestHeader />
+
+    <div class="main-container">
+        <apex:outputPanel rendered="{!showPage}">
+            <div class="content-box">
+                <h1 class="page-title">{!pageTitle}</h1>
+                <p class="body-text">{!introText}</p>
+
+                <p class="body-text">{!reasonIntroText}</p>
+                <ul class="reason-list">
+                    <apex:repeat value="{!reasonBullets}" var="reasonBullet">
+                        <li class="reason-item">{!reasonBullet}</li>
+                    </apex:repeat>
+                </ul>
+
+                <div class="section-title">{!nextStepsTitle}</div>
+
+                <p class="body-text">{!contactHrText}</p>
+
+                <div class="hr-email">
+                    <apex:outputPanel rendered="{!showHrEmailLink}" layout="none">
+                        <a href="mailto:{!hrSupportEmailDisplay}">{!hrSupportEmailDisplay}</a>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!NOT(showHrEmailLink)}" layout="none">
+                        {!hrSupportEmailDisplay}
+                    </apex:outputPanel>
+                </div>
+
+                <div class="action-row">
+                    <button type="button" class="close-btn" onclick="closePage();">{!closeButtonLabel}</button>
+                </div>
+
+                <div id="closeHint" class="close-hint">
+                    If this page did not close automatically, you may now close this browser tab or window.
+                </div>
+            </div>
+        </apex:outputPanel>
+    </div>
+
+    <c:CbsGuestFooter />
+</body>
+</html>
+</apex:page>

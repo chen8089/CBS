@@ -1,0 +1,40 @@
+:host {
+    display: block;
+    min-height: 100%;
+    --cbs-primary-blue: #003b71;
+    --cbs-deep-blue: #002b55;
+    --cbs-accent-red: #c8102e;
+    --cbs-bg-light: #f5f7fa;
+    --cbs-text-main: #1f2933;
+    --cbs-text-muted: #667085;
+    --cbs-border: #d9dee7;
+    --cbs-white: #ffffff;
+}
+
+.cbs-theme {
+    min-height: 100vh;
+    background: var(--cbs-bg-light);
+    color: var(--cbs-text-main);
+    display: flex;
+    flex-direction: column;
+}
+
+.cbs-main {
+    flex: 1;
+    padding: 1.5rem 0 2rem;
+}
+
+.cbs-content-container {
+    width: min(1280px, calc(100% - 2rem));
+    margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+    .cbs-main {
+        padding-top: 1rem;
+    }
+
+    .cbs-content-container {
+        width: min(1280px, calc(100% - 1rem));
+    }
+}

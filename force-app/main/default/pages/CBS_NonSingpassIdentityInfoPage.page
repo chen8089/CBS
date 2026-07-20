@@ -1,0 +1,261 @@
+<apex:page controller="CBS_NonSingpassIdentityInfoController" showHeader="false" sidebar="false" standardStylesheets="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0" cache="false" expires="0">
+    <apex:stylesheet value="{!URLFOR($Resource.cbsGuestCommonCss)}"/>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>CBS - Identity Information Page</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            background: #f4f6f8;
+            color: #1d1d1f;
+            font-family: Arial, sans-serif;
+        }
+        .header {
+            background-color: #FFFFFF;
+            padding: 15px 5%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        .header img {
+            max-height: 60px;
+            width: auto;
+        }
+        .page-wrap {
+            max-width: 900px;
+            margin: 28px auto;
+            padding: 0 16px 36px;
+        }
+        .card {
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            padding: 24px;
+        }
+        .title {
+            font-size: 24px;
+            font-weight: 700;
+            margin: 0 0 10px;
+        }
+        .desc {
+            font-size: 14px;
+            color: #4f4f55;
+            line-height: 1.5;
+            margin: 0 0 20px;
+        }
+        .section {
+            margin-top: 24px;
+        }
+        .section h2 {
+            margin: 0 0 14px;
+            font-size: 18px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px 16px;
+        }
+        .field {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .label {
+            font-size: 13px;
+            color: #444;
+        }
+        .required::after {
+            content: " *";
+            color: #c62828;
+            font-weight: 700;
+        }
+        .readonly, input[type=text], input[type=date], textarea, select {
+            width: 100%;
+            box-sizing: border-box;
+            border: 1px solid #cdd5df;
+            border-radius: 6px;
+            padding: 9px 10px;
+            font-size: 14px;
+            background: #fff;
+        }
+        .readonly {
+            background: #f6f7f9;
+            color: #333;
+            min-height: 18px;
+        }
+        textarea {
+            min-height: 74px;
+            resize: vertical;
+        }
+        .full {
+            grid-column: 1 / -1;
+        }
+        .declaration {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            font-size: 14px;
+        }
+        .declaration label {
+            display: flex;
+            gap: 8px;
+            align-items: flex-start;
+            line-height: 1.4;
+        }
+        .actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            margin-top: 24px;
+        }
+        .btn {
+            border-radius: 6px;
+            border: 1px solid #1f3c88;
+            padding: 10px 18px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .btn-secondary {
+            background: #fff;
+            color: #1f3c88;
+        }
+        .btn-primary {
+            background: #1f3c88;
+            color: #fff;
+        }
+        .msg {
+            margin-bottom: 10px;
+            color: #b71c1c;
+            font-size: 13px;
+        }
+        .footer {
+            display: block;
+            line-height: 0;
+            width: 100%;
+        }
+        .footer img {
+            display: block;
+            height: auto;
+            width: 100%;
+        }
+        @media (max-width: 740px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            .actions {
+                flex-direction: column-reverse;
+                align-items: stretch;
+            }
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <c:CbsGuestHeader />
+
+    <div class="page-wrap">
+        <div class="card">
+            <h1 class="title">{!pageTitle}</h1>
+            <p class="desc">{!pageDescription}</p>
+
+            <div class="msg"><apex:pageMessages /></div>
+
+            <apex:form enctype="multipart/form-data">
+                <apex:outputPanel rendered="{!canRenderForm}">
+                    <div class="section">
+                        <h2>Section 1: Request Information</h2>
+                        <div class="grid">
+                            <div class="field"><span class="label">Employer / Bank Name</span><div class="readonly">{!employerOrBankName}</div></div>
+                            <div class="field"><span class="label">Employment Type / Subject Type</span><div class="readonly">{!employmentTypeLabel}</div></div>
+                            <div class="field"><span class="label">Full Name</span><div class="readonly">{!requestFullName}</div></div>
+                            <div class="field"><span class="label">Email Address</span><div class="readonly">{!requestEmail}</div></div>
+                            <div class="field"><span class="label">ID Type</span><div class="readonly">{!requestIdType}</div></div>
+                            <div class="field"><span class="label">ID Number</span><div class="readonly">{!maskedIdNumber}</div></div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h2>Section 2: Identity Information</h2>
+                        <div class="grid">
+                            <div class="field">
+                                <span class="label required">Principal Name / Full Legal Name</span>
+                                <apex:inputText value="{!principalName}" html-placeholder="Enter full legal name"/>
+                            </div>
+                            <div class="field">
+                                <span class="label required">Pass Type</span>
+                                <apex:inputText value="{!passType}" html-placeholder="Enter pass type"/>
+                            </div>
+                            <div class="field">
+                                <span class="label required">Passport Number</span>
+                                <apex:inputText value="{!passportNumber}" html-placeholder="Enter passport number"/>
+                            </div>
+                            <div class="field">
+                                <span class="label required">Date of Birth</span>
+                                <apex:input type="date" value="{!dateOfBirth}"/>
+                            </div>
+                            <div class="field">
+                                <span class="label required">Nationality</span>
+                                <apex:inputText value="{!nationality}" html-placeholder="Enter nationality"/>
+                            </div>
+                            <div class="field">
+                                <span class="label required">Gender</span>
+                                <apex:inputText value="{!gender}" html-placeholder="Enter gender"/>
+                            </div>
+                            <div class="field">
+                                <span class="label">Marital Status</span>
+                                <apex:inputText value="{!maritalStatus}" html-placeholder="Enter marital status"/>
+                            </div>
+                            <div class="field full">
+                                <span class="label required">Registered Address</span>
+                                <apex:inputTextarea value="{!registeredAddress}" html-placeholder="Enter registered address"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h2>Section 3: Supporting Documents</h2>
+                        <div class="grid">
+                            <div class="field">
+                                <span class="label required">Passport Document</span>
+                                <apex:inputFile value="{!passportBody}" filename="{!passportFileName}" accept=".jpg,.jpeg,.png,.pdf"/>
+                                <span class="label">Accepted: JPG, JPEG, PNG, PDF. Max 5MB.</span>
+                            </div>
+                            <div class="field">
+                                <span class="label required">Face ID / Selfie</span>
+                                <apex:inputFile value="{!selfieBody}" filename="{!selfieFileName}" accept=".jpg,.jpeg,.png,.pdf"/>
+                                <span class="label">Accepted: JPG, JPEG, PNG, PDF. Max 5MB.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h2>Section 4: Declaration</h2>
+                        <div class="declaration">
+                            <label>
+                                <apex:inputCheckbox value="{!declarationInfoAccurate}"/>
+                                <span>I confirm that the information provided above is true, accurate and complete.</span>
+                            </label>
+                            <label>
+                                <apex:inputCheckbox value="{!declarationDocumentConsent}"/>
+                                <span>I consent to CBS collecting and using the uploaded documents for identity verification purposes.</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="actions">
+                        <apex:commandButton value="Back" action="{!goBack}" styleClass="btn btn-secondary"/>
+                        <apex:commandButton value="Cancel" action="{!cancelFlow}" styleClass="btn btn-secondary" immediate="true"/>
+                        <apex:commandButton value="Continue" action="{!continueToConsent}" styleClass="btn btn-primary"/>
+                    </div>
+                </apex:outputPanel>
+            </apex:form>
+        </div>
+    </div>
+
+    <c:CbsGuestFooter />
+</body>
+</html>
+</apex:page>

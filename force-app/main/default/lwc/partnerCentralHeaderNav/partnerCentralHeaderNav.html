@@ -1,0 +1,18 @@
+<template>
+    <div class="pch-root">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a
+                href="javascript:void(0)"
+                class="breadcrumb-link"
+                data-page-name={modulePageName}
+                onclick={handleModuleClick}
+            >
+                {moduleLabel}
+            </a>
+
+            <span class="separator" aria-hidden="true">›</span>
+
+            <span class="breadcrumb-current">{currentPageLabel}</span>
+        </nav>
+    </div>
+</template>

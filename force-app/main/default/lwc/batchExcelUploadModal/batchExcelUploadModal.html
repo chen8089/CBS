@@ -1,0 +1,85 @@
+<template>
+    <template if:true={showModal}>
+        <section
+            role="dialog"
+            tabindex="-1"
+            aria-modal="true"
+            aria-labelledby="upload-modal-heading"
+            class="slds-modal slds-fade-in-open beum-backdrop"
+            onclick={handleBackdropClick}
+        >
+            <div class="slds-modal__container beum-container" onclick={handleDialogClick}>
+                <header class="slds-modal__header">
+                    <h2 id="upload-modal-heading" class="slds-modal__title slds-hyphenate">Upload New Batch</h2>
+                </header>
+
+                <div class="slds-modal__content slds-p-around_medium beum-content">
+                    <template if:true={busy}>
+                        <div class="beum-spinner">
+                            <lightning-spinner alternative-text="Processing" size="medium"></lightning-spinner>
+                        </div>
+                    </template>
+
+                    <template if:true={uploadRejectMessage}>
+                        <div class="slds-notify slds-notify_alert slds-alert_error slds-m-bottom_medium" role="alert">
+                            <span class="slds-assistive-text">Error</span>
+                            <h2>{uploadRejectMessage}</h2>
+                        </div>
+                    </template>
+
+                    <lightning-input
+                        label="Batch Name"
+                        value={batchName}
+                        placeholder="Optional — file name or timestamp used if blank"
+                        onchange={handleBatchNameChange}
+                    ></lightning-input>
+
+                    <div class="beum-file-section">
+                        <lightning-input
+                            type="file"
+                            label="Excel File"
+                            accept=".xlsx,.xls,.csv"
+                            onchange={handleFileChange}
+                        ></lightning-input>
+                        <template if:true={fileName}>
+                            <p class="beum-file-name">Selected: {fileName}</p>
+                        </template>
+                        <p class="beum-hint">
+                            Required columns: Email Address, Full Name, ID Type, ID Number,
+                            Date of Birth, Employment Status
+                        </p>
+                    </div>
+
+                    <template if:true={uploadSummary}>
+                        <div class="slds-box slds-m-top_medium">
+                            <p>Total Rows: {uploadSummary.totalRows}</p>
+                            <p>Success Rows: {uploadSummary.successRows}</p>
+                            <p>Exception Rows: {uploadSummary.exceptionRows}</p>
+                            <p>Created Contacts: {uploadSummary.createdContacts}</p>
+                            <p>Created Exceptions: {uploadSummary.createdExceptions}</p>
+                            <template if:true={uploadMessage}>
+                                <p class="slds-m-top_x-small">{uploadMessage}</p>
+                            </template>
+                            <template if:true={uploadSummary.exceptionRows}>
+                                <p class="slds-text-color_error slds-m-top_x-small">
+                                    Some records failed validation and were added to Exceptions for review.
+                                </p>
+                            </template>
+                        </div>
+                    </template>
+                </div>
+
+                <footer class="slds-modal__footer">
+                    <lightning-button label="Cancel" onclick={handleCancel}></lightning-button>
+                    <lightning-button
+                        label="Upload"
+                        variant="brand"
+                        onclick={handleUpload}
+                        disabled={uploadDisabled}
+                    ></lightning-button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>

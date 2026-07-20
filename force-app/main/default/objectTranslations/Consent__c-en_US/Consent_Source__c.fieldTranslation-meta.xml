@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label><!-- Consent Source --></label>
+    <name>Consent_Source__c</name>
+    <picklistValues>
+        <masterLabel>Admin</masterLabel>
+        <translation><!-- Admin --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Client Portal</masterLabel>
+        <translation><!-- Client Portal --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Salesforce Sites</masterLabel>
+        <translation><!-- Salesforce Sites --></translation>
+    </picklistValues>
+</CustomFieldTranslation>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Withdrawal_Channel__c</fullName>
+    <label>Withdrawal Channel</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Data Subject Singpass</fullName>
+                <default>true</default>
+                <label>Data Subject (Singpass)</label>
+            </value>
+            <value>
+                <fullName>Client on behalf</fullName>
+                <default>false</default>
+                <label>Client on Behalf</label>
+            </value>
+            <value>
+                <fullName>Admin correction</fullName>
+                <default>false</default>
+                <label>Admin Correction</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

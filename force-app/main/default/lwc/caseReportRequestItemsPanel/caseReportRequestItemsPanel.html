@@ -1,0 +1,31 @@
+<template>
+    <lightning-card title={cardTitle} icon-name="custom:custom63">
+        <lightning-button
+            slot="actions"
+            variant="brand"
+            label="Export Authorized List"
+            title="Export Authorized List"
+            onclick={handleExportAuthorizedList}
+            disabled={disableExportButton}
+        ></lightning-button>
+        <div class="slds-p-horizontal_medium slds-p-bottom_small">
+            <template if:true={isLoading}>
+                <lightning-spinner alternative-text="Loading report request items" size="small"></lightning-spinner>
+            </template>
+
+            <template if:false={isLoading}>
+                <template if:true={hasRows}>
+                    <lightning-datatable
+                        key-field="itemId"
+                        data={rows}
+                        columns={columns}
+                        hide-checkbox-column
+                    ></lightning-datatable>
+                </template>
+                <template if:false={hasRows}>
+                    <p class="slds-text-body_small">No Report Request Items found for this Case.</p>
+                </template>
+            </template>
+        </div>
+    </lightning-card>
+</template>

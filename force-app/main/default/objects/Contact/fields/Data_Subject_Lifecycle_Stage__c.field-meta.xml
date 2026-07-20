@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Data_Subject_Lifecycle_Stage__c</fullName>
+    <label>Data Subject Lifecycle Stage</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Upload</fullName>
+                <default>true</default>
+                <label>Upload</label>
+            </value>
+            <value>
+                <fullName>Consent Request</fullName>
+                <default>false</default>
+                <label>Consent Request</label>
+            </value>
+            <value>
+                <fullName>Active Consent</fullName>
+                <default>false</default>
+                <label>Active Consent</label>
+            </value>
+            <value>
+                <fullName>Consent Declined</fullName>
+                <default>false</default>
+                <label>Consent Declined</label>
+            </value>
+            <value>
+                <fullName>Processing</fullName>
+                <default>false</default>
+                <label>Processing</label>
+            </value>
+            <value>
+                <fullName>Report Request</fullName>
+                <default>false</default>
+                <label>Report Request</label>
+            </value>
+            <value>
+                <fullName>Report Fulfilment</fullName>
+                <default>false</default>
+                <label>Report Fulfilment</label>
+            </value>
+            <value>
+                <fullName>Consent Withdrawn</fullName>
+                <default>false</default>
+                <label>Consent Withdrawn</label>
+            </value>
+            <value>
+                <fullName>Consent Expired</fullName>
+                <default>false</default>
+                <label>Consent Expired</label>
+            </value>
+            <value>
+                <fullName>Departure</fullName>
+                <default>false</default>
+                <label>Departure</label>
+            </value>
+            <value>
+                <fullName>Consumed</fullName>
+                <default>false</default>
+                <label>Consumed</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,17 @@
+<apex:page controller="QRSiteApprovalController" action="{!scanAndApprove}" showHeader="false" sidebar="false" standardStylesheets="false" cache="false" expires="0">
+    <apex:stylesheet value="{!URLFOR($Resource.cbsGuestCommonCss)}"/>
+    <head>
+        <title>Mobile Approval Confirmation</title>
+    </head>
+    <div style="text-align: center; margin-top: 50px; font-family: sans-serif;">
+        <apex:form >
+            <h2 style="color: #333; margin-bottom: 30px;">Authorization Approval Confirmation</h2>
+            
+            <apex:outputPanel rendered="{!isFinished}">
+                <div style="margin-top: 50px;">
+                    <h3 style="color: #2196F3; font-size: 22px; padding: 0 20px;">{!resultMessage}</h3>
+                </div>
+            </apex:outputPanel>
+        </apex:form>
+    </div>
+</apex:page>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Authentication_Type__c</fullName>
+    <description>Singpass or Non-Singpass authentication method for the data subject.</description>
+    <label>Authentication Type</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Singpass</fullName>
+                <default>false</default>
+                <label>Singpass</label>
+            </value>
+            <value>
+                <fullName>Non-Singpass</fullName>
+                <default>false</default>
+                <label>Non-Singpass</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

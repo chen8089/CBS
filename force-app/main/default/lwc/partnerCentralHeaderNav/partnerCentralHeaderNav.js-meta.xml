@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>62.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>Partner Central Header Nav</masterLabel>
+    <description>Two-level breadcrumb for CBS Partner Central (module link + current page label).</description>
+    <targets>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+        <target>lightning__AppPage</target>
+        <target>lightning__HomePage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightningCommunity__Default">
+            <property name="headerTitle" type="String" label="Header title" default="Partner Community"
+                description="Brand title shown beside the CBS logo." />
+            <property name="homeUrl" type="String" label="Home URL" default="/partnercommunity/s/"
+                description="Fallback home URL used by the logo link." />
+            <property name="officialSiteUrl" type="String" label="Official site URL" default="https://www.creditbureau.com.sg/"
+                description="External website link shown in the header utility row." />
+            <property name="contactEmail" type="String" label="Contact email" default="consumer_services@creditbureau.com.sg"
+                description="Support email shown in the header utility row." />
+            <property name="supportHotline" type="String" label="Support hotline" default="+65 6565 6363"
+                description="Support hotline shown in the header utility row." />
+            <property name="showQuickActions" type="Boolean" label="Show utility links" default="true"
+                description="Displays official website and contact actions in the header." />
+            <property name="moduleLabel" type="String" label="Module label" default="Consent"
+                description="First segment; clickable label for the module home link." />
+            <property name="modulePageName" type="String" label="Module named page API name" default="Consent"
+                description="Experience Named Page API name opened when the module label is clicked." />
+            <property name="moduleUrl" type="String" label="Module URL fallback" default=""
+                description="Optional fallback URL used when module named page API name is not configured." />
+            <property name="currentPageLabel" type="String" label="Current page label" default="Data Subjects"
+                description="Second segment; plain text for the active page (not a link)." />
+            <property name="currentPageName" type="String" label="Current page API name" default="Data_Subjects"
+                description="Named Page API name for this Experience page (not shown in UI)." />
+            <property name="showSubNavigation" type="Boolean" label="Show sub navigation (unused)" default="true"
+                description="Unused; kept because existing Experience pages reference this property." />
+            <property name="navItemsJson" type="String" label="Nav items JSON (unused)" default="[]"
+                description="Unused; kept because existing Experience pages reference this property." />
+        </targetConfig>
+        <targetConfig targets="lightning__AppPage,lightning__HomePage">
+            <property name="headerTitle" type="String" label="Header title" default="Partner Community" />
+            <property name="homeUrl" type="String" label="Home URL" default="/partnercommunity/s/" />
+            <property name="officialSiteUrl" type="String" label="Official site URL" default="https://www.creditbureau.com.sg/" />
+            <property name="contactEmail" type="String" label="Contact email" default="consumer_services@creditbureau.com.sg" />
+            <property name="supportHotline" type="String" label="Support hotline" default="+65 6565 6363" />
+            <property name="showQuickActions" type="Boolean" label="Show utility links" default="true" />
+            <property name="moduleLabel" type="String" label="Module label" default="Consent" />
+            <property name="modulePageName" type="String" label="Module named page API name" default="Consent"
+                description="comm__namedPage targets Experience Cloud named pages." />
+            <property name="moduleUrl" type="String" label="Module URL fallback" default="" />
+            <property name="currentPageLabel" type="String" label="Current page label" default="Data Subjects" />
+            <property name="currentPageName" type="String" label="Current page API name" default="Data_Subjects" />
+            <property name="showSubNavigation" type="Boolean" label="Show sub navigation (unused)" default="true"
+                description="Unused; kept for Experience Builder compatibility." />
+            <property name="navItemsJson" type="String" label="Nav items JSON (unused)" default="[]"
+                description="Unused; kept for Experience Builder compatibility." />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

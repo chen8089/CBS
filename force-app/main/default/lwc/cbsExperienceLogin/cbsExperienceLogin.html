@@ -1,0 +1,166 @@
+<template>
+    <div class="login-page">
+        <header class="brand-header">
+            <div class="brand-wrap">
+                <div class="brand-logo">
+                    <template if:true={showLogo}>
+                        <img src={logoUrl} alt="Credit Bureau Singapore" onerror={handleLogoError} />
+                    </template>
+                    <template if:false={showLogo}>
+                        <span class="text-logo">Credit Bureau Singapore</span>
+                    </template>
+                </div>
+            </div>
+        </header>
+        <main class="login-main">
+            <section class="left-panel" aria-label="CBS Client Portal login">
+                <div class="left-inner">
+                    <div class="login-card">
+                        <template if:true={isLoginMode}>
+                            <p class="eyebrow">CBS Client Portal</p>
+                            <h1 class="login-card-title">Sign in to continue</h1>
+
+                            <template if:true={errorMessage}>
+                                <div class="error-message" role="alert">{errorMessage}</div>
+                            </template>
+
+                            <div class="form-field">
+                                <label for="usernameInput">Username</label>
+                                <input
+                                    id="usernameInput"
+                                    name="username"
+                                    type="text"
+                                    value={username}
+                                    oninput={handleUsernameChange}
+                                    onkeydown={handleInputKeyDown}
+                                    autocomplete="username"
+                                    disabled={isLoading}
+                                />
+                            </div>
+
+                            <div class="form-field">
+                                <label for="passwordInput">Password</label>
+                                <input
+                                    id="passwordInput"
+                                    name="password"
+                                    type="password"
+                                    value={password}
+                                    oninput={handlePasswordChange}
+                                    onkeydown={handleInputKeyDown}
+                                    onblur={handlePasswordBlur}
+                                    autocomplete="current-password"
+                                    disabled={isLoading}
+                                />
+                            </div>
+
+                            <button
+                                class="login-button"
+                                type="button"
+                                onclick={handleLogin}
+                                disabled={isLoading}
+                            >
+                                {loginButtonLabel}
+                            </button>
+
+                            <div class="login-options">
+                                <label class="remember-me">
+                                    <input
+                                        type="checkbox"
+                                        checked={rememberMe}
+                                        onchange={handleRememberMeChange}
+                                        disabled={isLoading}
+                                    />
+                                    <span>Remember me</span>
+                                </label>
+
+                                <a href="#" onclick={handleForgotPasswordClick}>Forgot Password?</a>
+                            </div>
+
+                            <template if:true={showCapsLockWarning}>
+                                <div class="caps-warning" role="status">Caps Lock is on.</div>
+                            </template>
+                        </template>
+
+                        <template if:true={isForgotPasswordMode}>
+                            <h1 class="login-card-title">Reset Your Password</h1>
+                            <p class="forgot-description">
+                                Enter your username or email address and we will send you instructions to reset your password.
+                            </p>
+
+                            <template if:true={errorMessage}>
+                                <div class="error-message" role="alert">{errorMessage}</div>
+                            </template>
+
+                            <div class="form-field">
+                                <label for="forgotUsernameInput">Username</label>
+                                <input
+                                    id="forgotUsernameInput"
+                                    name="forgotUsername"
+                                    type="text"
+                                    value={forgotPasswordUsername}
+                                    oninput={handleForgotPasswordUsernameChange}
+                                    onkeydown={handleForgotPasswordInputKeyDown}
+                                    placeholder="Enter your username..."
+                                    autocomplete="username"
+                                    disabled={isLoading}
+                                />
+                            </div>
+
+                            <div class="forgot-actions">
+                                <button
+                                    class="secondary-link"
+                                    type="button"
+                                    onclick={handleForgotPasswordCancel}
+                                    disabled={isLoading}
+                                >
+                                    Back to Login
+                                </button>
+                                <button
+                                    class="login-button"
+                                    type="button"
+                                    onclick={handleForgotPasswordContinue}
+                                    disabled={isLoading}
+                                >
+                                    {forgotPasswordButtonLabel}
+                                </button>
+                            </div>
+                        </template>
+
+                        <template if:true={isForgotPasswordSuccessMode}>
+                            <h1 class="login-card-title">Check Your Email</h1>
+                            <div class="success-message" role="status">{successMessage}</div>
+                            <button
+                                class="login-button"
+                                type="button"
+                                onclick={handleBackToLogin}
+                                disabled={isLoading}
+                            >
+                                Back to Login
+                            </button>
+                        </template>
+                    </div>
+                </div>
+            </section>
+
+            <aside class="right-panel" style={rightPanelStyle} aria-label="Credit Bureau Singapore brand information">
+                <div class="right-inner">
+                    <h2>Credit Bureau Singapore</h2>
+                    <p class="promo-subtitle">
+                        Secure portal for authorised client users to manage employment credit check consent and report
+                        requests.
+                    </p>
+
+                    <ul class="brand-bullets">
+                        <li>Consent Management</li>
+                        <li>Report Request Tracking</li>
+                        <li>Secure Client Access</li>
+                    </ul>
+                </div>
+            </aside>
+        </main>
+        <footer class="page-footer">
+            <span>© Credit Bureau (Singapore) Pte Ltd</span>
+            <span>For authorised users only.</span>
+        </footer>
+    </div>
+</template>

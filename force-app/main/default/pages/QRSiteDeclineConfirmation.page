@@ -1,0 +1,124 @@
+<apex:page controller="QRSiteSingpassEmpDeclineConfirmCtrl" showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0" cache="false" expires="0">
+    <apex:stylesheet value="{!URLFOR($Resource.cbsGuestCommonCss)}"/>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>CBS - Decline Confirmation</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            background-color: #F4F5F7;
+            color: #333333;
+            font-family: Arial, sans-serif;
+        }
+        .header {
+            background-color: #FFFFFF;
+            padding: 15px 5%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        .header img {
+            max-height: 60px;
+            width: auto;
+        }
+        .main-container {
+            display: flex;
+            justify-content: center;
+            padding: 40px 20px 80px;
+        }
+        .card {
+            background-color: #FFFFFF;
+            width: 100%;
+            max-width: 700px;
+            padding: 40px 50px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            border-radius: 10px;
+        }
+        .card-title {
+            color: #2946A3;
+            font-size: 18px;
+            font-weight: bold;
+            line-height: 1.4;
+            margin: 0 0 20px;
+            text-align: center;
+        }
+        .paragraph {
+            font-size: 13px;
+            line-height: 1.6;
+            margin: 0 0 14px;
+            text-align: justify;
+        }
+        .button-row {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 24px;
+            flex-wrap: wrap;
+        }
+        .btn {
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            min-width: 160px;
+            padding: 11px 18px;
+        }
+        .btn-primary {
+            background-color: #1F389A;
+            color: #FFFFFF;
+        }
+        .btn-secondary {
+            background-color: #E5E7EB;
+            color: #1F2937;
+        }
+        .footer {
+            display: block;
+            line-height: 0;
+            width: 100%;
+        }
+        .footer img {
+            display: block;
+            height: auto;
+            width: 100%;
+        }
+        @media (max-width: 600px) {
+            .card {
+                padding: 25px 20px;
+            }
+            .button-row {
+                flex-direction: column-reverse;
+                align-items: stretch;
+            }
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <c:CbsGuestHeader />
+
+    <div class="main-container">
+        <div class="card">
+            <apex:form >
+                <apex:outputPanel rendered="{!showPage}">
+                    <div class="card-title">{!confirmationTitle}</div>
+                    <apex:repeat value="{!confirmationMessageLines}" var="messageLine">
+                        <p class="paragraph">{!messageLine}</p>
+                    </apex:repeat>
+
+                    <div class="button-row">
+                        <apex:commandButton value="Confirm Decline" action="{!confirmDecline}" styleClass="btn btn-primary"/>
+                        <apex:commandButton value="Go Back" action="{!goBackToConsentForm}" styleClass="btn btn-secondary"/>
+                    </div>
+                </apex:outputPanel>
+            </apex:form>
+        </div>
+    </div>
+
+    <c:CbsGuestFooter />
+</body>
+</html>
+</apex:page>

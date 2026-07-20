@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label>Exception Type</label>
+    <name>Exception_Type__c</name>
+    <picklistValues>
+        <masterLabel>File Validation</masterLabel>
+        <translation><!-- File Validation --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Match Failed</masterLabel>
+        <translation><!-- Match Failed --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Other</masterLabel>
+        <translation><!-- Other --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Reminder Review</masterLabel>
+        <translation><!-- Reminder Review --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Unauthorized Consent</masterLabel>
+        <translation><!-- Unauthorized Consent --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Unmatched Authorization</masterLabel>
+        <translation><!-- Unmatched Authorization --></translation>
+    </picklistValues>
+</CustomFieldTranslation>

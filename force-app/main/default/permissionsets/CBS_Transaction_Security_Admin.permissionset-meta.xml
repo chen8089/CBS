@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Allows CBS administrators to modify Transaction Security policies for UAT Gate 42 setup.</description>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>CBS Transaction Security Admin</label>
+    <userPermissions>
+        <enabled>true</enabled>
+        <name>ModifyTransactionSecurityPolicies</name>
+    </userPermissions>
+</PermissionSet>

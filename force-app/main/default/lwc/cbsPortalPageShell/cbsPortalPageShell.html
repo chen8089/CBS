@@ -1,0 +1,19 @@
+<template>
+    <section class="shell">
+        <header class="shell-header">
+            <template lwc:if={showBreadcrumb}>
+                <nav class="breadcrumb" aria-label="Breadcrumb">
+                    <span>{breadcrumbText}</span>
+                </nav>
+            </template>
+            <h1 class="title">{pageTitle}</h1>
+            <template lwc:if={subtitle}>
+                <p class="subtitle">{subtitle}</p>
+            </template>
+        </header>
+
+        <div class={bodyClass}>
+            <slot></slot>
+        </div>
+    </section>
+</template>

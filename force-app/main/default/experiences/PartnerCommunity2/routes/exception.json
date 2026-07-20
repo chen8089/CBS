@@ -1,0 +1,12 @@
+{
+  "activeViewId" : "8a934559-230d-4d81-90b8-ea513b87e7a9",
+  "appPageId" : "adf3cabf-4635-4f0a-bd31-b7c844e608b2",
+  "configurationTags" : [ ],
+  "devName" : "Exception__c",
+  "id" : "bfd1bb97-f6c3-41e9-8d40-b0f94d604443",
+  "label" : "Exception",
+  "pageAccess" : "UseParent",
+  "routeType" : "custom-exception",
+  "type" : "route",
+  "urlPrefix" : "exception"
+}

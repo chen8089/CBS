@@ -1,0 +1,50 @@
+{
+  "appPageId" : "adf3cabf-4635-4f0a-bd31-b7c844e608b2",
+  "componentName" : "siteforce:sldsOneColLayout",
+  "dataProviders" : [ ],
+  "id" : "f04754a2-befb-4b12-85a1-78e8e2dab86c",
+  "label" : "Batch",
+  "regions" : [ {
+    "id" : "f9d533b3-07cc-4877-9176-b1dc87532b79",
+    "regionName" : "header",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "subtitle" : "Manage",
+        "title" : "Consent Batches",
+        "uploadPageName" : "import-data-subjects"
+      },
+      "componentName" : "c:batchUploadDashboard",
+      "id" : "a52e798b-679f-4ca9-9f84-8874fabfd478",
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "aad8bba3-463b-4291-9240-2280fe0f72fc",
+    "regionName" : "content",
+    "type" : "region"
+  }, {
+    "id" : "4e460055-833e-4365-ac1f-3564fa5228e9",
+    "regionName" : "footer",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "customHeadTags" : "",
+        "description" : "",
+        "title" : "Batch"
+      },
+      "componentName" : "forceCommunity:seoAssistant",
+      "id" : "0f5969a5-f8d4-48ad-9782-4080c6d8f39a",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "4c1e1bf0-8c42-472d-a11f-1fc1475db24c",
+    "regionName" : "sfdcHiddenRegion",
+    "type" : "region"
+  } ],
+  "themeLayoutType" : "Inner",
+  "type" : "view",
+  "viewType" : "custom-batch"
+}

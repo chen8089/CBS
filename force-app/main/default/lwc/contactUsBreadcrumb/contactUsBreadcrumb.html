@@ -1,0 +1,17 @@
+<template>
+    <nav class="breadcrumb-wrapper" aria-label="Breadcrumb">
+        <div class="breadcrumb-container">
+            <ol class="breadcrumb-list">
+                <li class="breadcrumb-item">
+                    <a class="breadcrumb-link" href={homeUrl}>{homeLabel}</a>
+                </li>
+                <li class="breadcrumb-item breadcrumb-item_separator" aria-hidden="true">
+                    <span class="breadcrumb-separator">/</span>
+                </li>
+                <li class="breadcrumb-item breadcrumb-item_current" aria-current="page">
+                    <span class="breadcrumb-current">{currentLabel}</span>
+                </li>
+            </ol>
+        </div>
+    </nav>
+</template>

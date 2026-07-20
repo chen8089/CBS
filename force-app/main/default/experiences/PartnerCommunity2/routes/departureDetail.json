@@ -1,0 +1,12 @@
+{
+  "activeViewId" : "bca97b2a-baea-4c4d-b703-fbadf65408c5",
+  "appPageId" : "adf3cabf-4635-4f0a-bd31-b7c844e608b2",
+  "configurationTags" : [ ],
+  "devName" : "Departure_Detail__c",
+  "id" : "682101b1-ec06-48ee-a440-b73176337458",
+  "label" : "Departure Detail",
+  "objectApiName" : "Departure__c",
+  "routeType" : "detail-a04",
+  "type" : "route",
+  "urlPrefix" : "departure"
+}

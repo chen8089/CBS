@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label>Offline Processing Status</label>
+    <name>Offline_Processing_Status__c</name>
+    <picklistValues>
+        <masterLabel>AS400 Processing</masterLabel>
+        <translation><!-- AS400 Processing --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Packaged</masterLabel>
+        <translation><!-- Packaged --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Sent</masterLabel>
+        <translation><!-- Sent --></translation>
+    </picklistValues>
+</CustomFieldTranslation>

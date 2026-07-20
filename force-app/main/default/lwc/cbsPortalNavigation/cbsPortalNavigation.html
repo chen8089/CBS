@@ -1,0 +1,52 @@
+<template>
+    <nav class="cbs-nav" aria-label="Portal navigation">
+        <div class="nav-inner">
+            <button
+                class="mobile-toggle"
+                type="button"
+                onclick={toggleMobileMenu}
+                aria-controls="cbs-mobile-nav"
+                aria-expanded={isMobileMenuOpen}
+            >
+                <lightning-icon icon-name="utility:rows" size="x-small" alternative-text="Menu"></lightning-icon>
+                <span>Menu</span>
+            </button>
+
+            <ul class="desktop-nav">
+                <template for:each={resolvedNavItems} for:item="item">
+                    <li key={item.key}>
+                        <a
+                            href={item.href}
+                            class={item.className}
+                            data-item-key={item.key}
+                            data-page-name={item.pageName}
+                            data-url={item.url}
+                            onclick={handleNavigate}
+                        >
+                            {item.label}
+                        </a>
+                    </li>
+                </template>
+            </ul>
+        </div>
+
+        <template lwc:if={isMobileMenuOpen}>
+            <ul id="cbs-mobile-nav" class="mobile-nav">
+                <template for:each={resolvedNavItems} for:item="item">
+                    <li key={item.key}>
+                        <a
+                            href={item.href}
+                            class={item.className}
+                            data-item-key={item.key}
+                            data-page-name={item.pageName}
+                            data-url={item.url}
+                            onclick={handleNavigate}
+                        >
+                            {item.label}
+                        </a>
+                    </li>
+                </template>
+            </ul>
+        </template>
+    </nav>
+</template>

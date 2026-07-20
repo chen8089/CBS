@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TransactionSecurityPolicy xmlns="http://soap.sforce.com/2006/04/metadata">
+    <action>
+        <block>true</block>
+        <endSession>false</endSession>
+        <freezeUser>false</freezeUser>
+        <notifications>
+            <inApp>true</inApp>
+            <sendEmail>true</sendEmail>
+            <user>chencai@frensworkz.com.creditbureau</user>
+        </notifications>
+        <twoFactorAuthentication>false</twoFactorAuthentication>
+    </action>
+    <active>true</active>
+    <apexClass>CbsTxnPolicyReportExportAlert</apexClass>
+    <blockMessage>CBS policy blocks report export operations for UAT Gate 42.</blockMessage>
+    <description>CBS Gate 42 active ReportEvent export protection. Blocks report export operations for UAT evidence.</description>
+    <developerName>CBS_Report_Export_Alert</developerName>
+    <eventName>ReportEvent</eventName>
+    <masterLabel>CBS Report Export Alert</masterLabel>
+    <type>CustomApexPolicy</type>
+</TransactionSecurityPolicy>

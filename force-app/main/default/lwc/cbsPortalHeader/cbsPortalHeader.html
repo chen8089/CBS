@@ -1,0 +1,33 @@
+<template>
+    <header class={headerClass}>
+        <div class="header-inner">
+            <a class="brand" href={homeUrl}>
+                <img src={computedLogoUrl} alt="Credit Bureau Singapore" class="brand-logo" />
+                <div class="brand-copy">
+                    <span class="brand-title">Credit Bureau Singapore</span>
+                    <span class="brand-subtitle">CBS / BESDC Partner Portal</span>
+                </div>
+            </a>
+
+            <div class="header-actions">
+                <a class="official-link" href={officialSiteUrl} target="_blank" rel="noopener noreferrer">Official Website</a>
+                <template lwc:if={showUserMenu}>
+                    <lightning-button-menu
+                        alternative-text="User menu"
+                        icon-name="utility:user"
+                        menu-alignment="right"
+                        onselect={handleUserMenuSelect}
+                        variant="bare"
+                        class="user-menu"
+                    >
+                        <lightning-menu-item value="profile" label={profileLabel}></lightning-menu-item>
+                        <lightning-menu-item value="logout" label="Logout"></lightning-menu-item>
+                    </lightning-button-menu>
+                </template>
+                <template lwc:else>
+                    <button class="logout-button" type="button" onclick={handleLogout}>Logout</button>
+                </template>
+            </div>
+        </div>
+    </header>
+</template>

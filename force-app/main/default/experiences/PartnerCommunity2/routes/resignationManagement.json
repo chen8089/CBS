@@ -1,0 +1,12 @@
+{
+  "activeViewId" : "05b4bfc2-2842-4b91-a71a-9fedaccc1848",
+  "appPageId" : "adf3cabf-4635-4f0a-bd31-b7c844e608b2",
+  "configurationTags" : [ ],
+  "devName" : "Resignation_Management__c",
+  "id" : "cfea1825-9e6b-4390-bf2f-42ddec48fb0c",
+  "label" : "Resignation Management",
+  "pageAccess" : "UseParent",
+  "routeType" : "custom-resignation-management",
+  "type" : "route",
+  "urlPrefix" : "resignation-management"
+}

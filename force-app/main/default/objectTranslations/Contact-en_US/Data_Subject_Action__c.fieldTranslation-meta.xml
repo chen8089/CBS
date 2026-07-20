@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label><!-- Data Subject Action --></label>
+    <name>Data_Subject_Action__c</name>
+    <picklistValues>
+        <masterLabel>Authentication Failed</masterLabel>
+        <translation><!-- Authentication Failed --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Authorized</masterLabel>
+        <translation><!-- Authorized --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Cancelled</masterLabel>
+        <translation><!-- Cancelled --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Declined</masterLabel>
+        <translation><!-- Declined --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Expired</masterLabel>
+        <translation><!-- Expired --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Link Viewed</masterLabel>
+        <translation><!-- Link Viewed --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>No Action</masterLabel>
+        <translation><!-- No Action --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Verification Failed</masterLabel>
+        <translation><!-- Verification Failed --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Withdrawn</masterLabel>
+        <translation><!-- Withdrawn --></translation>
+    </picklistValues>
+</CustomFieldTranslation>

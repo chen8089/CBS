@@ -1,0 +1,11 @@
+<apex:page controller="CaseBatchWhitelistDlCtrl"
+    showHeader="false"
+    sidebar="false"
+    cache="false"
+    standardStylesheets="false"
+    applyHtmlTag="false"
+    applyBodyTag="false"
+    contentType="text/csv; charset=UTF-8"
+>
+    <apex:outputText value="{!csvBody}" escape="false"/>
+</apex:page>

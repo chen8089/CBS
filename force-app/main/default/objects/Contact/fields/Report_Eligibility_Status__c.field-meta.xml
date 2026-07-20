@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Report_Eligibility_Status__c</fullName>
+    <label>Report Eligibility Status</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Not Eligible</fullName>
+                <default>false</default>
+                <label>Not Eligible</label>
+            </value>
+            <value>
+                <fullName>Eligible</fullName>
+                <default>false</default>
+                <label>Eligible</label>
+            </value>
+            <value>
+                <fullName>Pending Consent</fullName>
+                <default>false</default>
+                <label>Pending Consent</label>
+            </value>
+            <value>
+                <fullName>Consent Declined</fullName>
+                <default>false</default>
+                <label>Consent Declined</label>
+            </value>
+            <value>
+                <fullName>Consent Withdrawn</fullName>
+                <default>false</default>
+                <label>Consent Withdrawn</label>
+            </value>
+            <value>
+                <fullName>Consent Expired</fullName>
+                <default>false</default>
+                <label>Consent Expired</label>
+            </value>
+            <value>
+                <fullName>Consent Consumed</fullName>
+                <default>false</default>
+                <label>Consent Consumed</label>
+            </value>
+            <value>
+                <fullName>Under Review</fullName>
+                <default>false</default>
+                <label>Under Review</label>
+            </value>
+            <value>
+                <fullName>Blocked</fullName>
+                <default>false</default>
+                <label>Blocked</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

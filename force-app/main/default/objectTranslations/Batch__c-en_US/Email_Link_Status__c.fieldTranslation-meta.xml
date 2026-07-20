@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label><!-- Email Link Status --></label>
+    <name>Email_Link_Status__c</name>
+    <picklistValues>
+        <masterLabel>Generated</masterLabel>
+        <translation><!-- Generated --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Not Generated</masterLabel>
+        <translation><!-- Not Generated --></translation>
+    </picklistValues>
+</CustomFieldTranslation>

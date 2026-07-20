@@ -1,0 +1,257 @@
+:host {
+    --bud-blue: #0176d3;
+    --bud-border: #dddbda;
+    --bud-bg: #f3f2f2;
+    --bud-muted: #706e6b;
+    display: block;
+}
+
+.bud-root {
+    background: var(--bud-bg);
+    border-radius: 0.25rem;
+    padding: 0.75rem;
+}
+
+.bud-breadcrumb {
+    color: #444;
+    font-size: 0.75rem;
+    margin-bottom: 0.4rem;
+}
+
+.bud-header {
+    align-items: center;
+    background: #f8f9fb;
+    border: 1px solid var(--bud-border);
+    border-radius: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+    padding: 0.9rem 1rem;
+}
+
+.bud-header-left {
+    align-items: center;
+    display: flex;
+    gap: 0.75rem;
+}
+
+.bud-header-icon-wrap {
+    align-items: center;
+    background: var(--bud-blue);
+    border-radius: 0.25rem;
+    display: flex;
+    height: 2.3rem;
+    justify-content: center;
+    min-height: 2.3rem;
+    min-width: 2.3rem;
+    width: 2.3rem;
+}
+
+.bud-header-icon-wrap lightning-icon {
+    --slds-c-icon-color-foreground-default: #fff;
+}
+
+.bud-subtitle {
+    margin: 0;
+    font-size: 0.8rem;
+    color: #3e3e3c;
+}
+
+.bud-title {
+    margin: 0.1rem 0 0;
+    font-size: 1.25rem;
+    color: #080707;
+    font-weight: 700;
+}
+
+.bud-cards {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+    overflow-x: auto;
+    padding-bottom: 0.2rem;
+}
+
+.bud-card {
+    background: #fff;
+    border: 1px solid var(--bud-border);
+    border-radius: 0.5rem;
+    cursor: pointer;
+    flex: 0 0 150px;
+    overflow: hidden;
+    padding: 0.7rem 0.5rem 0.8rem;
+    position: relative;
+    text-align: center;
+    transition: box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.bud-card:hover {
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.bud-card_selected {
+    border: 2px solid var(--bud-blue);
+    box-shadow: 0 0 0 1px rgba(1, 118, 211, 0.15);
+}
+
+.bud-card-corner {
+    border-color: transparent var(--bud-blue) transparent transparent;
+    border-style: solid;
+    border-width: 0 26px 26px 0;
+    height: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 0;
+}
+
+.bud-card-value {
+    color: #052f5f;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.bud-card-label {
+    color: var(--bud-blue);
+    font-size: 0.75rem;
+    margin-top: 0.35rem;
+}
+
+.bud-panel {
+    background: #fff;
+    border: 1px solid var(--bud-border);
+    border-radius: 0.5rem;
+    padding: 0.75rem 1rem 1rem;
+    position: relative;
+}
+
+.bud-panel-header {
+    align-items: flex-end;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.bud-panel-title {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.bud-panel-subtitle {
+    margin: 0.2rem 0 0;
+    color: var(--bud-muted);
+    font-size: 0.81rem;
+}
+
+.bud-panel-actions {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+}
+
+.bud-search {
+    min-width: 12rem;
+}
+
+.bud-filter-wrap {
+    position: relative;
+}
+
+.filter-trigger-wrap {
+    align-items: center;
+    border: 2px solid transparent;
+    border-radius: 0.25rem;
+    display: inline-flex;
+    justify-content: center;
+}
+
+.filter-trigger-wrap_active {
+    border-color: var(--bud-blue);
+}
+
+.bud-filter-popover {
+    background: #fff;
+    border: 1px solid var(--bud-border);
+    border-radius: 0.4rem;
+    box-shadow: 0 5px 16px rgba(0, 0, 0, 0.12);
+    max-width: 420px;
+    min-width: 290px;
+    padding: 1rem 1rem 0.25rem;
+    position: absolute;
+    right: 0;
+    top: calc(100% + 0.35rem);
+    width: min(100vw - 2rem, 390px);
+    z-index: 10050;
+}
+
+.bud-filter-field {
+    margin-bottom: 0.65rem;
+}
+
+.bud-filter-footer {
+    border-top: 1px solid var(--bud-border);
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.3rem;
+    padding: 0.75rem 0;
+}
+
+.bud-table-wrap {
+    min-height: 8rem;
+    position: relative;
+}
+
+.bud-spinner-overlay {
+    align-items: center;
+    background: rgba(255, 255, 255, 0.55);
+    display: flex;
+    inset: 0;
+    justify-content: center;
+    position: absolute;
+    z-index: 3;
+}
+
+.bud-empty-state {
+    color: var(--bud-muted);
+    padding: 2rem 1rem;
+    text-align: center;
+}
+
+.bud-empty-title {
+    margin: 0.75rem 0 0.2rem;
+    font-weight: 600;
+}
+
+.bud-empty-text {
+    margin: 0;
+}
+
+.bud-datatable-scroll {
+    overflow-x: auto;
+}
+
+.bud-datatable-scroll lightning-datatable {
+    min-width: 1600px;
+}
+
+@media (max-width: 768px) {
+    .bud-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .bud-panel-actions {
+        width: 100%;
+    }
+
+    .bud-search {
+        flex: 1 1 13rem;
+    }
+}

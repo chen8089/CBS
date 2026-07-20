@@ -1,0 +1,12 @@
+{
+  "activeViewId" : "69909c74-6c3d-43ea-9232-aa0708c5d797",
+  "appPageId" : "adf3cabf-4635-4f0a-bd31-b7c844e608b2",
+  "configurationTags" : [ ],
+  "devName" : "Departure_Related_List__c",
+  "id" : "b1388ce4-edc7-46e0-b663-f4c6f85889ad",
+  "label" : "Departure Related List",
+  "objectApiName" : "Departure__c",
+  "routeType" : "relatedlist-a04",
+  "type" : "route",
+  "urlPrefix" : "departure"
+}

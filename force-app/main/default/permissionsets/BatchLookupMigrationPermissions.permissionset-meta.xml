@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Temporary permission set for Departure Batch lookup migration.</description>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Departure__c.Batch__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>Batch Lookup Migration Permissions</label>
+</PermissionSet>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <encodingKey>UTF-8</encodingKey>
+    <name>CBS_ConsentDeclinedClientNotification</name>
+    <style>none</style>
+    <subject>Failed Consent Collection Notification - {!Contact.Name} - {!Consent_Request_Item__c.Id}</subject>
+    <textOnly>Dear Client User,
+
+This is an automated failed consent collection notification from Credit Bureau (Singapore) Pte Ltd (&quot;CBS&quot;).
+
+The Data Subject has declined consent for this request.
+
+Data Subject: {!Contact.Name}
+Bank / Client: {!Contact.Account}
+Consent Request Reference: {!Consent_Request_Item__c.Id}
+Consent Status: Declined
+
+As consent has been declined, report request processing under this consent request should be treated as ineligible.
+
+Thank you.
+CBS Service Team</textOnly>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

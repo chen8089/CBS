@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Encryption_Status__c</fullName>
+    <label>加密状态</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Not Encrypted</fullName>
+                <default>false</default>
+                <label>Not Encrypted</label>
+            </value>
+            <value>
+                <fullName>Encrypted</fullName>
+                <default>false</default>
+                <label>Encrypted</label>
+            </value>
+            <value>
+                <fullName>Decrypted</fullName>
+                <default>false</default>
+                <label>Decrypted</label>
+            </value>
+            <value>
+                <fullName>Encryption Failed</fullName>
+                <default>false</default>
+                <label>Encryption Failed</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

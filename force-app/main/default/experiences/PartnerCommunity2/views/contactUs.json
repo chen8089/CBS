@@ -1,0 +1,67 @@
+{
+  "appPageId" : "adf3cabf-4635-4f0a-bd31-b7c844e608b2",
+  "componentName" : "siteforce:sldsOneColLayout",
+  "dataProviders" : [ ],
+  "id" : "b80da79d-1d85-44cc-aa20-4a855652cac0",
+  "label" : "Contact Us",
+  "regions" : [ {
+    "components" : [ {
+      "componentAttributes" : {
+        "bottomSpacing" : "24px",
+        "currentLabel" : "CONTACT US",
+        "homeLabel" : "HOME",
+        "homeUrl" : "/",
+        "maxWidth" : "1280px",
+        "topSpacing" : "24px"
+      },
+      "componentName" : "c:contactUsBreadcrumb",
+      "id" : "38695459-0cf9-4a2a-a124-0a296a1c57ca",
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "afc9ac19-609d-4d72-941f-157537e9caa9",
+    "regionName" : "header",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "backgroundColor" : "transparent",
+        "cardBackgroundColor" : "#fff9dd",
+        "iconColor" : "#ffb01f",
+        "maxWidth" : "1280px",
+        "titleText" : "Get In Touch"
+      },
+      "componentName" : "c:contactUsContent",
+      "id" : "c425f3ee-804b-496f-8a18-e2499d2d9de3",
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "59d26c5a-8a88-4a7d-839f-df1cbf4a90ea",
+    "regionName" : "content",
+    "type" : "region"
+  }, {
+    "id" : "f1e69128-591d-4da0-8d30-a7b3030b3926",
+    "regionName" : "footer",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "customHeadTags" : "",
+        "description" : "",
+        "title" : "Contact Us"
+      },
+      "componentName" : "forceCommunity:seoAssistant",
+      "id" : "1f291090-c12d-4eb6-8240-48e4c484c1db",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "ab9bf709-a728-4f3b-8253-ca9daada30a6",
+    "regionName" : "sfdcHiddenRegion",
+    "type" : "region"
+  } ],
+  "themeLayoutType" : "Inner",
+  "type" : "view",
+  "viewType" : "custom-contact-us"
+}

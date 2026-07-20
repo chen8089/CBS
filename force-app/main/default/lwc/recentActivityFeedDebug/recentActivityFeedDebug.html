@@ -1,0 +1,87 @@
+<template>
+    <lightning-card title="Departure Feed Debug">
+        <div class="slds-p-around_medium">
+            <template if:true={isLoading}>
+                <lightning-spinner alternative-text="Loading debug data" size="medium"></lightning-spinner>
+            </template>
+
+            <template if:true={apexErrorMessage}>
+                <div class="slds-box slds-theme_error slds-text-color_inverse slds-m-bottom_medium">
+                    <p>{apexErrorMessage}</p>
+                </div>
+            </template>
+
+            <template if:true={hasData}>
+                <template if:true={hasErrors}>
+                    <div class="slds-box slds-theme_error slds-text-color_inverse slds-m-bottom_medium">
+                        <p class="slds-text-title_bold slds-m-bottom_x-small">Debug Errors</p>
+                        <template for:each={data.errors} for:item="errorMessage">
+                            <p key={errorMessage}>{errorMessage}</p>
+                        </template>
+                    </div>
+                </template>
+
+                <dl class="slds-list_horizontal slds-wrap slds-m-bottom_large">
+                    <dt class="slds-item_label slds-truncate" title="User Id">User Id</dt>
+                    <dd class="slds-item_detail slds-truncate">{data.userId}</dd>
+
+                    <dt class="slds-item_label slds-truncate" title="Username">Username</dt>
+                    <dd class="slds-item_detail slds-truncate">{data.username}</dd>
+
+                    <dt class="slds-item_label slds-truncate" title="User Type">User Type</dt>
+                    <dd class="slds-item_detail slds-truncate">{data.userType}</dd>
+
+                    <dt class="slds-item_label slds-truncate" title="Profile Name">Profile Name</dt>
+                    <dd class="slds-item_detail slds-truncate">{data.profileName}</dd>
+
+                    <dt class="slds-item_label slds-truncate" title="User Contact Id">User Contact Id</dt>
+                    <dd class="slds-item_detail slds-truncate">{data.userContactId}</dd>
+
+                    <dt class="slds-item_label slds-truncate" title="User Contact Name">User Contact Name</dt>
+                    <dd class="slds-item_detail slds-truncate">{data.userContactName}</dd>
+
+                    <dt class="slds-item_label slds-truncate" title="User Contact Email">User Contact Email</dt>
+                    <dd class="slds-item_detail slds-truncate">{data.userContactEmail}</dd>
+
+                    <dt class="slds-item_label slds-truncate" title="Account Id">Account Id</dt>
+                    <dd class="slds-item_detail slds-truncate">{data.accountId}</dd>
+
+                    <dt class="slds-item_label slds-truncate" title="Object API Name">Object API Name</dt>
+                    <dd class="slds-item_detail slds-truncate">{data.objectApiName}</dd>
+
+                    <dt class="slds-item_label slds-truncate" title="Feed Object API Name">Feed Object API Name</dt>
+                    <dd class="slds-item_detail slds-truncate">{data.feedObjectApiName}</dd>
+
+                    <dt class="slds-item_label slds-truncate" title="Departure Record Count">Departure Record Count</dt>
+                    <dd class="slds-item_detail slds-truncate">{data.contactRecordCount}</dd>
+
+                    <dt class="slds-item_label slds-truncate" title="Departure Feed Count">Departure Feed Count</dt>
+                    <dd class="slds-item_detail slds-truncate">{data.feedCount}</dd>
+
+                    <dt class="slds-item_label slds-truncate" title="FeedTrackedChange Count">FeedTrackedChange Count</dt>
+                    <dd class="slds-item_detail slds-truncate">{data.feedTrackedChangeCount}</dd>
+
+                    <dt class="slds-item_label slds-truncate" title="Tracked Fields Found In Feed Records">
+                        Tracked Fields Found In Feed Records
+                    </dt>
+                    <dd class="slds-item_detail slds-truncate">{trackedFieldNamesText}</dd>
+                </dl>
+
+                <section class="slds-m-bottom_medium">
+                    <h3 class="slds-text-heading_small slds-m-bottom_x-small">Departure Records Sample</h3>
+                    <pre class="slds-box slds-theme_shade slds-scrollable_x">{contactRecordsJson}</pre>
+                </section>
+
+                <section class="slds-m-bottom_medium">
+                    <h3 class="slds-text-heading_small slds-m-bottom_x-small">Departure Feed Sample</h3>
+                    <pre class="slds-box slds-theme_shade slds-scrollable_x">{feedJson}</pre>
+                </section>
+
+                <section>
+                    <h3 class="slds-text-heading_small slds-m-bottom_x-small">FeedTrackedChange Records Found</h3>
+                    <pre class="slds-box slds-theme_shade slds-scrollable_x">{feedTrackedChangeJson}</pre>
+                </section>
+            </template>
+        </div>
+    </lightning-card>
+</template>

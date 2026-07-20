@@ -1,0 +1,256 @@
+<apex:page controller="QRSiteApprovalController" showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0" cache="false" expires="0">
+    <apex:stylesheet value="{!URLFOR($Resource.cbsGuestCommonCss)}"/>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>CBS - Important Notes</title>
+
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #F4F5F7;
+            color: #333333;
+            font-family: Arial, sans-serif;
+        }
+
+        .header {
+            background-color: #FFFFFF;
+            padding: 15px 5%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .header img {
+            max-height: 60px;
+            width: auto;
+        }
+
+        .main-container {
+            display: flex;
+            justify-content: center;
+            padding: 50px 20px 80px;
+        }
+
+        .card {
+            background-color: #FFFFFF;
+            width: 100%;
+            max-width: 650px;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .card-title {
+            color: #222222;
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 25px;
+        }
+
+        .notes-list {
+            color: #000000;
+            font-size: 13px;
+            line-height: 1.6;
+            margin-bottom: 40px;
+            padding-left: 20px;
+        }
+
+        .notes-list li {
+            margin-bottom: 12px;
+            text-align: justify;
+        }
+
+        .intro-text {
+            color: #111827;
+            font-size: 13px;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .summary-card {
+            background: #F9FAFB;
+            border: 1px solid #D1D5DB;
+            border-radius: 8px;
+            margin: 14px 0 18px;
+            padding: 14px;
+        }
+
+        .summary-grid {
+            display: grid;
+            gap: 10px;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .summary-label {
+            color: #6B7280;
+            font-size: 12px;
+            margin-bottom: 2px;
+        }
+
+        .summary-value {
+            color: #111827;
+            font-size: 13px;
+            font-weight: bold;
+            word-break: break-word;
+        }
+
+        .followup-note {
+            color: #111827;
+            font-size: 13px;
+            line-height: 1.6;
+            margin: 0 0 12px;
+        }
+
+        .page-message {
+            color: #C81E2B;
+            font-size: 13px;
+            margin-bottom: 16px;
+        }
+
+        .singpass-btn {
+            align-items: center;
+            border: none;
+            border-radius: 8px;
+            color: #FFFFFF;
+            cursor: pointer;
+            display: inline-flex;
+            font-family: Poppins, Arial, sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            height: 48px;
+            justify-content: center;
+            padding: 12px 20px;
+            text-align: center;
+            text-decoration: none;
+            transition: background-color 0.2s;
+            background-color: #D93841;
+            width: 320px;
+        }
+
+        .singpass-btn:hover {
+            background-color: #B0262D;
+            color: #FFFFFF;
+            text-decoration: none;
+        }
+
+        .singpass-btn-main {
+            font-size: 16px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .singpass-btn-sub {
+            display: none;
+        }
+
+        .footer {
+            display: block;
+            line-height: 0;
+            width: 100%;
+        }
+
+        .footer img {
+            display: block;
+            height: auto;
+            width: 100%;
+        }
+
+        @media (max-width: 600px) {
+            .header {
+                padding: 15px 20px;
+            }
+
+            .card {
+                padding: 25px 20px;
+            }
+
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .singpass-btn {
+                max-width: 320px;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <c:CbsGuestHeader />
+
+    <div class="main-container">
+        <div class="card">
+            <div class="card-title">{!importantNotesTitle}</div>
+
+            <apex:outputPanel rendered="{!isWithdrawAction}">
+                <p class="intro-text">{!withdrawIntroText}</p>
+                <p class="intro-text">{!withdrawIntroSubText}</p>
+
+                <ol class="notes-list">
+                    <apex:repeat value="{!withdrawImpactNotes}" var="note">
+                        <li>{!note}</li>
+                    </apex:repeat>
+                </ol>
+
+                <div class="summary-card">
+                    <div class="summary-grid">
+                        <div>
+                            <div class="summary-label">Data Subject Name</div>
+                            <div class="summary-value">{!withdrawDataSubjectName}</div>
+                        </div>
+                        <div>
+                            <div class="summary-label">Employer / Bank Name</div>
+                            <div class="summary-value">{!withdrawEmployerBankName}</div>
+                        </div>
+                        <div>
+                            <div class="summary-label">Current Consent Status</div>
+                            <div class="summary-value">{!withdrawConsentStatus}</div>
+                        </div>
+                        <div>
+                            <div class="summary-label">Latest Submission Date &amp; Time</div>
+                            <div class="summary-value">{!withdrawSubmissionDateTime}</div>
+                        </div>
+                        <apex:outputPanel rendered="{!withdrawConsentExpiryDate != ''}" layout="none">
+                            <div>
+                                <div class="summary-label">Current Consent Expiry Date</div>
+                                <div class="summary-value">{!withdrawConsentExpiryDate}</div>
+                            </div>
+                        </apex:outputPanel>
+                    </div>
+                </div>
+
+                <p class="followup-note">{!withdrawNextStepNote}</p>
+                <p class="followup-note">{!withdrawHrReminder}</p>
+            </apex:outputPanel>
+
+            <apex:outputPanel rendered="{!NOT(isWithdrawAction)}">
+                <ol class="notes-list">
+                    <apex:repeat value="{!importantNotesList}" var="note">
+                        <li>{!note}</li>
+                    </apex:repeat>
+                </ol>
+            </apex:outputPanel>
+
+            <div class="page-message">
+                <apex:pageMessages />
+            </div>
+
+            <apex:form >
+                <apex:commandLink action="{!continueWithdrawal}" styleClass="singpass-btn" rendered="{!hasValidEntryAction && isWithdrawAction}">
+                    <span class="singpass-btn-main">{!importantNotesButtonMain}</span>
+                    <span class="singpass-btn-sub">{!importantNotesButtonSub}</span>
+                </apex:commandLink>
+                <apex:commandLink action="{!goToNextQrPage}" styleClass="singpass-btn" rendered="{!hasValidEntryAction && NOT(isWithdrawAction)}">
+                    <span class="singpass-btn-main">{!importantNotesButtonMain}</span>
+                    <span class="singpass-btn-sub">{!importantNotesButtonSub}</span>
+                </apex:commandLink>
+            </apex:form>
+        </div>
+    </div>
+
+    <c:CbsGuestFooter />
+</body>
+</html>
+</apex:page>

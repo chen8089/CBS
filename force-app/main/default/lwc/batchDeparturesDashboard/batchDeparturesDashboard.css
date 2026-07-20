@@ -1,0 +1,261 @@
+:host {
+    --bdd-blue: #0176d3;
+    --bdd-border: #dddbda;
+    --bdd-bg: #f3f2f2;
+    --bdd-muted: #706e6b;
+    --bdd-datatable-max-height: 50vh;
+    display: block;
+}
+
+.bdd-root {
+    background: var(--bdd-bg);
+    border-radius: 0.25rem;
+    padding: 0.75rem;
+}
+
+.bdd-breadcrumb {
+    color: #444;
+    font-size: 0.75rem;
+    margin: 0 0 0.4rem;
+}
+
+.bdd-header {
+    align-items: center;
+    background: #f8f9fb;
+    border: 1px solid var(--bdd-border);
+    border-radius: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+    padding: 0.9rem 1rem;
+}
+
+.bdd-header-left {
+    align-items: center;
+    display: flex;
+    gap: 0.75rem;
+}
+
+.bdd-header-icon-wrap {
+    align-items: center;
+    background: var(--bdd-blue);
+    border-radius: 0.25rem;
+    display: flex;
+    height: 2.3rem;
+    justify-content: center;
+    min-height: 2.3rem;
+    min-width: 2.3rem;
+    width: 2.3rem;
+}
+
+.bdd-header-icon-wrap lightning-icon {
+    --slds-c-icon-color-foreground-default: #fff;
+}
+
+.bdd-subtitle {
+    margin: 0;
+    font-size: 0.8rem;
+    color: #3e3e3c;
+}
+
+.bdd-title {
+    margin: 0.1rem 0 0;
+    font-size: 1.25rem;
+    color: #080707;
+    font-weight: 700;
+}
+
+.bdd-cards {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+    overflow-x: auto;
+    padding-bottom: 0.2rem;
+}
+
+.bdd-card {
+    background: #fff;
+    border: 1px solid var(--bdd-border);
+    border-radius: 0.5rem;
+    cursor: pointer;
+    flex: 1 1 0;
+    min-width: 140px;
+    overflow: hidden;
+    padding: 0.7rem 0.5rem 0.8rem;
+    position: relative;
+    text-align: center;
+    transition: box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.bdd-card:hover {
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.bdd-card_selected {
+    border: 2px solid var(--bdd-blue);
+    box-shadow: 0 0 0 1px rgba(1, 118, 211, 0.15);
+}
+
+.bdd-card-corner {
+    border-color: transparent var(--bdd-blue) transparent transparent;
+    border-style: solid;
+    border-width: 0 26px 26px 0;
+    height: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 0;
+}
+
+.bdd-card-value {
+    color: #052f5f;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.bdd-card-label {
+    color: var(--bdd-blue);
+    font-size: 0.75rem;
+    margin-top: 0.35rem;
+}
+
+.bdd-panel {
+    background: #fff;
+    border: 1px solid var(--bdd-border);
+    border-radius: 0.5rem;
+    padding: 0.75rem 1rem 1rem;
+    position: relative;
+}
+
+.bdd-panel-header {
+    align-items: flex-end;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.bdd-panel-title {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.bdd-panel-subtitle {
+    margin: 0.2rem 0 0;
+    color: var(--bdd-muted);
+    font-size: 0.81rem;
+}
+
+.bdd-panel-actions {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+}
+
+.bdd-search {
+    min-width: 12rem;
+}
+
+.bdd-filter-wrap {
+    position: relative;
+}
+
+.filter-trigger-wrap {
+    align-items: center;
+    border: 2px solid transparent;
+    border-radius: 0.25rem;
+    display: inline-flex;
+    justify-content: center;
+}
+
+.filter-trigger-wrap_active {
+    border-color: var(--bdd-blue);
+}
+
+.bdd-filter-popover {
+    background: #fff;
+    border: 1px solid var(--bdd-border);
+    border-radius: 0.4rem;
+    box-shadow: 0 5px 16px rgba(0, 0, 0, 0.12);
+    max-width: 420px;
+    min-width: 290px;
+    padding: 1rem 1rem 0.25rem;
+    position: absolute;
+    right: 0;
+    top: calc(100% + 0.35rem);
+    width: min(100vw - 2rem, 390px);
+    z-index: 10050;
+}
+
+.bdd-filter-field {
+    margin-bottom: 0.65rem;
+}
+
+.bdd-filter-footer {
+    border-top: 1px solid var(--bdd-border);
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.3rem;
+    padding: 0.75rem 0;
+}
+
+.bdd-table-wrap {
+    min-height: 8rem;
+    max-height: var(--bdd-datatable-max-height);
+    overflow-y: auto;
+    position: relative;
+}
+
+.bdd-spinner-overlay {
+    align-items: center;
+    background: rgba(255, 255, 255, 0.55);
+    display: flex;
+    inset: 0;
+    justify-content: center;
+    position: absolute;
+    z-index: 3;
+}
+
+.bdd-empty-state {
+    color: var(--bdd-muted);
+    padding: 2rem 1rem;
+    text-align: center;
+}
+
+.bdd-empty-title {
+    margin: 0.75rem 0 0.2rem;
+    font-weight: 600;
+}
+
+.bdd-empty-text {
+    margin: 0;
+}
+
+.bdd-datatable-scroll {
+    overflow-x: auto;
+}
+
+.bdd-datatable-scroll lightning-datatable {
+    min-width: 900px;
+}
+
+@media (max-width: 768px) {
+    .bdd-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .bdd-panel-actions {
+        width: 100%;
+    }
+
+    .bdd-search {
+        flex: 1 1 13rem;
+    }
+}

@@ -1,0 +1,30 @@
+<template>
+    <div class="cbs-theme">
+        <c-cbs-portal-header
+            logo-url={logoUrl}
+            home-url={homeUrl}
+            official-site-url={officialSiteUrl}
+            show-sticky-header={showStickyHeader}
+            show-user-menu={showUserMenu}
+            logout-url={logoutUrl}
+        ></c-cbs-portal-header>
+
+        <c-cbs-portal-navigation
+            nav-items-json={navItemsJson}
+            home-page-name={homePageName}
+            home-url={homeUrl}
+        ></c-cbs-portal-navigation>
+
+        <main class="cbs-main" id="main-content">
+            <div class="cbs-content-container">
+                <slot></slot>
+            </div>
+        </main>
+
+        <c-cbs-portal-footer
+            privacy-url={privacyUrl}
+            terms-url={termsUrl}
+            contact-us-url={contactUsUrl}
+        ></c-cbs-portal-footer>
+    </div>
+</template>

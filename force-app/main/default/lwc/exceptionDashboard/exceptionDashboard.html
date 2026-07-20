@@ -1,0 +1,174 @@
+<template>
+    <div class="exd-root">
+        <div class="exd-header">
+            <div class="exd-header-left">
+                <div class="exd-header-icon-wrap" aria-hidden="true">
+                    <lightning-icon icon-name="standard:case" size="small" alternative-text=""></lightning-icon>
+                </div>
+                <div class="exd-header-title-wrap">
+                    <p class="exd-subtitle">{subtitle}</p>
+                    <h1 class="exd-title">{title}</h1>
+                </div>
+            </div>
+            <div class="exd-header-right"></div>
+        </div>
+
+        <div class="exd-cards" role="list">
+            <template for:each={cards} for:item="card">
+                <div
+                    key={card.key}
+                    class={card.className}
+                    data-filter={card.key}
+                    role="listitem"
+                    onclick={handleCardClick}
+                >
+                    <template if:true={card.selected}>
+                        <div class="exd-card-corner" aria-hidden="true"></div>
+                    </template>
+                    <div class="exd-card-value">{card.value}</div>
+                    <div class="exd-card-label">{card.label}</div>
+                </div>
+            </template>
+        </div>
+
+        <div class="exd-panel">
+            <div class="exd-panel-header">
+                <div>
+                    <h2 class="exd-panel-title">{tableTitle}</h2>
+                    <p class="exd-panel-subtitle">{tableSubtitle}</p>
+                </div>
+                <div class="exd-panel-actions">
+                    <lightning-input
+                        type="search"
+                        variant="label-hidden"
+                        placeholder="Search Results"
+                        value={searchInput}
+                        class="exd-search"
+                        onchange={handleSearchChange}
+                    ></lightning-input>
+
+                    <lightning-button-icon
+                        icon-name="utility:refresh"
+                        variant="border-filled"
+                        alternative-text="Refresh"
+                        aria-label="Refresh"
+                        title="Refresh"
+                        onclick={handleRefresh}
+                    ></lightning-button-icon>
+
+                    <div class="exd-filter-wrap">
+                        <div class={filterTriggerClass}>
+                            <lightning-button-icon
+                                icon-name="utility:filterList"
+                                variant="border-filled"
+                                alternative-text="Filter list"
+                                aria-label="Filter list"
+                                title="Filter list"
+                                onclick={toggleFilter}
+                            ></lightning-button-icon>
+                        </div>
+
+                        <template if:true={isFilterOpen}>
+                            <section class="exd-filter-popover">
+                                <div class="exd-filter-field">
+                                    <lightning-combobox
+                                        name="ownership"
+                                        label="Ownership"
+                                        value={draftFilterValues.ownership}
+                                        options={ownershipOptions}
+                                        onchange={handleFilterChange}
+                                    ></lightning-combobox>
+                                </div>
+                                <div class="exd-filter-field">
+                                    <lightning-combobox
+                                        name="source"
+                                        label="Source"
+                                        value={draftFilterValues.source}
+                                        options={sourceOptions}
+                                        onchange={handleFilterChange}
+                                    ></lightning-combobox>
+                                </div>
+                                <div class="exd-filter-field">
+                                    <lightning-combobox
+                                        name="dateType"
+                                        label="Date Type"
+                                        value={draftFilterValues.dateType}
+                                        options={dateTypeOptions}
+                                        onchange={handleFilterChange}
+                                    ></lightning-combobox>
+                                </div>
+                                <div class="exd-filter-field">
+                                    <lightning-combobox
+                                        name="dateRange"
+                                        label="Date Range"
+                                        value={draftFilterValues.dateRange}
+                                        options={dateRangeOptions}
+                                        onchange={handleDateRangeChange}
+                                    ></lightning-combobox>
+                                </div>
+                                <div class="exd-filter-field">
+                                    <lightning-input
+                                        type="date"
+                                        label="Start Date"
+                                        value={draftFilterValues.startDate}
+                                        disabled={dateInputsDisabled}
+                                        onchange={handleStartDateChange}
+                                    ></lightning-input>
+                                </div>
+                                <div class="exd-filter-field">
+                                    <lightning-input
+                                        type="date"
+                                        label="End Date"
+                                        value={draftFilterValues.endDate}
+                                        disabled={dateInputsDisabled}
+                                        onchange={handleEndDateChange}
+                                    ></lightning-input>
+                                </div>
+                                <div class="exd-filter-footer">
+                                    <lightning-button
+                                        label="Clear All"
+                                        variant="neutral"
+                                        onclick={clearFilters}
+                                    ></lightning-button>
+                                    <lightning-button label="Apply" variant="brand" onclick={applyFilters}></lightning-button>
+                                </div>
+                            </section>
+                        </template>
+                    </div>
+                </div>
+            </div>
+
+            <div class="exd-table-wrap">
+                <template if:true={loading}>
+                    <div class="exd-spinner-overlay">
+                        <lightning-spinner size="medium" alternative-text="Loading"></lightning-spinner>
+                    </div>
+                </template>
+
+                <template if:true={showEmpty}>
+                    <div class="exd-empty-state">
+                        <lightning-icon icon-name="utility:info" size="large" alternative-text=""></lightning-icon>
+                        <p class="exd-empty-title">No exception records found</p>
+                        <p class="exd-empty-text">Try another search keyword or adjust filters.</p>
+                    </div>
+                </template>
+
+                <template if:false={showEmpty}>
+                    <div class="exd-datatable-scroll">
+                        <lightning-datatable
+                            key-field="id"
+                            data={exceptions}
+                            columns={columns}
+                            column-widths-mode="auto"
+                            onsort={handleSort}
+                            onrowaction={handleRowAction}
+                            hide-checkbox-column
+                            sorted-by={sortedBy}
+                            sorted-direction={sortDirection}
+                        ></lightning-datatable>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+</template>

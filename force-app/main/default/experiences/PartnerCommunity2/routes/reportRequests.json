@@ -1,0 +1,12 @@
+{
+  "activeViewId" : "d418ffed-76e4-474f-bdc2-f09693966d62",
+  "appPageId" : "adf3cabf-4635-4f0a-bd31-b7c844e608b2",
+  "configurationTags" : [ ],
+  "devName" : "Report_Requests__c",
+  "id" : "5bd38228-98cb-42a5-8919-cd58d5e52d38",
+  "label" : "Report Requests",
+  "pageAccess" : "UseParent",
+  "routeType" : "custom-report-requests",
+  "type" : "route",
+  "urlPrefix" : "report-requests"
+}

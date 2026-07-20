@@ -1,0 +1,343 @@
+<apex:page controller="SingpassWithdrawalConsentController" action="{!initPage}" showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0" cache="false" expires="0">
+    <apex:stylesheet value="{!URLFOR($Resource.cbsGuestCommonCss)}"/>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>CBS - Singpass Withdrawal of Consent and Authorisation</title>
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #F5F5F5;
+            color: #000000;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 12pt;
+            line-height: 1.5;
+            box-sizing: border-box;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        .page-shell {
+            margin: 0 auto;
+            max-width: 820px;
+            padding: 0 20px 48px;
+        }
+
+        .header {
+            background-color: #FFFFFF;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            margin-bottom: 24px;
+            padding: 15px 5%;
+        }
+
+        .header img {
+            max-height: 60px;
+            width: auto;
+        }
+
+        .main-container {
+            padding: 0 0 40px;
+        }
+
+        .document-frame {
+            background-color: #FFFFFF;
+            border: 1px solid #000000;
+            padding: 28px 32px 36px;
+        }
+
+        .page-title {
+            font-size: 12pt;
+            font-weight: bold;
+            line-height: 1.5;
+            margin: 0 0 18px;
+        }
+
+        .body-text {
+            font-size: 12pt;
+            line-height: 1.5;
+            margin: 0 0 12px;
+        }
+
+        .body-text:last-child {
+            margin-bottom: 0;
+        }
+
+        .section-heading {
+            font-size: 12pt;
+            font-weight: bold;
+            line-height: 1.5;
+            margin: 24px 0 12px;
+        }
+
+        .section-heading:first-of-type {
+            margin-top: 18px;
+        }
+
+        .consent-table {
+            border-collapse: collapse;
+            margin: 0 0 6px;
+            table-layout: fixed;
+            width: 100%;
+        }
+
+        .consent-table td {
+            border: 1px solid #000000;
+            font-size: 12pt;
+            line-height: 1.5;
+            padding: 6px 10px;
+            vertical-align: top;
+        }
+
+        .consent-table .label-cell {
+            width: 34%;
+        }
+
+        .consent-table .value-cell {
+            width: 66%;
+        }
+
+        .declaration-intro {
+            font-size: 12pt;
+            line-height: 1.5;
+            margin: 0 0 12px;
+        }
+
+        .checkbox-row {
+            align-items: flex-start;
+            display: flex;
+            gap: 10px;
+            margin: 0 0 18px;
+        }
+
+        .checkbox-row input[type="checkbox"] {
+            cursor: pointer;
+            flex-shrink: 0;
+            height: 14px;
+            margin-top: 4px;
+            width: 14px;
+        }
+
+        .checkbox-text {
+            font-size: 12pt;
+            line-height: 1.5;
+            margin: 0;
+            text-align: justify;
+        }
+
+        .numbered-list {
+            font-size: 12pt;
+            line-height: 1.5;
+            list-style-type: decimal;
+            margin: 0 0 24px;
+            padding-left: 24px;
+        }
+
+        .numbered-list li {
+            margin-bottom: 0;
+            padding-left: 4px;
+        }
+
+        .page-message {
+            color: #C81E2B;
+            font-size: 12pt;
+            line-height: 1.5;
+            margin-bottom: 16px;
+        }
+
+        .button-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 48px;
+            justify-content: center;
+            margin-top: 28px;
+        }
+
+        .btn {
+            align-items: center;
+            background-color: #D93841;
+            border: none;
+            border-radius: 8px;
+            color: #FFFFFF;
+            cursor: pointer;
+            display: inline-flex;
+            font-family: Poppins, Arial, sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            height: 48px;
+            justify-content: center;
+            line-height: 1;
+            padding: 12px 20px;
+            text-align: center;
+            width: 320px;
+        }
+
+        .btn:hover {
+            background-color: #B0262D;
+        }
+
+        .btn:disabled,
+        .btn[disabled] {
+            background-color: #A0A0A0;
+            color: #FFFFFF;
+            cursor: not-allowed;
+        }
+
+        .footer {
+            display: block;
+            line-height: 0;
+            margin-top: 0;
+            width: 100%;
+        }
+
+        .footer img {
+            display: block;
+            height: auto;
+            width: 100%;
+        }
+
+        @media (max-width: 640px) {
+            .document-frame {
+                padding: 20px 16px 28px;
+            }
+
+            .consent-table,
+            .consent-table tbody,
+            .consent-table tr,
+            .consent-table td {
+                display: block;
+                width: 100%;
+            }
+
+            .consent-table tr {
+                border-bottom: 1px solid #000000;
+            }
+
+            .consent-table td {
+                border: none;
+                border-bottom: 1px solid #000000;
+            }
+
+            .consent-table tr:last-child td:last-child {
+                border-bottom: none;
+            }
+
+            .button-row {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .btn {
+                max-width: 320px;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <c:CbsGuestHeader />
+
+    <div class="page-shell">
+        <div class="main-container">
+            <div class="document-frame">
+            <apex:form id="withdrawForm">
+                <div class="page-message">
+                    <apex:pageMessages />
+                </div>
+
+                <apex:outputPanel rendered="{!showPage}">
+                    <h1 class="page-title">{!pageSubtitle}</h1>
+
+                    <p class="body-text">{!greeting}</p>
+                    <p class="body-text">{!singpassVerificationText}</p>
+                    <p class="body-text">{!reviewPrompt}</p>
+
+                    <h2 class="section-heading">{!sectionOneTitle}</h2>
+                    <table class="consent-table" role="presentation">
+                        <tr>
+                            <td class="label-cell">Bank:</td>
+                            <td class="value-cell"><apex:outputText value="{!employerBankName}"/></td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">Purpose:</td>
+                            <td class="value-cell"><apex:outputText value="{!purposeText}"/></td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">Consent Given On:</td>
+                            <td class="value-cell"><apex:outputText value="{!consentSubmittedDate}"/></td>
+                        </tr>
+                        <tr>
+                            <td class="label-cell">Consent Valid Until:</td>
+                            <td class="value-cell"><apex:outputText value="{!consentExpiryDate}"/></td>
+                        </tr>
+                    </table>
+
+                    <h2 class="section-heading">{!sectionTwoTitle}</h2>
+
+                    <div class="checkbox-row">
+                        <apex:inputCheckbox value="{!hasConfirmedWithdrawal}" id="withdrawCheckbox" html-data-role="withdraw-checkbox"/>
+                        <p class="checkbox-text">{!declarationIntro}</p>
+                    </div>
+
+                    <ol class="numbered-list">
+                        <apex:repeat value="{!withdrawalDeclarationClauses}" var="clause">
+                            <li>{!clause}</li>
+                        </apex:repeat>
+                    </ol>
+
+                    <div class="button-row">
+                        <apex:commandButton value="Submit Withdrawal"
+                            action="{!submitWithdrawal}"
+                            styleClass="btn"
+                            html-data-role="submit-button"
+                            rerender="withdrawForm"
+                            oncomplete="resetSubmitState();"/>
+                    </div>
+                </apex:outputPanel>
+            </apex:form>
+            </div>
+        </div>
+    </div>
+
+    <c:CbsGuestFooter />
+
+    <script>
+        (function() {
+            var checkbox = document.querySelector('[data-role="withdraw-checkbox"]');
+            var submitButton = document.querySelector('[data-role="submit-button"]');
+            var submitLocked = false;
+
+            function toggleSubmitButton() {
+                if (!checkbox || !submitButton) {
+                    return;
+                }
+                submitButton.disabled = submitLocked || !checkbox.checked;
+            }
+
+            window.resetSubmitState = function() {
+                submitLocked = false;
+                toggleSubmitButton();
+            };
+
+            if (checkbox && submitButton) {
+                toggleSubmitButton();
+                checkbox.addEventListener('change', toggleSubmitButton);
+                submitButton.addEventListener('click', function() {
+                    if (!checkbox.checked) {
+                        return;
+                    }
+                    submitLocked = true;
+                    submitButton.disabled = true;
+                });
+            }
+        })();
+    </script>
+</body>
+</html>
+</apex:page>

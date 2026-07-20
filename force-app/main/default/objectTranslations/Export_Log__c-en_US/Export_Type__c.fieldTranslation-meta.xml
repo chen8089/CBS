@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label><!-- Export Type --></label>
+    <name>Export_Type__c</name>
+    <picklistValues>
+        <masterLabel>Authorized List</masterLabel>
+        <translation><!-- Authorized List --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>File Download</masterLabel>
+        <translation><!-- File Download --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Report Export</masterLabel>
+        <translation><!-- Report Export --></translation>
+    </picklistValues>
+</CustomFieldTranslation>

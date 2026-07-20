@@ -1,0 +1,56 @@
+<apex:page controller="QRSiteConsentStatusNotificationCtrl" action="{!initActiveConsent}" showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0" cache="false" expires="0">
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>CBS - Active Consent Found</title>
+    <style>
+        html, body { margin: 0; padding: 0; background-color: #F4F5F7; color: #333333; font-family: Arial, sans-serif; }
+        .header { background-color: #FFFFFF; padding: 15px 5%; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); }
+        .header img { max-height: 60px; width: auto; }
+        .main-container { display: flex; justify-content: center; padding: 40px 20px 80px; }
+        .card { background-color: #FFFFFF; width: 100%; max-width: 700px; padding: 40px 50px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); border-radius: 10px; }
+        .completion-title { color: #2946A3; font-size: 18px; font-weight: bold; line-height: 1.4; margin: 0 0 20px; text-align: center; }
+        .completion-message { color: #333333; font-size: 13px; line-height: 1.6; text-align: center; }
+        .completion-message p { margin: 0 0 14px; }
+        .success-summary-card { background: #F9FAFB; border: 1px solid #D1D5DB; border-radius: 8px; margin: 18px 0; padding: 14px; text-align: left; }
+        .success-summary-grid { display: grid; gap: 10px; grid-template-columns: 1fr 1fr; }
+        .success-summary-item { display: flex; flex-direction: column; gap: 3px; }
+        .success-summary-label { color: #6B7280; font-size: 12px; }
+        .success-summary-value { color: #111827; font-size: 13px; font-weight: bold; word-break: break-word; }
+        .completion-footer-text { font-weight: bold; margin-top: 24px; text-align: center; }
+        .footer { display: block; line-height: 0; width: 100%; }
+        .footer img { display: block; height: auto; width: 100%; }
+        @media (max-width: 600px) { .card { padding: 25px 20px; } .success-summary-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <c:CbsGuestHeader />
+    <div class="main-container">
+        <div class="card">
+            <apex:outputPanel rendered="{!showPage}">
+                <div class="completion-message">
+                    <div class="completion-title">{!pageTitle}</div>
+                    <apex:repeat value="{!messageLines}" var="messageLine"><p>{!messageLine}</p></apex:repeat>
+                    <apex:outputPanel rendered="{!showSummary}">
+                        <div class="success-summary-card">
+                            <div class="success-summary-grid">
+                                <div class="success-summary-item"><div class="success-summary-label">Consent Status</div><div class="success-summary-value">{!consentStatus}</div></div>
+                                <div class="success-summary-item"><div class="success-summary-label">Submission Date &amp; Time</div><div class="success-summary-value">{!submissionDateTime}</div></div>
+                                <div class="success-summary-item"><div class="success-summary-label">Employer / Bank Name</div><div class="success-summary-value">{!employerBankName}</div></div>
+                                <div class="success-summary-item"><div class="success-summary-label">Data Subject Name</div><div class="success-summary-value">{!dataSubjectName}</div></div>
+                                <apex:outputPanel rendered="{!consentExpiryDate != ''}" layout="none">
+                                    <div class="success-summary-item"><div class="success-summary-label">Consent Expiry Date</div><div class="success-summary-value">{!consentExpiryDate}</div></div>
+                                </apex:outputPanel>
+                            </div>
+                        </div>
+                    </apex:outputPanel>
+                    <div class="completion-footer-text">{!footerText}</div>
+                </div>
+            </apex:outputPanel>
+        </div>
+    </div>
+    <c:CbsGuestFooter />
+</body>
+</html>
+</apex:page>

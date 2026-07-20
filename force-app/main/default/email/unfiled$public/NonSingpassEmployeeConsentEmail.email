@@ -1,0 +1,47 @@
+<div style="font-family: Arial, sans-serif; color: #333333; line-height: 1.5; font-size: 14px; max-width: 800px; margin: 0 auto;">
+    <p>Dear {!Contact.Name},</p>
+
+    <p>
+        As part of {!Contact.Account}’s employee screening and background checking procedures, your consent is required to authorise Credit Bureau (Singapore) Pte Ltd (“CBS”) to provide your consumer credit report(s) and/or credit information to {!Contact.Account}.
+    </p>
+
+    <p>
+        Upon submission of your consent, it shall remain valid for a period of five (5) years from the submission date, unless withdrawn earlier. You will receive notification(s) for any credit information request(s) made by {!Contact.Account} to CBS during the consent validity period. To complete this process, please access the secure link below to submit the required documents, personal information and consent:
+    </p>
+
+    <p><strong>[CONSENT LINK]</strong></p>
+    <p>
+        <a href="{!Consent_Request_Item__c.Email_Authorize_Url__c}">
+            {!Consent_Request_Item__c.Email_Authorize_Url__c}
+        </a>
+    </p>
+
+    <p>If you do not wish to provide consent, you may decline by using the link below:</p>
+    <p><strong>[DECLINE LINK]</strong></p>
+    <p>
+        <a href="{!Consent_Request_Item__c.Email_Decline_Url__c}">
+            {!Consent_Request_Item__c.Email_Decline_Url__c}
+        </a>
+    </p>
+
+    <p>
+        If you had already provided consent previously, you may withdraw your consent at any time by accessing the withdrawal link below and completing the required identity verification steps:
+    </p>
+    <p><strong>[WITHDRAWAL LINK]</strong></p>
+    <p>
+        <a href="{!Consent_Request_Item__c.Email_Withdraw_Url__c}">
+            {!Consent_Request_Item__c.Email_Withdraw_Url__c}
+        </a>
+    </p>
+
+    <p>
+        Note: {!Contact.Account} will be notified of your consent status if you choose to decline or withdraw your consent from CBS. As a result, {!Contact.Account} will not be able to request for your credit information from CBS unless valid consent has been provided.
+    </p>
+
+    <p>
+        If you are unsure of this email, you may contact [NAME OF BANK AND DEPARTMENT] at {!Contact.Account}.
+    </p>
+
+    <p>Thank you.</p>
+    <p>[NAME OF BANK AND DEPARTMENT]</p>
+</div>

@@ -1,0 +1,351 @@
+<apex:page controller="QRSiteNonSingpassConsentController" action="{!initPage}" showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0" cache="false" expires="0">
+    <apex:stylesheet value="{!URLFOR($Resource.cbsGuestCommonCss)}"/>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>CBS - Explicit Authorization and Consent</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            background-color: #F4F5F7;
+            color: #333333;
+            font-family: Arial, sans-serif;
+        }
+        .header {
+            background-color: #FFFFFF;
+            padding: 15px 5%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        .header img {
+            max-height: 60px;
+            width: auto;
+        }
+        .main-container {
+            display: flex;
+            justify-content: center;
+            padding: 30px 16px 80px;
+        }
+        .card {
+            background-color: #FFFFFF;
+            width: 100%;
+            max-width: 900px;
+            padding: 26px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            border-radius: 10px;
+        }
+        .card-title {
+            color: #000000;
+            font-size: 20px;
+            font-weight: bold;
+            line-height: 1.4;
+            margin-bottom: 10px;
+        }
+        .text-blue {
+            color: #2946A3;
+        }
+        .date-row {
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .section {
+            margin-top: 18px;
+            border-top: 1px solid #E5E7EB;
+            padding-top: 16px;
+        }
+        .section-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin: 0 0 10px;
+            color: #1F389A;
+        }
+        .paragraph {
+            font-size: 13px;
+            line-height: 1.6;
+            margin: 0 0 10px;
+            text-align: justify;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .info-label {
+            font-size: 12px;
+            color: #666666;
+        }
+        .info-value {
+            background-color: #F0F2F5;
+            border: 1px solid #D1D5DB;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: bold;
+            padding: 8px 10px;
+            min-height: 18px;
+            word-break: break-word;
+        }
+        .info-wide {
+            grid-column: 1 / -1;
+        }
+        .doc-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        .doc-status-ok {
+            color: #0B6B2B;
+            font-weight: bold;
+        }
+        .doc-status-missing {
+            color: #C81E2B;
+            font-weight: bold;
+        }
+        .consent-box {
+            align-items: flex-start;
+            display: flex;
+            gap: 12px;
+            margin-top: 8px;
+        }
+        .consent-box input[type="checkbox"] {
+            margin-top: 3px;
+            transform: scale(1.4);
+        }
+        .consent-text {
+            font-size: 13px;
+            line-height: 1.6;
+            text-align: justify;
+        }
+        .page-message {
+            margin-bottom: 12px;
+        }
+        .completion-message {
+            color: #333333;
+            font-size: 13px;
+            line-height: 1.6;
+            text-align: center;
+        }
+        .completion-title {
+            color: #2946A3;
+            font-size: 18px;
+            font-weight: bold;
+            line-height: 1.4;
+            margin: 0 0 16px;
+            text-align: center;
+        }
+        .completion-message p {
+            margin: 0 0 12px;
+        }
+        .button-row {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 22px;
+            flex-wrap: wrap;
+        }
+        .btn {
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            min-width: 140px;
+            padding: 11px 18px;
+        }
+        .btn-primary {
+            background-color: #1F389A;
+            color: #FFFFFF;
+        }
+        .btn-primary:hover {
+            background-color: #15276D;
+        }
+        .btn-secondary {
+            background-color: #E5E7EB;
+            color: #1F2937;
+        }
+        .decline-link-wrap {
+            margin-top: 12px;
+            text-align: center;
+        }
+        .decline-link {
+            color: #1F389A;
+            font-size: 13px;
+            text-decoration: underline;
+            background: none;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+        }
+        .footer {
+            display: block;
+            line-height: 0;
+            width: 100%;
+        }
+        .footer img {
+            display: block;
+            height: auto;
+            width: 100%;
+        }
+        @media (max-width: 740px) {
+            .card {
+                padding: 20px 14px;
+            }
+            .info-grid,
+            .doc-grid {
+                grid-template-columns: 1fr;
+            }
+            .button-row {
+                flex-direction: column-reverse;
+                align-items: stretch;
+            }
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <c:CbsGuestHeader />
+
+    <div class="main-container">
+        <div class="card">
+            <apex:form >
+                <div class="page-message">
+                    <apex:pageMessages />
+                </div>
+
+                <apex:outputPanel rendered="{!showCompletionMessage}">
+                    <div class="completion-message">
+                        <div class="completion-title">{!completionMessageLine1}</div>
+                        <apex:repeat value="{!completionMessageLines}" var="messageLine">
+                            <p>{!messageLine}</p>
+                        </apex:repeat>
+                    </div>
+                </apex:outputPanel>
+
+                <apex:outputPanel rendered="{!showConsentForm}">
+                    <div class="card-title">
+                        Individual's Explicit Authorization and Consent for Disclosure of Personal Credit Information to
+                        <span class="text-blue">{!bankName}</span>
+                    </div>
+                    <div class="date-row">Date: {!currentDateString}</div>
+
+                    <div class="section">
+                        <div class="section-title">Important Authorization Text</div>
+                        <p class="paragraph">
+                            I authorise Credit Bureau (Singapore) Pte Ltd ("CBS") to collect, receive, use, release and disclose my personal credit information to
+                            <strong>{!bankName}</strong> for the purpose of employment screening and/or background check.
+                        </p>
+                        <p class="paragraph">
+                            This authorization is strictly for this employment-related credit assessment request for the above bank/employer only.
+                        </p>
+                        <p class="paragraph">
+                            I understand that for Non-Singpass submission, CBS must complete manual identity verification before this consent can be treated as valid for report request processing.
+                            If verification fails or clarification/additional documents are required, this consent will not proceed as valid consent.
+                        </p>
+                    </div>
+
+                    <div class="section">
+                        <div class="section-title">Identity Information Review</div>
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <div class="info-label">Principal Name / Full Legal Name</div>
+                                <div class="info-value"><apex:outputText value="{!inputPrincipalName}"/></div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Pass Type</div>
+                                <div class="info-value"><apex:outputText value="{!inputPassType}"/></div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Passport Number</div>
+                                <div class="info-value"><apex:outputText value="{!inputPassportNumber}"/></div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Date of Birth</div>
+                                <div class="info-value"><apex:outputText value="{!inputDobDay} {!inputDobMonth} {!inputDobYear}"/></div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Nationality</div>
+                                <div class="info-value"><apex:outputText value="{!inputNationality}"/></div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Gender</div>
+                                <div class="info-value"><apex:outputText value="{!inputGender}"/></div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Marital Status</div>
+                                <div class="info-value"><apex:outputText value="{!inputMaritalStatus}"/></div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Email Address</div>
+                                <div class="info-value"><apex:outputText value="{!inputEmailAddress}"/></div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">ID Type</div>
+                                <div class="info-value"><apex:outputText value="{!inputIdType}"/></div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">ID Number</div>
+                                <div class="info-value"><apex:outputText value="{!inputIdNumber}"/></div>
+                            </div>
+                            <div class="info-item info-wide">
+                                <div class="info-label">Registered Address</div>
+                                <div class="info-value"><apex:outputText value="{!inputRegisteredAddress}"/></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <div class="section-title">Document Status</div>
+                        <div class="doc-grid">
+                            <div class="info-item">
+                                <div class="info-label">Passport</div>
+                                <div class="info-value">
+                                    <span class="{!IF(passportUploaded, 'doc-status-ok', 'doc-status-missing')}">{!passportUploadStatus}</span>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-label">Face ID</div>
+                                <div class="info-value">
+                                    <span class="{!IF(faceIdUploaded, 'doc-status-ok', 'doc-status-missing')}">{!faceIdUploadStatus}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <div class="section-title">Consent Confirmation</div>
+                        <div class="consent-box">
+                            <apex:inputCheckbox value="{!hasAcceptedConsent}"/>
+                            <div class="consent-text">
+                                I ACCEPT AND AUTHORIZE AND GIVE MY CONSENT to Credit Bureau (Singapore) Pte Ltd ("CBS") to collect, receive, use, release and disclose my personal credit information to
+                                <strong>{!bankName}</strong> for the purpose of employment screening and/or background check.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="button-row">
+                        <apex:commandButton value="Back" action="{!goBack}" styleClass="btn btn-secondary"/>
+                        <apex:commandButton value="Submit / I Consent" action="{!submitConsent}" styleClass="btn btn-primary"/>
+                    </div>
+
+                    <apex:outputPanel rendered="{!showDeclineLink}">
+                        <div class="decline-link-wrap">
+                            <apex:commandLink action="{!goToDeclinePage}" styleClass="decline-link" value="I decline to give consent"/>
+                        </div>
+                    </apex:outputPanel>
+                </apex:outputPanel>
+            </apex:form>
+        </div>
+    </div>
+
+    <c:CbsGuestFooter />
+</body>
+</html>
+</apex:page>

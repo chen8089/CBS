@@ -1,0 +1,85 @@
+<template>
+    <section
+        role="dialog"
+        tabindex="-1"
+        aria-modal="true"
+        aria-labelledby="report-upload-modal-heading"
+        class="slds-modal slds-fade-in-open bdum-backdrop"
+        onclick={handleBackdropClick}
+    >
+        <div class="slds-modal__container bdum-container" onclick={handleDialogClick}>
+            <header class="slds-modal__header">
+                <h2 id="report-upload-modal-heading" class="slds-modal__title slds-hyphenate">Upload Report</h2>
+            </header>
+
+            <div class="slds-modal__content slds-p-around_medium bdum-content">
+                <template if:true={busy}>
+                    <div class="bdum-spinner">
+                        <lightning-spinner alternative-text="Processing" size="medium"></lightning-spinner>
+                    </div>
+                </template>
+
+                <div class="bdum-file-section">
+                    <lightning-input
+                        type="file"
+                        label="Excel File"
+                        accept=".xlsx,.xls,.csv"
+                        onchange={handleFileChange}
+                    ></lightning-input>
+                    <template if:true={fileName}>
+                        <p class="bdum-file-name">Selected: {fileName}</p>
+                    </template>
+                    <p class="bdum-hint">Required column: Email Address</p>
+                </div>
+
+                <template if:true={hasUploadSummary}>
+                    <div class="bdum-summary">
+                        <div class="bdum-summary-item">
+                            <span class="bdum-summary-label">Total Rows</span>
+                            <span class="bdum-summary-value">{summaryTotal}</span>
+                        </div>
+                        <div class="bdum-summary-item bdum-summary-valid">
+                            <span class="bdum-summary-label">Success Rows</span>
+                            <span class="bdum-summary-value">{summarySuccess}</span>
+                        </div>
+                        <div class="bdum-summary-item bdum-summary-error">
+                            <span class="bdum-summary-label">Exception Rows</span>
+                            <span class="bdum-summary-value">{summaryExceptions}</span>
+                        </div>
+                        <div class="bdum-summary-item bdum-summary-error">
+                            <span class="bdum-summary-label">Created Exceptions</span>
+                            <span class="bdum-summary-value">{summaryCreatedExceptions}</span>
+                        </div>
+                    </div>
+                    <template if:true={showExceptionHint}>
+                        <p class="bdum-hint">
+                            Some report records failed validation and were added to Exceptions for review.
+                        </p>
+                    </template>
+                </template>
+
+                <template if:true={showErrorTable}>
+                    <div class="bdum-error-table">
+                        <lightning-datatable
+                            key-field="id"
+                            data={errorTableData}
+                            columns={errorColumns}
+                            hide-checkbox-column
+                        ></lightning-datatable>
+                    </div>
+                </template>
+            </div>
+
+            <footer class="slds-modal__footer">
+                <lightning-button label="Cancel" onclick={handleCancel} disabled={isUploading}></lightning-button>
+                <lightning-button
+                    label="Upload"
+                    variant="brand"
+                    onclick={handleUpload}
+                    disabled={uploadDisabled}
+                ></lightning-button>
+            </footer>
+        </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+</template>

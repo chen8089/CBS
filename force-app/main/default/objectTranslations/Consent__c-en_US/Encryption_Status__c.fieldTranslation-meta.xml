@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label>Encryption Status</label>
+    <name>Encryption_Status__c</name>
+    <picklistValues>
+        <masterLabel>Decrypted</masterLabel>
+        <translation><!-- Decrypted --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Encrypted</masterLabel>
+        <translation><!-- Encrypted --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Encryption Failed</masterLabel>
+        <translation><!-- Encryption Failed --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Not Encrypted</masterLabel>
+        <translation><!-- Not Encrypted --></translation>
+    </picklistValues>
+</CustomFieldTranslation>

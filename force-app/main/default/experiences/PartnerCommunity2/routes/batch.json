@@ -1,0 +1,12 @@
+{
+  "activeViewId" : "f04754a2-befb-4b12-85a1-78e8e2dab86c",
+  "appPageId" : "adf3cabf-4635-4f0a-bd31-b7c844e608b2",
+  "configurationTags" : [ ],
+  "devName" : "Batch__c",
+  "id" : "b2e7469b-fd98-4fad-ab77-1229a4ce92cc",
+  "label" : "Batch",
+  "pageAccess" : "UseParent",
+  "routeType" : "custom-batch",
+  "type" : "route",
+  "urlPrefix" : "batch"
+}

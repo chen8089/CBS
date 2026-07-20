@@ -1,0 +1,5 @@
+<apex:component >
+    <div class="footer">
+        <img src="{!$Resource.pagefoot}" alt="Footer Information"/>
+    </div>
+</apex:component>

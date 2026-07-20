@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <help><!-- Select the date range options for timeline date filter. If left empty, the date range will show all available options. --></help>
+    <label><!-- Date Filters --></label>
+    <name>Date_Filters__c</name>
+</CustomFieldTranslation>

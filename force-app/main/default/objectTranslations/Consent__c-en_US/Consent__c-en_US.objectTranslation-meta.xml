@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Consent Record</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Consent Records</value>
+    </caseValues>
+    <layouts>
+        <layout>CBS Consent Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+        <sections>
+            <label><!-- Encryption and Files --></label>
+            <section>Encryption and Files</section>
+        </sections>
+        <sections>
+            <label><!-- Event Information --></label>
+            <section>Event Information</section>
+        </sections>
+        <sections>
+            <label><!-- Match and Expiry --></label>
+            <section>Match and Expiry</section>
+        </sections>
+        <sections>
+            <label><!-- MyInfo Details --></label>
+            <section>MyInfo Details</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

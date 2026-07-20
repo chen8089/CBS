@@ -1,0 +1,82 @@
+{
+  "appPageId" : "adf3cabf-4635-4f0a-bd31-b7c844e608b2",
+  "componentName" : "siteforce:sldsTwoCol84SidebarFeaturedLayout",
+  "dataProviders" : [ ],
+  "id" : "a4057e43-cb58-49fe-9f08-17912658cd1f",
+  "label" : "Home",
+  "regions" : [ {
+    "components" : [ {
+      "componentAttributes" : { },
+      "componentName" : "c:cbsHomeHeroSection",
+      "id" : "91fe11b3-f965-4485-9c20-efc4306d88cf",
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "93066811-9ea9-4ae5-8455-c2ca22f9d7dd",
+    "regionName" : "header",
+    "type" : "region"
+  }, {
+    "id" : "c5728bc8-4ef2-4efa-9710-2491903012b7",
+    "regionName" : "featured",
+    "type" : "region"
+  }, {
+    "id" : "e6db9f72-390a-401b-9035-67efc4642db7",
+    "regionName" : "content",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "channel" : "DefaultChannel",
+        "title" : ""
+      },
+      "componentName" : "forceCommunity:recommendations",
+      "id" : "ea7fe0a1-4a2f-4e36-9a63-87e5aa90bef6",
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    }, {
+      "componentAttributes" : {
+        "display" : "LEVELS_POINTS",
+        "excludeInternalUsers" : false,
+        "knowledgeLabel" : "Knows about",
+        "numberOfUsers" : 5,
+        "showContextUser" : false,
+        "showTooltip" : false,
+        "showUserRank" : false,
+        "title" : "Leaderboard",
+        "tooltipText" : "Earn points and climb to new levels when you contribute in the experience!"
+      },
+      "componentName" : "forceCommunity:reputationLeaderboard42",
+      "id" : "49c2f214-05cb-4d86-8a0b-386e0eef11ee",
+      "renderPriority" : "NEUTRAL",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "584c44d5-5616-4cfa-aee1-7089ff463885",
+    "regionName" : "sidebar",
+    "type" : "region"
+  }, {
+    "id" : "298e4730-ab17-47c2-bf53-d8212decda46",
+    "regionName" : "footer",
+    "type" : "region"
+  }, {
+    "components" : [ {
+      "componentAttributes" : {
+        "customHeadTags" : "",
+        "description" : "",
+        "title" : "Home"
+      },
+      "componentName" : "forceCommunity:seoAssistant",
+      "id" : "a37eb4d2-d168-47db-bcaa-84f92437cb30",
+      "renditionMap" : { },
+      "type" : "component"
+    } ],
+    "id" : "ef8376e4-f5aa-4f22-a8ee-140ccaedd10d",
+    "regionName" : "sfdcHiddenRegion",
+    "type" : "region"
+  } ],
+  "themeLayoutType" : "Inner",
+  "type" : "view",
+  "viewType" : "home"
+}

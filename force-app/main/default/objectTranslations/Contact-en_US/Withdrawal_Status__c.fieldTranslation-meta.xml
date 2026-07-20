@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label><!-- Withdrawal Status --></label>
+    <name>Withdrawal_Status__c</name>
+    <picklistValues>
+        <masterLabel>Exceptions</masterLabel>
+        <translation><!-- Exceptions --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Pending Approval</masterLabel>
+        <translation><!-- Pending Approval --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Review Required</masterLabel>
+        <translation><!-- Review Required --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Withdrawn / Completed</masterLabel>
+        <translation><!-- Withdrawn / Completed --></translation>
+    </picklistValues>
+</CustomFieldTranslation>

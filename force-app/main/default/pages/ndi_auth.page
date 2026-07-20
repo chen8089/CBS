@@ -1,0 +1,33 @@
+<apex:page controller="QRSiteSingpassNdiAuthCtrl" action="{!initPage}" showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0" cache="false" expires="0">
+    <apex:stylesheet value="{!URLFOR($Resource.cbsGuestCommonCss)}"/>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>CBS - Singpass Authentication</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            background-color: #F4F5F7;
+            color: #333333;
+            font-family: Arial, sans-serif;
+        }
+        .main-container {
+            display: flex;
+            justify-content: center;
+            padding: 80px 20px;
+        }
+        .message {
+            font-size: 14px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <p class="message">Redirecting to consent form after Singpass authentication...</p>
+    </div>
+</body>
+</html>
+</apex:page>

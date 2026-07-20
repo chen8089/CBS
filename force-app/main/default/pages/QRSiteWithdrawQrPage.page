@@ -1,0 +1,190 @@
+<apex:page controller="QRSiteApprovalController" action="{!checkWithdrawStatusPC}" showHeader="false" sidebar="false" standardStylesheets="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0" cache="false" expires="0">
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>CBS - Scan QR Code for Withdrawal</title>
+
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #F4F5F7;
+            color: #333333;
+            font-family: Arial, sans-serif;
+        }
+
+        .header {
+            background-color: #FFFFFF;
+            padding: 15px 5%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .header img {
+            max-height: 60px;
+            width: auto;
+        }
+
+        .main-container {
+            display: flex;
+            justify-content: center;
+            padding: 50px 20px 80px;
+        }
+
+        .card {
+            background-color: #FFFFFF;
+            width: 100%;
+            max-width: 650px;
+            border-radius: 12px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .card-title {
+            color: #222222;
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+
+        .card-description {
+            color: #333333;
+            font-size: 14px;
+            line-height: 1.6;
+            margin: 0 auto 30px;
+            max-width: 520px;
+        }
+
+        .qr-wrapper {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .qr-box {
+            background-color: #FFFFFF;
+            border: 1px solid #E5E7EB;
+            border-radius: 12px;
+            display: inline-block;
+            padding: 18px;
+        }
+
+        .qr-status {
+            color: #555555;
+            font-size: 13px;
+            margin-top: 22px;
+        }
+
+        .error-message {
+            color: #C81E2B;
+            font-size: 14px;
+            margin-top: 20px;
+        }
+
+        .footer {
+            display: block;
+            line-height: 0;
+            width: 100%;
+        }
+
+        .footer img {
+            display: block;
+            height: auto;
+            width: 100%;
+        }
+
+        @media (max-width: 600px) {
+            .header {
+                padding: 15px 20px;
+            }
+
+            .card {
+                padding: 25px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <c:CbsGuestHeader />
+
+    <div class="main-container">
+        <div class="card">
+            <apex:outputPanel rendered="{!showWithdrawQrCode}">
+                <div class="card-title">Scan QR Code</div>
+                <p class="card-description">
+                    Please scan the QR code with your phone to authenticate your withdrawal request.
+                    This page will update automatically once authentication is completed.
+                </p>
+
+                <div class="qr-wrapper">
+                    <div class="qr-box">
+                        <div id="qrcode"></div>
+                    </div>
+                </div>
+
+                <p class="qr-status">Waiting for mobile authentication...</p>
+                <p id="error-msg" class="error-message"></p>
+            </apex:outputPanel>
+
+            <apex:outputPanel rendered="{!NOT(showWithdrawQrCode)}">
+                <div class="card-title">{!withdrawalCompletionMessageLine1}</div>
+                <apex:repeat value="{!withdrawalCompletionMessageLines}" var="messageLine">
+                    <p class="card-description">{!messageLine}</p>
+                </apex:repeat>
+                <p class="qr-status">{!withdrawalCompletionFooterText}</p>
+            </apex:outputPanel>
+        </div>
+    </div>
+
+    <apex:form style="display: none;" rendered="{!showWithdrawQrCode}">
+        <apex:actionPoller action="{!checkWithdrawStatusPC}" interval="5"/>
+    </apex:form>
+
+    <apex:includeScript value="{!$Resource.QRCodeJS}"/>
+
+    <apex:outputPanel rendered="{!showWithdrawQrCode}">
+    <script>
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const contactId = urlParams.get('ContactId');
+            const consentId = urlParams.get('id');
+            const requestItemId = urlParams.get('requestItemId');
+            const token = urlParams.get('token');
+
+            const qrCodeContainer = document.getElementById("qrcode");
+
+            if (!contactId || !consentId || !requestItemId || !token) {
+                document.getElementById("error-msg").innerText = "Invalid link or missing parameter (ContactId/id/requestItemId/token)";
+                return;
+            }
+
+            let mobileUrl = '{!$Site.BaseUrl}/QRSiteWithdrawActionConfirmPage?';
+            const mobileParams = [];
+            if (contactId) {
+                mobileParams.push('ContactId=' + encodeURIComponent(contactId));
+            }
+            if (consentId) {
+                mobileParams.push('id=' + encodeURIComponent(consentId));
+            }
+            mobileParams.push('requestItemId=' + encodeURIComponent(requestItemId));
+            mobileParams.push('token=' + encodeURIComponent(token));
+            mobileUrl += mobileParams.join('&');
+
+            new QRCode(qrCodeContainer, {
+                text: mobileUrl,
+                width: 250,
+                height: 250,
+                colorDark : "#000000",
+                colorLight : "#ffffff",
+                correctLevel : QRCode.CorrectLevel.H
+            });
+        };
+    </script>
+    </apex:outputPanel>
+
+    <c:CbsGuestFooter />
+</body>
+</html>
+</apex:page>

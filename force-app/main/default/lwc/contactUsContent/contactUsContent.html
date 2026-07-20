@@ -1,0 +1,43 @@
+<template>
+    <section class="contact-us-section">
+        <div class="contact-us-container">
+            <h1 class="page-title">{titleText}</h1>
+
+            <div class="info-grid">
+                <template for:each={infoItems} for:item="item">
+                    <div key={item.key} class="info-item">
+                        <div class="info-icon">
+                            <lightning-icon
+                                icon-name={item.iconName}
+                                size="large"
+                                alternative-text={item.title}
+                            ></lightning-icon>
+                        </div>
+                        <h3 class="info-title">{item.title}</h3>
+                        <template for:each={item.lines} for:item="line">
+                            <p key={line.key} class="info-line">
+                                <template if:true={line.isEmail}>
+                                    {line.prefix}<a class="info-email-link" href={line.mailto}>{line.email}</a>
+                                </template>
+                                <template if:false={line.isEmail}>
+                                    {line.text}
+                                </template>
+                            </p>
+                        </template>
+                    </div>
+                </template>
+            </div>
+
+            <div class="contact-card-grid">
+                <template for:each={cards} for:item="card">
+                    <article key={card.key} class="contact-card">
+                        <h2 class="contact-card-title">{card.title}</h2>
+                        <p class="contact-card-body">{card.body}</p>
+                        <p class="email-intro">{card.emailIntro}</p>
+                        <a class="email-link" href={card.mailto}>{card.email}</a>
+                    </article>
+                </template>
+            </div>
+        </div>
+    </section>
+</template>

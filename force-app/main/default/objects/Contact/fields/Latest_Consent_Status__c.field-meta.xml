@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Latest_Consent_Status__c</fullName>
+    <label>Latest Consent Status</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Pending</fullName>
+                <default>false</default>
+                <label>Pending</label>
+            </value>
+            <value>
+                <fullName>Active Consent</fullName>
+                <default>false</default>
+                <label>Active Consent</label>
+            </value>
+            <value>
+                <fullName>Consent Declined</fullName>
+                <default>false</default>
+                <label>Consent Declined</label>
+            </value>
+            <value>
+                <fullName>Consent Withdrawn</fullName>
+                <default>false</default>
+                <label>Consent Withdrawn</label>
+            </value>
+            <value>
+                <fullName>Consent Expired</fullName>
+                <default>false</default>
+                <label>Consent Expired</label>
+            </value>
+            <value>
+                <fullName>Consent Expired / Consumed</fullName>
+                <default>false</default>
+                <label>Consent Expired / Consumed</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,355 @@
+<apex:page controller="QRSiteApprovalController" action="{!handleWithdrawFormEntry}" showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0" cache="false" expires="0">
+    <apex:stylesheet value="{!URLFOR($Resource.cbsGuestCommonCss)}"/>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>CBS - Withdrawal of Explicit Authorization</title>
+
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #F4F5F7;
+            color: #333333;
+            font-family: Arial, sans-serif;
+        }
+
+        .header {
+            background-color: #FFFFFF;
+            padding: 15px 5%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .header img {
+            max-height: 60px;
+            width: auto;
+        }
+
+        .main-container {
+            display: flex;
+            justify-content: center;
+            padding: 40px 20px 80px;
+        }
+
+        .card {
+            background-color: #FFFFFF;
+            width: 100%;
+            max-width: 700px;
+            padding: 40px 50px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .card-title {
+            color: #000000;
+            font-size: 18px;
+            font-weight: bold;
+            line-height: 1.4;
+            margin-bottom: 25px;
+        }
+
+        .text-blue {
+            color: #2946A3;
+        }
+
+        .date-row {
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 25px;
+        }
+
+        .form-row {
+            align-items: center;
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+        }
+
+        .form-label {
+            color: #666666;
+            font-size: 13px;
+            line-height: 1.2;
+            width: 210px;
+        }
+
+        .read-only-box {
+            background-color: #DCDCDC;
+            border: 1px solid #A9A9A9;
+            border-radius: 4px;
+            color: #000000;
+            flex: 1;
+            font-size: 13px;
+            font-weight: bold;
+            min-height: 16px;
+            padding: 6px 12px;
+        }
+
+        .col-right-label {
+            padding-left: 20px;
+            width: 80px;
+        }
+
+        .dob-group {
+            display: flex;
+            flex: 1;
+            gap: 8px;
+        }
+
+        .dob-group .read-only-box {
+            flex: 1;
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 14px;
+            font-weight: bold;
+            margin: 30px 0 15px;
+        }
+
+        .intro-text {
+            font-size: 13px;
+            line-height: 1.4;
+            margin-bottom: 25px;
+        }
+
+        .consent-box {
+            align-items: flex-start;
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .consent-box input[type="checkbox"] {
+            cursor: pointer;
+            margin-top: 4px;
+            transform: scale(1.6);
+        }
+
+        .consent-text {
+            font-size: 13px;
+            line-height: 1.5;
+            text-align: justify;
+        }
+
+        .consent-text p {
+            margin: 0 0 15px;
+        }
+
+        .withdrawal-list {
+            margin: 0 0 30px;
+            padding-left: 15px;
+        }
+
+        .withdrawal-list li {
+            margin-bottom: 12px;
+        }
+
+        .page-message {
+            color: #C81E2B;
+            font-size: 13px;
+            margin-bottom: 16px;
+        }
+
+        .completion-message {
+            color: #333333;
+            font-size: 13px;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        .completion-message strong {
+            color: #2946A3;
+            font-size: 14px;
+        }
+
+        .completion-title {
+            color: #2946A3;
+            font-size: 18px;
+            font-weight: bold;
+            line-height: 1.4;
+            margin: 0 0 20px;
+            text-align: center;
+        }
+
+        .completion-message p {
+            margin: 0 0 14px;
+        }
+
+        .completion-footer-text {
+            font-weight: bold;
+            margin-top: 24px;
+            text-align: center;
+        }
+
+        .btn-container {
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .submit-btn {
+            align-items: center;
+            background-color: #D93841;
+            border: none;
+            border-radius: 8px;
+            color: #FFFFFF;
+            cursor: pointer;
+            display: inline-flex;
+            font-family: Poppins, Arial, sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            height: 48px;
+            justify-content: center;
+            padding: 12px 20px;
+            text-decoration: none;
+            transition: background-color 0.2s;
+            width: 320px;
+        }
+
+        .submit-btn:hover {
+            background-color: #B0262D;
+        }
+
+        .submit-btn:disabled,
+        .submit-btn[disabled] {
+            background-color: #A0A0A0;
+            cursor: not-allowed;
+        }
+
+        .submit-btn:disabled:hover,
+        .submit-btn[disabled]:hover {
+            background-color: #A0A0A0;
+        }
+
+        .footer {
+            display: block;
+            line-height: 0;
+            width: 100%;
+        }
+
+        .footer img {
+            display: block;
+            height: auto;
+            width: 100%;
+        }
+
+        @media (max-width: 600px) {
+            .card {
+                padding: 25px 20px;
+            }
+
+            .col-right-label {
+                margin-top: 12px;
+                padding-left: 0;
+            }
+
+            .form-row {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .form-label,
+            .col-right-label {
+                margin-bottom: 5px;
+                width: 100%;
+            }
+
+            .read-only-box,
+            .dob-group {
+                box-sizing: border-box;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <c:CbsGuestHeader />
+
+    <div class="main-container">
+        <div class="card">
+            <apex:form >
+                <apex:outputPanel rendered="{!showWithdrawalCompletionMessage}">
+                    <div class="completion-message">
+                        <div class="completion-title">{!withdrawalCompletionMessageLine1}</div>
+                        <apex:repeat value="{!withdrawalCompletionMessageLines}" var="messageLine">
+                            <p>{!messageLine}</p>
+                        </apex:repeat>
+                        <apex:outputPanel rendered="{!withdrawalCompletionFooterText != ''}">
+                            <div class="completion-footer-text">{!withdrawalCompletionFooterText}</div>
+                        </apex:outputPanel>
+                    </div>
+                </apex:outputPanel>
+
+                <apex:outputPanel rendered="{!showWithdrawalForm}">
+                    <div class="card-title">
+                        Withdrawal of Consent and Authorisation
+                    </div>
+
+                    <div class="intro-text">
+                        Please review the information below before submitting your withdrawal request.
+                    </div>
+
+                    <div class="section-title">Current Consent Information</div>
+                    <div class="form-row">
+                        <div class="form-label">Data Subject Name</div>
+                        <div class="read-only-box">{!dataSubjectName}</div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-label">Employer / Bank Name</div>
+                        <div class="read-only-box">{!employerBankName}</div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-label">Current Consent Status</div>
+                        <div class="read-only-box">{!consentStatus}</div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-label">Latest Submission Date &amp; Time</div>
+                        <div class="read-only-box">{!submissionDateTime}</div>
+                    </div>
+
+                    <apex:outputPanel rendered="{!consentExpiryDate != ''}" layout="block" styleClass="form-row">
+                        <div class="form-label">Current Consent Expiry Date</div>
+                        <div class="read-only-box">{!consentExpiryDate}</div>
+                    </apex:outputPanel>
+
+                    <div class="section-title">
+                        Withdrawal of Consent and Authorisation
+                    </div>
+
+                    <div class="consent-box">
+                        <apex:inputCheckbox value="{!hasConfirmedWithdrawal}" id="withdrawalCheckbox"/>
+
+                        <div class="consent-text">
+                            <p>I <strong>WITHDRAW MY CONSENT AND AUTHORISATION</strong> previously given to Credit Bureau (Singapore) Pte Ltd ("CBS") to collect, receive, use, release and disclose my personal credit information to <strong class="text-blue">{!employerBankName}</strong> for the purpose of employment screening and/or background check.</p>
+
+                            <p>By submitting this withdrawal, I understand and agree that:</p>
+
+                            <ol class="withdrawal-list">
+                                <li>CBS will update my consent status as <strong>withdrawn</strong> upon successful submission of this electronic form.</li>
+                                <li><strong class="text-blue">{!employerBankName}</strong> will be notified that I have withdrawn my consent.</li>
+                                <li>After my withdrawal has been processed, <strong class="text-blue">{!employerBankName}</strong> will not be able to submit any new request to CBS for my credit report under this consent.</li>
+                                <li>This withdrawal does not affect any credit report request that was already submitted, processed, or completed before the date and time of this withdrawal.</li>
+                                <li>I may be required to provide fresh consent if <strong class="text-blue">{!employerBankName}</strong> needs to request my credit report again in future.</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <div class="page-message">
+                        <apex:pageMessages />
+                    </div>
+
+                    <div class="btn-container">
+                        <apex:commandButton value="Submit Withdrawal" action="{!submitWithdrawal}" styleClass="submit-btn"/>
+                    </div>
+                </apex:outputPanel>
+            </apex:form>
+        </div>
+    </div>
+
+    <c:CbsGuestFooter />
+</body>
+</html>
+</apex:page>

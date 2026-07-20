@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>66.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>CBS Portal Navigation</masterLabel>
+    <description>CBS branded horizontal and mobile navigation for Experience Cloud.</description>
+    <targets>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+        <target>lightning__AppPage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightningCommunity__Default,lightning__AppPage">
+            <property name="homePageName" type="String" label="Home Named Page API Name" default="Home" />
+            <property name="homeUrl" type="String" label="Home URL" default="/s/" />
+            <property
+                name="navItemsJson"
+                type="String"
+                label="Navigation Items JSON"
+                default="[{&quot;label&quot;:&quot;Home&quot;,&quot;pageName&quot;:&quot;Home&quot;},{&quot;label&quot;:&quot;Consent&quot;,&quot;pageName&quot;:&quot;Consent&quot;},{&quot;label&quot;:&quot;Resignation / Departure&quot;,&quot;pageName&quot;:&quot;Resignation_Departure&quot;},{&quot;label&quot;:&quot;Report Requests&quot;,&quot;pageName&quot;:&quot;Report_Requests&quot;},{&quot;label&quot;:&quot;Batch&quot;,&quot;pageName&quot;:&quot;Batch&quot;},{&quot;label&quot;:&quot;Exceptions&quot;,&quot;pageName&quot;:&quot;Exceptions&quot;}]"
+                description="Array with label + pageName/url. Example: [{&quot;label&quot;:&quot;Home&quot;,&quot;pageName&quot;:&quot;Home&quot;}]."
+            />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

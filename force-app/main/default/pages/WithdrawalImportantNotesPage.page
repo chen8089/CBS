@@ -1,0 +1,191 @@
+<apex:page controller="WithdrawalImportantNotesController" action="{!init}" showHeader="false" standardStylesheets="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0" cache="false" expires="0">
+    <apex:stylesheet value="{!URLFOR($Resource.cbsGuestCommonCss)}"/>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>CBS - Important Notes Before You Withdraw Consent</title>
+
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #F4F5F7;
+            color: #333333;
+            font-family: Arial, sans-serif;
+        }
+
+        .header {
+            background-color: #FFFFFF;
+            padding: 15px 5%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .header img {
+            max-height: 60px;
+            width: auto;
+        }
+
+        .main-container {
+            display: flex;
+            justify-content: center;
+            padding: 50px 20px 80px;
+        }
+
+        .card {
+            background-color: #FFFFFF;
+            width: 100%;
+            max-width: 650px;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .card-title {
+            color: #222222;
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 25px;
+        }
+
+        .body-text {
+            color: #111827;
+            font-size: 13px;
+            line-height: 1.6;
+            margin: 0 0 12px;
+            text-align: justify;
+        }
+
+        .section-heading {
+            color: #111827;
+            font-size: 15px;
+            font-weight: bold;
+            margin: 20px 0 10px;
+        }
+
+        .notes-list {
+            color: #111827;
+            font-size: 13px;
+            line-height: 1.6;
+            margin: 0 0 12px;
+            padding-left: 20px;
+        }
+
+        .notes-list li {
+            margin-bottom: 10px;
+            text-align: justify;
+        }
+
+        .cancel-message {
+            background: #EFF6FF;
+            border: 1px solid #BFDBFE;
+            border-radius: 8px;
+            color: #1E3A8A;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 24px;
+            padding: 16px;
+        }
+
+        .page-message {
+            color: #C81E2B;
+            font-size: 13px;
+            margin-bottom: 16px;
+        }
+
+        .button-row {
+            display: flex;
+            justify-content: center;
+        }
+
+        .singpass-btn {
+            background-color: #E32636;
+            border: none;
+            border-radius: 6px;
+            color: #FFFFFF;
+            cursor: pointer;
+            display: inline-block;
+            padding: 10px 25px;
+            text-align: center;
+            text-decoration: none;
+            transition: background-color 0.2s;
+        }
+
+        .singpass-btn:hover {
+            background-color: #C81E2B;
+            color: #FFFFFF;
+            text-decoration: none;
+        }
+
+        .singpass-btn-main {
+            display: block;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .footer {
+            display: block;
+            line-height: 0;
+            width: 100%;
+        }
+
+        .footer img {
+            display: block;
+            height: auto;
+            width: 100%;
+        }
+
+        @media (max-width: 600px) {
+            .header {
+                padding: 15px 20px;
+            }
+
+            .card {
+                padding: 25px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <c:CbsGuestHeader />
+
+    <div class="main-container">
+        <div class="card">
+            <div class="card-title">{!pageTitle}</div>
+
+            <apex:outputPanel rendered="{!cancelled}">
+                <div class="cancel-message">{!cancelMessage}</div>
+            </apex:outputPanel>
+
+            <apex:outputPanel rendered="{!showPage}">
+                <p class="body-text">{!introText}</p>
+
+                <p class="section-heading">{!effectOfWithdrawalHeading}</p>
+                <p class="body-text">{!effectOfWithdrawalIntro}</p>
+                <ul class="notes-list">
+                    <apex:repeat value="{!withdrawalEffectBullets}" var="bullet">
+                        <li>{!bullet}</li>
+                    </apex:repeat>
+                </ul>
+                <p class="body-text">{!proceedNote}</p>
+            </apex:outputPanel>
+
+            <div class="page-message">
+                <apex:pageMessages />
+            </div>
+
+            <apex:form >
+                <div class="button-row">
+                    <apex:commandLink action="{!continueToWithdrawal}" styleClass="singpass-btn" rendered="{!canProceed}">
+                        <span class="singpass-btn-main">{!continueButtonLabel}</span>
+                    </apex:commandLink>
+                </div>
+            </apex:form>
+        </div>
+    </div>
+
+    <c:CbsGuestFooter />
+</body>
+</html>
+</apex:page>

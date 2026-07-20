@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>66.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>Recent Activity Shell</masterLabel>
+    <description>Static Recent Activity shell for Experience Cloud and Lightning pages.</description>
+    <targets>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+        <target>lightning__AppPage</target>
+        <target>lightning__RecordPage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightningCommunity__Default,lightning__AppPage,lightning__RecordPage">
+            <property name="title" type="String" label="Title" default="Recent Activity" />
+            <property name="maxHeight" type="String" label="Max Height" default="60rem" />
+            <property name="showMockData" type="Boolean" label="Show Mock Data" default="true" />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

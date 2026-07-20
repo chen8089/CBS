@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>66.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>Departure Feed Debug</masterLabel>
+    <description>Read-only debug component for Departure feed and FeedTrackedChange access checks.</description>
+    <targets>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+        <target>lightning__AppPage</target>
+        <target>lightning__RecordPage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightningCommunity__Default,lightning__AppPage,lightning__RecordPage">
+            <property name="maxRecords" type="Integer" label="Max Records" default="10"
+                description="Maximum rows to inspect for each query. Apex caps this at 50." />
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

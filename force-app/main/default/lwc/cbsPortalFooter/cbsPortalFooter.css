@@ -1,0 +1,79 @@
+:host {
+    display: block;
+}
+
+.cbs-footer {
+    margin-top: auto;
+    background: var(--cbs-deep-blue, #002b55);
+    color: #dbe3ef;
+}
+
+.footer-main,
+.footer-bottom {
+    width: min(1280px, calc(100% - 2rem));
+    margin: 0 auto;
+}
+
+.footer-main {
+    padding: 1.5rem 0 1.2rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 1rem 2rem;
+}
+
+.company-name {
+    margin: 0 0 0.5rem;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.company-block p {
+    margin: 0 0 0.35rem;
+    font-size: 0.875rem;
+    line-height: 1.4;
+}
+
+.company-block a {
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+.company-block a:hover,
+.company-block a:focus {
+    color: #ffccd4;
+}
+
+.footer-links {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.footer-links a {
+    color: #dbe3ef;
+    font-size: 0.875rem;
+    text-decoration: none;
+}
+
+.footer-links a:hover,
+.footer-links a:focus {
+    color: var(--cbs-accent-red, #c8102e);
+    text-decoration: underline;
+}
+
+.footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
+    padding: 0.65rem 0 0.9rem;
+    font-size: 0.75rem;
+    color: #c7d3e8;
+}
+
+@media (max-width: 768px) {
+    .footer-main,
+    .footer-bottom {
+        width: min(1280px, calc(100% - 1rem));
+    }
+}

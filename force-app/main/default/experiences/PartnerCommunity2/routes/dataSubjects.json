@@ -1,0 +1,12 @@
+{
+  "activeViewId" : "33c29128-cf2f-4564-a154-e66dc5e73aee",
+  "appPageId" : "adf3cabf-4635-4f0a-bd31-b7c844e608b2",
+  "configurationTags" : [ ],
+  "devName" : "Data_Subjects__c",
+  "id" : "7d4f086f-06c5-4139-a823-121a0a62cda6",
+  "label" : "Data Subjects",
+  "pageAccess" : "UseParent",
+  "routeType" : "custom-data-subjects",
+  "type" : "route",
+  "urlPrefix" : "data-subjects"
+}

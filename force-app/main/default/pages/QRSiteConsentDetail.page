@@ -1,0 +1,63 @@
+<apex:page standardController="Consent__c" extensions="QRSiteConsentExtension" showHeader="false" sidebar="false" standardStylesheets="true" lightningStylesheets="true" docType="html-5.0">
+    <apex:stylesheet value="{!URLFOR($Resource.cbsGuestCommonCss)}"/>
+    <head>
+        <title>Authorization Details</title>
+        <style>
+            /* 强制隐藏系统自带的全部按钮 */
+            .pbBottomButtons, .pbButton {
+                display: none !important;
+            }
+
+            body {
+                background-color: #f3f2f2 !important;
+            }
+
+            .qrsite-page {
+                min-height: 100vh;
+                font-family: "Salesforce Sans", Arial, sans-serif;
+            }
+
+            .qrsite-content {
+                width: 90%;
+                max-width: 700px;
+                margin: 0 auto;
+            }
+
+            .qrsite-detail-card {
+                border-radius: 0.25rem;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+            }
+        </style>
+    </head>
+    <apex:slds />
+
+    <div class="slds-scope qrsite-page">
+        <div class="slds-p-around_large slds-text-align_center">
+            <h2 class="slds-text-heading_large slds-text-color_success slds-m-bottom_small">
+                Authorization Completed Successfully
+            </h2>
+            <p class="slds-text-body_regular slds-text-color_weak slds-m-bottom_large">
+                Below are your authorization details:
+            </p>
+
+            <div class="qrsite-content slds-text-align_left">
+                <apex:pageMessages />
+
+                <article class="slds-card slds-p-around_medium slds-m-bottom_large qrsite-detail-card">
+                    <!-- apex:detail 会自动根据你在 Consent__c 页面布局里的设置，展示对访客可见的字段 -->
+                    <apex:detail subject="{!Consent__c.Id}" relatedList="false" title="false" showChatter="false" inlineEdit="false"/>
+                </article>
+
+                <div class="slds-text-align_center slds-p-bottom_xx-large">
+                    <!-- 自定义撤销按钮 -->
+                    <apex:form >
+                        <apex:commandButton value="Withdraw Authorization" action="{!withdrawConsent}"
+                            styleClass="slds-button slds-button_destructive"
+                            style="padding-left: 2rem; padding-right: 2rem;"
+                            onclick="return confirm('Are you sure you want to withdraw the authorization? This action cannot be undone.');"/>
+                    </apex:form>
+                </div>
+            </div>
+        </div>
+    </div>
+</apex:page>

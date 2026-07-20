@@ -1,0 +1,231 @@
+<template>
+    <div class="ds-root">
+        <div class="ds-header dashboard-header">
+            <div class="dashboard-title">
+                <div class="ds-header-icon-wrap" aria-hidden="true">
+                    <lightning-icon
+                        class="ds-header-icon"
+                        icon-name="standard:lead"
+                        size="medium"
+                        alternative-text=""
+                    ></lightning-icon>
+                </div>
+                <div class="ds-header-titles">
+                    <p class="ds-title-kicker">Manage</p>
+                    <h1 class="ds-title-main">Consent</h1>
+                </div>
+            </div>
+            <div class="dashboard-header-actions">
+                <lightning-button
+                    label="Upload Consent"
+                    variant="brand"
+                    onclick={handleUploadConsent}
+                ></lightning-button>
+            </div>
+        </div>
+
+        <div class="ds-metrics">
+            <div class="stage-card-grid">
+                <template for:each={stageCards} for:item="item">
+                    <div
+                        key={item.value}
+                        class={item.className}
+                        data-value={item.value}
+                        onclick={handleStageCardClick}
+                    >
+                        <div class="stage-card-count">{item.count}</div>
+                        <div class="stage-card-label">{item.label}</div>
+                    </div>
+                </template>
+            </div>
+        </div>
+
+        <div class="ds-panel">
+            <div class="ds-panel-head">
+                <div class="ds-panel-head-left">
+                    <h2 class="ds-panel-title">Data Subjects</h2>
+                    <p class="ds-panel-sub">{tableSubtitle}</p>
+                </div>
+                <div class="ds-panel-head-right table-actions">
+                    <lightning-input
+                        type="search"
+                        variant="label-hidden"
+                        placeholder="Search Results"
+                        value={searchInput}
+                        onchange={handleSearchChange}
+                        class="ds-search"
+                    ></lightning-input>
+
+                    <div class="filter-container">
+                        <div class={filterTriggerWrapClass}>
+                            <lightning-button-icon
+                                icon-name="utility:filterList"
+                                alternative-text="Filter"
+                                title="Filter"
+                                variant="border-filled"
+                                onclick={toggleFilter}
+                                class="ds-filter-btn"
+                            ></lightning-button-icon>
+                        </div>
+
+                        <template if:true={isFilterOpen}>
+                            <section class="filter-popover" onclick={stopPopoverPropagation}>
+                                <div class="filter-field">
+                                    <lightning-combobox
+                                        name="ownership"
+                                        label="Ownership"
+                                        value={draftFilterValues.ownership}
+                                        placeholder="Select ownership"
+                                        options={ownershipOptions}
+                                        onchange={handleFilterFieldChange}
+                                        dropdown-alignment="bottom-left"
+                                    ></lightning-combobox>
+                                </div>
+                                <div class="filter-field">
+                                    <lightning-combobox
+                                        name="lifecycleStage"
+                                        label="Lifecycle Stage"
+                                        value={draftFilterValues.lifecycleStage}
+                                        placeholder="-- Select Lifecycle Stage --"
+                                        options={lifecycleStageFilterOptions}
+                                        onchange={handleFilterFieldChange}
+                                        dropdown-alignment="bottom-left"
+                                    ></lightning-combobox>
+                                </div>
+                                <div class="filter-field">
+                                    <lightning-combobox
+                                        name="authenticationType"
+                                        label="Authentication Type"
+                                        value={draftFilterValues.authenticationType}
+                                        placeholder="-- Select Authentication Type --"
+                                        options={authenticationTypeFilterOptions}
+                                        onchange={handleFilterFieldChange}
+                                        dropdown-alignment="bottom-left"
+                                    ></lightning-combobox>
+                                </div>
+                                <div class="filter-field">
+                                    <lightning-combobox
+                                        name="consentType"
+                                        label="Consent Type"
+                                        value={draftFilterValues.consentType}
+                                        placeholder="-- Select Consent Type --"
+                                        options={consentTypeFilterOptions}
+                                        onchange={handleFilterFieldChange}
+                                        dropdown-alignment="bottom-left"
+                                    ></lightning-combobox>
+                                </div>
+                                <div class="filter-field">
+                                    <lightning-combobox
+                                        name="dateType"
+                                        label="Date Type"
+                                        value={draftFilterValues.dateType}
+                                        placeholder="-- Select Date Type --"
+                                        options={dateTypeOptions}
+                                        onchange={handleFilterFieldChange}
+                                        dropdown-alignment="bottom-left"
+                                    ></lightning-combobox>
+                                </div>
+                                <div class="filter-field">
+                                    <lightning-combobox
+                                        name="dateRange"
+                                        label="Date Range"
+                                        value={draftFilterValues.dateRange}
+                                        placeholder="-- Select Date Range --"
+                                        options={dateRangeOptions}
+                                        onchange={handleDateRangeChange}
+                                        dropdown-alignment="bottom-left"
+                                    ></lightning-combobox>
+                                </div>
+                                <div class="filter-field">
+                                    <lightning-input
+                                        type="date"
+                                        label="Start Date"
+                                        value={draftFilterValues.startDate}
+                                        disabled={dateInputsDisabled}
+                                        onchange={handleStartDateChange}
+                                    ></lightning-input>
+                                </div>
+                                <div class="filter-field">
+                                    <lightning-input
+                                        type="date"
+                                        label="End Date"
+                                        value={draftFilterValues.endDate}
+                                        disabled={dateInputsDisabled}
+                                        onchange={handleEndDateChange}
+                                    ></lightning-input>
+                                </div>
+                                <div class="filter-footer">
+                                    <lightning-button
+                                        variant="neutral"
+                                        label="Clear All"
+                                        onclick={clearFilters}
+                                    ></lightning-button>
+                                    <lightning-button
+                                        variant="brand"
+                                        label="Apply"
+                                        onclick={applyFilters}
+                                    ></lightning-button>
+                                </div>
+                            </section>
+                        </template>
+                    </div>
+
+                    <lightning-button-icon
+                        icon-name="utility:refresh"
+                        alternative-text="Refresh"
+                        title="Refresh"
+                        variant="border-filled"
+                        onclick={handleRefresh}
+                        class="ds-refresh"
+                    ></lightning-button-icon>
+                </div>
+            </div>
+
+            <div class="ds-table-wrap">
+                <template if:true={loading}>
+                    <div class="ds-spinner-overlay">
+                        <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+                    </div>
+                </template>
+
+                <template if:true={showEmpty}>
+                    <div class="ds-empty">
+                        <lightning-icon
+                            icon-name="utility:info"
+                            size="large"
+                            alternative-text=""
+                            class="ds-empty-icon"
+                        ></lightning-icon>
+                        <p class="ds-empty-title">No data subjects found</p>
+                        <p class="ds-empty-text">Try another filter or adjust your search.</p>
+                    </div>
+                </template>
+
+                <template if:false={showEmpty}>
+                    <template for:each={datatableWrapper} for:item="wrap">
+                        <lightning-datatable
+                            key={wrap.id}
+                            key-field="id"
+                            data={tableRows}
+                            columns={columns}
+                            hide-checkbox-column
+                            sorted-by={sortedBy}
+                            sorted-direction={sortDirection}
+                            onsort={handleSort}
+                            onrowaction={handleRowAction}
+                        ></lightning-datatable>
+                    </template>
+                </template>
+            </div>
+        </div>
+    </div>
+
+    <template if:true={isConsentUploadModalOpen}>
+        <c-consent-upload-modal
+            onclose={handleConsentUploadModalClose}
+            onsuccess={handleConsentUploadModalSuccess}
+            onrefresh={handleConsentUploadModalSuccess}
+            onuploadsuccess={handleConsentUploadModalSuccess}
+        ></c-consent-upload-modal>
+    </template>
+</template>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Exception_Owner__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <label>Exception Owner</label>
+    <referenceTo>User</referenceTo>
+    <relationshipName>Contact_Exception_Owners</relationshipName>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <type>Lookup</type>
+</CustomField>

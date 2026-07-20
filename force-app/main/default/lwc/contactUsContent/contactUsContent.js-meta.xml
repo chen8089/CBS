@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>66.0</apiVersion>
+    <isExposed>true</isExposed>
+    <masterLabel>Contact Us Content</masterLabel>
+    <description>Static Contact Us page content for Credit Bureau Singapore Experience Cloud.</description>
+    <targets>
+        <target>lightningCommunity__Page</target>
+        <target>lightningCommunity__Default</target>
+        <target>lightning__AppPage</target>
+        <target>lightning__RecordPage</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightningCommunity__Default,lightning__AppPage,lightning__RecordPage">
+            <property name="maxWidth" type="String" label="Max Width" default="1280px"/>
+            <property name="titleText" type="String" label="Page Title" default="Get In Touch"/>
+            <property name="backgroundColor" type="String" label="Background Color" default="transparent"/>
+            <property name="cardBackgroundColor" type="String" label="Card Background Color" default="#fff9dd"/>
+            <property name="iconColor" type="String" label="Icon Color" default="#ffb01f"/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>
