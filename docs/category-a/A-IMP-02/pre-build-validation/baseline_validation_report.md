@@ -13,21 +13,25 @@ Date: 2026-07-20
 - Hash result: **PASS**
 - Salesforce source API version: `67.0`
 - Git baseline tag: `baseline-A-IMP-02`
-- Baseline commit:
+- Historical ZIP-import commit:
   `b664a1f120bc80f1cf3be893c45d23cc55b97415`
+- Project-owner-approved metadata Git baseline as of 2026-07-20:
+  `8391a967683f5e07b3a4f4b01fe1db927fbff054`
 
 ## Current repository state
 
 - Branch: `feature/A-IMP-02-contact-separation`
-- Pre-build scan HEAD:
+- Original pre-build scan HEAD:
   `84c9cadda9517e192b35d19c23056b9935b2afb5`
-- HEAD is not identical to the approved baseline.
+- Project owner subsequently approved `8391a96` as the new metadata Git
+  baseline.
 - `baseline-A-IMP-02..HEAD` contains 301 changed files:
   - six Gate 1 documentation outputs;
   - approximately 295 Salesforce/project files from the earlier
     `8391a96` commit.
 
-Material metadata drift includes:
+The following values are now part of the approved `8391a96` current-state
+baseline, but remain conflicts against the A-IMP-02 target:
 
 - `Contact.enableHistory`: `false` at baseline, `true` at HEAD;
 - 17 processing/consent Contact fields have `trackHistory=true`;
@@ -51,11 +55,12 @@ The following A-IMP-02 target components remain unimplemented:
 - ZIP integrity: **PASS**
 - API version: **PASS**
 - Manifest row count: **PASS (37)**
-- Current metadata alignment with approved baseline: **FAIL**
-- Pre-build disposition: **STOP METADATA IMPLEMENTATION**
+- Metadata Git baseline decision: **PASS BY PROJECT-OWNER APPROVAL (`8391a96`)**
+- A-IMP-02 target readiness: **FAIL**
+- Pre-build disposition: **STOP METADATA IMPLEMENTATION FOR REMAINING RISKS**
 
-The current HEAD is materially different from the approved baseline and is not
-an A-IMP-02-compliant target state. Drift must be reconciled before any
-Salesforce metadata build begins.
+RC01 is resolved. Approval of `8391a96` as current-state baseline does not make
+that metadata the approved A-IMP-02 target and does not resolve runtime,
+history, API-name or regression stop conditions.
 
 This validation did not modify Salesforce metadata or data.

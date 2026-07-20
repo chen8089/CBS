@@ -63,15 +63,17 @@ active duplicate exists.
 
 ## Additional runtime issue
 
-R04 returned 117 Data Subject-family Contacts carrying client-access values.
-This is outside the three requested register templates and requires a controlled
-business/privacy decision before any separate disposition register or data
-action is created.
+The original R04 returned 117 Data Subject-family Contacts carrying
+client-access values. R04-RERUN-02 returned zero rows, and the user formally
+approved RC02 in both business-owner and privacy-owner capacities on
+2026-07-20.
 
 ## Stop conditions
 
 - Business owner has not confirmed the three evidence results.
 - R06 cross-status coverage remains unresolved.
-- The R04 contamination population has no approved disposition.
+- RC02 is resolved. RC04 is separately resolved by security/data-owner
+  approval to retain the four current Client User permission assignments.
+- Remaining owner decisions are not covered by the RC02 or RC04 approvals.
 
 No automatic recommendation or Salesforce data action was performed.

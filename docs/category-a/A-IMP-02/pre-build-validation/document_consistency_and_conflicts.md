@@ -41,16 +41,17 @@ The original prompt contemplated correcting the external layout assignment.
 Confirmed D08 and M021/M026-M028 require retain-and-regression only. Full
 permission, sharing and route redesign remains A-IMP-08/A-IMP-09.
 
-## Unresolved conflicts and stop conditions
+## Resolved decisions and remaining stop conditions
 
-### C01 - Material baseline drift
+### C01 - Metadata Git baseline (resolved)
 
-Current HEAD differs from `baseline-A-IMP-02` across approximately 295
-Salesforce/project files. The drift includes history, layouts, Apex, Flow, LWC,
-Experience Cloud and profile changes that are not explained by the 37-row
-Manifest.
+On 2026-07-20 the project owner approved commit `8391a96` as the new metadata
+Git baseline. Subsequent A-IMP-02 diffs must use that commit as their starting
+point.
 
-Disposition: stop all metadata implementation until reconciled.
+Disposition: RC01 resolved. The original ZIP/tag remain historical evidence.
+Approval of the baseline does not approve the baseline content as the A-IMP-02
+target.
 
 ### C02 - M024/M025 partial and incorrect history state
 

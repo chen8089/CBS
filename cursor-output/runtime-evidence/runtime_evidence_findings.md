@@ -111,3 +111,25 @@ Not complete. Required operator evidence:
 - Obtain business owner, privacy owner and security reviewer decisions.
 - Complete R09 manually.
 - Reconcile the target Org with the approved metadata baseline.
+
+## Post-remediation update - 2026-07-20 09:19 UTC
+
+- R04-RERUN-02 returned zero rows.
+- R07-RERUN-02 returned two active linked external users and zero R04
+  overlaps; RC03 is resolved.
+- R08-RERUN-02 still returned four legacy permission-set assignments.
+- Business and privacy owner approval of the R04 remediation was formally
+  supplied in the Cursor conversation.
+- Security and data owner approval was supplied to retain all four R08
+  assignments as required Client User Community and object-view permissions.
+
+The original findings above remain historical evidence. RC02 and RC03 are
+resolved; RC04 is resolved by approved retention.
+
+## RC05 verification update - 2026-07-20 09:32 UTC
+
+- No Contact has `Portal_Role__c = Subject`.
+- Sandbox active values are `HR`, `Approver` and `Client Admin`.
+- Sandbox values exactly match repository metadata.
+
+RC05 is resolved by runtime and metadata verification.

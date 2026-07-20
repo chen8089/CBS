@@ -7,6 +7,7 @@ Canonical submission root: `cursor-output/`
 - `approval-package/00_submission_summary.md`
 - `approval-package/01_git_branch_commit_record.txt`
 - `approval-package/02_package_inventory.md`
+- `approval-package/03_approval_decisions.md`
 
 ## Final approval input
 
@@ -28,6 +29,15 @@ Canonical submission root: `cursor-output/`
 - `runtime-evidence/R06_Active_Request_Duplicates_MASKED.csv`
 - `runtime-evidence/R07_Linked_External_Users_MASKED.csv`
 - `runtime-evidence/R08_Legacy_Assignments_MASKED.csv`
+- `runtime-evidence/R04_post_remediation_20260720T090957Z_MASKED.csv`
+- `runtime-evidence/R07_post_remediation_20260720T091001Z_MASKED.csv`
+- `runtime-evidence/R08_post_remediation_20260720T091004Z_MASKED.csv`
+- `runtime-evidence/RC02_post_remediation_verification_20260720.md`
+- `runtime-evidence/R04_post_remediation_20260720T091932Z_MASKED.csv`
+- `runtime-evidence/R07_post_remediation_20260720T091936Z_MASKED.csv`
+- `runtime-evidence/R08_post_remediation_20260720T091940Z_MASKED.csv`
+- `runtime-evidence/RC02_post_remediation_verification_20260720_02.md`
+- `runtime-evidence/RC05_post_remediation_verification_20260720.md`
 - `runtime-evidence/R09_setup_checklist.csv`
 - `runtime-evidence/Client_User_PII_remediation_register.csv`
 - `runtime-evidence/duplicate_Client_User_disposition_register.csv`

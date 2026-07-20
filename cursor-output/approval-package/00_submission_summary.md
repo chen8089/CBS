@@ -76,13 +76,17 @@ No Salesforce metadata or record was modified.
 
 ## P1/P2 risks and conflicts
 
-- Current HEAD contains approximately 295 Salesforce/project file changes not
-  reconciled to the approved baseline.
-- 117 of 122 Data Subject-family Contacts contain client-access values.
-- Two active external users are linked to affected Contacts.
-- Both external users hold both broad legacy permission sets.
-- Portal Role `Subject` is not represented in the reviewed repository picklist
-  metadata.
+- RC01 resolved on 2026-07-20: project owner approved commit `8391a96` as the
+  new Salesforce metadata Git baseline.
+- RC02 is resolved: R04 remediation is verified at zero rows and the user
+  formally approved in both business-owner and privacy-owner capacities.
+- RC03 is resolved: neither active external user's Contact overlaps the latest
+  R04 result.
+- RC04 is resolved by security/data-owner approval to retain both permission
+  sets for both active Client Users as required Community access and
+  object-view permissions.
+- RC05 is resolved: no `Subject` records remain and the Sandbox active Portal
+  Role values match repository metadata.
 - Contact history is partially and incorrectly configured relative to
   M024-M025.
 - R06 can miss duplicates spanning different active statuses.
@@ -94,14 +98,11 @@ No Salesforce metadata or record was modified.
 
 No file is eligible for implementation now. Written decisions are required for:
 
-1. the clean/reconciled implementation baseline;
-2. M018 sixth physical layout API;
-3. M030 exact test class APIs;
-4. R06 cross-status evidence rule;
-5. R04 record-level owner/privacy dispositions;
-6. external access containment or acceptance;
-7. M024-M025 history correction;
-8. all runtime-gated component activations.
+1. M018 sixth physical layout API;
+2. M030 exact test class APIs;
+3. R06 cross-status evidence rule;
+4. M024-M025 history correction;
+5. all runtime-gated component activations.
 
 ## Workstream boundaries
 
@@ -112,16 +113,17 @@ No file is eligible for implementation now. Written decisions are required for:
 
 ## Recommendation
 
-Do not approve Phase 2 implementation yet.
+Do not start Phase 2 implementation while the remaining stop conditions exist.
 
 Recommended next actions:
 
 1. Complete R09 with an authorised Setup operator.
-2. Obtain named business, privacy and security reviews.
-3. Reconcile the Org and Git HEAD to the approved baseline.
-4. Resolve M018, M030 and R06 through a controlled document amendment.
-5. Define and execute Category B-I and Experience Cloud regression evidence.
-6. Re-submit the updated evidence package for written project-owner approval.
+2. Obtain remaining named owner reviews not covered by RC02 and RC04.
+3. Use approved metadata baseline `8391a96` for subsequent diffs.
+4. Reconcile the target Org runtime values to baseline `8391a96`.
+5. Resolve M018, M030 and R06 through a controlled document amendment.
+6. Define and execute Category B-I and Experience Cloud regression evidence.
+7. Re-submit the updated evidence package for written project-owner approval.
 
 Until those actions are complete, no metadata build, validation deployment,
 Sandbox deployment or activation may begin.

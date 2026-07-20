@@ -1,0 +1,3 @@
+ContactToken,RecordTypeDeveloperName,AccountToken,EmailToken,Portal_Role__c,Can_Approve__c,Is_Active_Client_User__c
+CONTACT:a434fd3058519bfe,Non_Singpass,ACCOUNT:0ccf5d877077f67a,EMAIL:620629b48605e28e,HR,False,False
+CONTACT:212fd282fb392629,Data_Subject,ACCOUNT:901b28a9b096504e,EMAIL:fd00fdd126534dce,HR,False,True
