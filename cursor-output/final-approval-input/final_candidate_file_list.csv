@@ -3,7 +3,7 @@ M001,MODIFY,force-app/main/default/objects/Contact/fields/Full_Name__c.field-met
 M002,MODIFY,force-app/main/default/objects/Contact/fields/ID_Type__c.field-meta.xml,BLOCKED,Atomic M009 package and Phase 2 approval
 M003,MODIFY,force-app/main/default/objects/Contact/fields/ID_Number__c.field-meta.xml,BLOCKED,Atomic M009 package and Phase 2 approval
 M004,MODIFY,force-app/main/default/objects/Contact/fields/Employment_Status__c.field-meta.xml,BLOCKED,Approved baseline history conflicts with M025 target
-M005|M025,MODIFY,force-app/main/default/objects/Contact/fields/Portal_Role__c.field-meta.xml,BLOCKED,Owner review and R09
+M005|M025,MODIFY,force-app/main/default/objects/Contact/fields/Portal_Role__c.field-meta.xml,BLOCKED,Owner review and controlled history replacement
 M006,MODIFY,force-app/main/default/objects/Contact/recordTypes/Client_User.recordType-meta.xml,BLOCKED,Owner review and no Client User population
 M007,ADD,force-app/main/default/objects/Contact/validationRules/CBS_CU_Required_Core.validationRule-meta.xml,BLOCKED,Approval and tests
 M008A,ADD,force-app/main/default/objects/Contact/validationRules/CBS_CU_Prohibit_Identity_PII.validationRule-meta.xml,BLOCKED,R02 owner review
@@ -14,31 +14,43 @@ M009B,ADD,force-app/main/default/objects/Contact/validationRules/CBS_SP_Required
 M009C,ADD,force-app/main/default/objects/Contact/validationRules/CBS_NSP_Required_Identity_By_Stage.validationRule-meta.xml,BLOCKED,Non-Singpass regression and atomic package
 M010,ADD,force-app/main/default/objects/Contact/validationRules/CBS_DS_Prohibit_Client_Access_Data.validationRule-meta.xml,BLOCKED,RC02 approved; controlled build and activation sequence remain
 M011,ADD,force-app/main/default/objects/Contact/validationRules/CBS_CU_Role_Approval_Consistency.validationRule-meta.xml,BLOCKED,Role dry-run unavailable
-M012|M013D|M014,MODIFY,force-app/main/default/flows/contactApproveCreateConsentRequest.flow-meta.xml,BLOCKED,R06 R09 M030 and Category B-I regression
+M012|M013D|M014,MODIFY,force-app/main/default/flows/contactApproveCreateConsentRequest.flow-meta.xml,BLOCKED,M030 and Category B-I regression; R06 and R09 gates satisfied
 M012|M013D|M014,REVIEW_ONLY,force-app/main/default/flowDefinitions/contactApproveCreateConsentRequest.flowDefinition-meta.xml,BLOCKED,Do not change unless approved versioning requires it
-M013A,ADD,force-app/main/default/objects/Consent_Request_Item__c/fields/Consent_Purpose__c.field-meta.xml,BLOCKED,R06 and backfill quality
-M013B,ADD,force-app/main/default/objects/Consent_Request_Item__c/fields/Active_Request_Key__c.field-meta.xml,BLOCKED,R06 cross-status gap
-M013C,ADD,force-app/main/default/flows/Consent_Request_Item_Maintain_Active_Key.flow-meta.xml,BLOCKED,R06 cross-status gap
+M013A,ADD,force-app/main/default/objects/Consent_Request_Item__c/fields/Consent_Purpose__c.field-meta.xml,BLOCKED,Backfill quality and owner review
+M013B,ADD,force-app/main/default/objects/Consent_Request_Item__c/fields/Active_Request_Key__c.field-meta.xml,CONDITIONAL_BUILD_ONLY,R06 gate satisfied; backfill rehearsal and activation remain prohibited
+M013C,ADD,force-app/main/default/flows/Consent_Request_Item_Maintain_Active_Key.flow-meta.xml,CONDITIONAL_BUILD_ONLY,R06 gate satisfied; backfill rehearsal and activation remain prohibited
 M015,MODIFY,force-app/main/default/classes/BatchExcelUploadController.cls,BLOCKED,Regression and controlled implementation gate
 M016,MODIFY,force-app/main/default/classes/BatchExcelUploadControllerTest.cls,BLOCKED,M030 exact API names and regression
 M017,MODIFY,force-app/main/default/layouts/Contact-CBS Contact - Client User Layout.layout-meta.xml,BLOCKED,M008 M019 and UI QA
-M018,MODIFY,force-app/main/default/layouts/Contact-CBS Contact - Data Subject Layout.layout-meta.xml,BLOCKED,Sixth API unresolved and Category B-I regression
-M018,MODIFY,force-app/main/default/layouts/Contact-CBS Contact - SingPass.layout-meta.xml,BLOCKED,Sixth API unresolved and Category B-I regression
-M018,MODIFY,force-app/main/default/layouts/Contact-CBS Contact - Non-SingPass.layout-meta.xml,BLOCKED,Sixth API unresolved and Category B-I regression
-M018,MODIFY,force-app/main/default/layouts/Contact-CBS Contact - SingPass- Community User.layout-meta.xml,BLOCKED,Sixth API unresolved and Experience Cloud regression
-M018,MODIFY,force-app/main/default/layouts/Contact-CBS Contact - Non-SingPass - Community User.layout-meta.xml,BLOCKED,Sixth API unresolved and Experience Cloud regression
-M018,PENDING_APPROVAL,N/A,BLOCKED,Exact sixth layout API unresolved
+M018,MODIFY,force-app/main/default/layouts/Contact-CBS Contact - Data Subject Layout.layout-meta.xml,APPROVED_BUILD_SCOPE,Category B-I regression required before deployment
+M018,MODIFY,force-app/main/default/layouts/Contact-CBS Contact - SingPass.layout-meta.xml,APPROVED_BUILD_SCOPE,Category B-I regression required before deployment
+M018,MODIFY,force-app/main/default/layouts/Contact-CBS Contact - Non-SingPass.layout-meta.xml,APPROVED_BUILD_SCOPE,Category B-I regression required before deployment
+M018,RETAIN,force-app/main/default/layouts/Contact-CBS Contact - SingPass- Community User.layout-meta.xml,DEFERRED_AIMP09_RETAIN,Shared external layout retained; current-state no-regression only
+M018,RETAIN,force-app/main/default/layouts/Contact-CBS Contact - Non-SingPass - Community User.layout-meta.xml,DEFERRED_AIMP09_RETAIN,Experience layout retained; current-state no-regression only
+M018,RETAIN,force-app/main/default/layouts/Contact-Contact Layout.layout-meta.xml,RETAIN_SHARED_NO_FIELD_CHANGE,Data Subject-family assignments must move through an approved exact Profile mapping
+M018,MODIFY,force-app/main/default/profiles/Admin.profile-meta.xml,APPROVED_BUILD_SCOPE,2 approved assignment changes; regression required before deployment
+M018,MODIFY,force-app/main/default/profiles/Analytics Cloud Integration User.profile-meta.xml,APPROVED_BUILD_SCOPE,4 approved assignment changes; effective access review passed
+M018,MODIFY,force-app/main/default/profiles/Analytics Cloud Security User.profile-meta.xml,APPROVED_BUILD_SCOPE,4 approved assignment changes; effective access review passed
+M018,MODIFY,force-app/main/default/profiles/ContractManager.profile-meta.xml,APPROVED_BUILD_SCOPE,4 approved assignment changes; regression required before deployment
+M018,MODIFY,force-app/main/default/profiles/CPQ Integration User.profile-meta.xml,APPROVED_BUILD_SCOPE,4 approved assignment changes; effective access review passed
+M018,MODIFY,force-app/main/default/profiles/End User.profile-meta.xml,APPROVED_BUILD_SCOPE,4 approved assignment changes; regression required before deployment
+M018,MODIFY,force-app/main/default/profiles/Executive Sponsor.profile-meta.xml,APPROVED_BUILD_SCOPE,4 approved assignment changes; regression required before deployment
+M018,MODIFY,force-app/main/default/profiles/MarketingProfile.profile-meta.xml,APPROVED_BUILD_SCOPE,4 approved assignment changes; regression required before deployment
+M018,MODIFY,force-app/main/default/profiles/Read Only.profile-meta.xml,APPROVED_BUILD_SCOPE,4 approved assignment changes; regression required before deployment
+M018,MODIFY,force-app/main/default/profiles/Sales Insights Integration User.profile-meta.xml,APPROVED_BUILD_SCOPE,4 approved assignment changes; effective access review passed
+M018,MODIFY,force-app/main/default/profiles/SolutionManager.profile-meta.xml,APPROVED_BUILD_SCOPE,4 approved assignment changes; regression required before deployment
+M018,MODIFY,force-app/main/default/profiles/Standard.profile-meta.xml,APPROVED_BUILD_SCOPE,4 approved assignment changes; regression required before deployment
 M019,ADD,force-app/main/default/flexipages/CBS_Client_User_Record_Page.flexipage-meta.xml,BLOCKED,M017 M020 approval and QA
 M020,MODIFY,force-app/main/default/applications/Credit_Bureau.app-meta.xml,BLOCKED,M019 and A-IMP-08 boundary
 M021,RETAIN,force-app/main/default/profiles/Customer Community Plus User.profile-meta.xml,DEFERRED_AIMP09,Current-state regression only
 M022,MODIFY,force-app/main/default/matchingRules/Contact.matchingRule-meta.xml,BLOCKED,R05 owner review and tests
 M023,ADD,force-app/main/default/duplicateRules/Contact.CBS_Client_User_Email_Account_Duplicate.duplicateRule-meta.xml,BLOCKED,R05 owner review and tests
-M024|M025,MODIFY,force-app/main/default/objects/Contact/Contact.object-meta.xml,BLOCKED,Approved baseline history state requires R09 reconciliation
-M025,MODIFY,force-app/main/default/objects/Contact/fields/AccountId.field-meta.xml,BLOCKED,R09
-M025,MODIFY,force-app/main/default/objects/Contact/fields/Email.field-meta.xml,BLOCKED,R09
-M025,MODIFY,force-app/main/default/objects/Contact/fields/Department.field-meta.xml,BLOCKED,R09
-M025,MODIFY,force-app/main/default/objects/Contact/fields/Can_Approve__c.field-meta.xml,BLOCKED,R09
-M025,MODIFY,force-app/main/default/objects/Contact/fields/Is_Active_Client_User__c.field-meta.xml,BLOCKED,R09
+M024|M025,MODIFY,force-app/main/default/objects/Contact/Contact.object-meta.xml,BLOCKED,R09-01 capacity passes; standard history confirmed; controlled reconciliation remains
+M025,MODIFY,force-app/main/default/objects/Contact/fields/AccountId.field-meta.xml,BLOCKED,Controlled history replacement
+M025,MODIFY,force-app/main/default/objects/Contact/fields/Email.field-meta.xml,BLOCKED,Controlled history replacement
+M025,MODIFY,force-app/main/default/objects/Contact/fields/Department.field-meta.xml,BLOCKED,Controlled history replacement
+M025,MODIFY,force-app/main/default/objects/Contact/fields/Can_Approve__c.field-meta.xml,BLOCKED,Controlled history replacement
+M025,MODIFY,force-app/main/default/objects/Contact/fields/Is_Active_Client_User__c.field-meta.xml,BLOCKED,Controlled history replacement
 M026,RETAIN,force-app/main/default/permissionsets/Set_Custom_Object_To_Partner.permissionset-meta.xml,DEFERRED_AIMP08_AIMP09,No permission reduction in A-IMP-02
 M026,RETAIN,force-app/main/default/permissionsets/partner_community_User_Permissions_set.permissionset-meta.xml,DEFERRED_AIMP08_AIMP09,No permission reduction in A-IMP-02
 M027,RETAIN,force-app/main/default/experiences/PartnerCommunity2/routes/contactList.json,DEFERRED_AIMP09,Current-state regression only
@@ -47,5 +59,5 @@ M027,RETAIN,force-app/main/default/experiences/PartnerCommunity2/routes/contactR
 M028,RETAIN,force-app/main/default/sharingRules/Contact.sharingRules-meta.xml,DEFERRED_AIMP09,No sharing change
 M028,RETAIN,force-app/main/default/sharingSets/AccountSharing.sharingSet-meta.xml,DEFERRED_AIMP09,No sharing change
 M028,RETAIN,force-app/main/default/settings/Sharing.settings-meta.xml,DEFERRED_AIMP09,No sharing change
-M029,READ_ONLY,cursor-output/runtime-evidence/,ANALYSIS_INCOMPLETE,RC02 approved; R09 and other owner decisions remain
+M029,READ_ONLY,cursor-output/runtime-evidence/,ANALYSIS_INCOMPLETE,RC02 approved and R09 complete; other runtime decisions remain
 M030,PENDING_APPROVAL,N/A,BLOCKED,Exact test API names unresolved

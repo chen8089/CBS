@@ -49,17 +49,16 @@ The result is consistent with R01 returning zero Client_User Contacts.
 File:
 `Active_Request_duplicate_disposition_register.csv`
 
-Evidence source: R06
+Evidence source: R06-CORRECTED-01
 
-- Duplicate groups returned by controlled R06: 0
+- Duplicate groups returned by approved corrected cross-status R06: 0
 - Retained-active recommendations entered: 0
 - Terminalisation recommendations entered: 0
-- Owner approvals entered: 0
-- Status: not closable
+- Owner approvals required: 0 because no duplicate group exists
+- Status: closed with zero groups
 
-R06 groups by `Current_Status__c` and can miss duplicates across different
-active statuses. The empty result must not be interpreted as proof that no
-active duplicate exists.
+The corrected query groups all `Pending`, `Sent` and `Viewed` records together
+without grouping by status. RC07 is resolved.
 
 ## Additional runtime issue
 
@@ -71,7 +70,6 @@ approved RC02 in both business-owner and privacy-owner capacities on
 ## Stop conditions
 
 - Business owner has not confirmed the three evidence results.
-- R06 cross-status coverage remains unresolved.
 - RC02 is resolved. RC04 is separately resolved by security/data-owner
   approval to retain the four current Client User permission assignments.
 - Remaining owner decisions are not covered by the RC02 or RC04 approvals.

@@ -1,0 +1,7 @@
+layout_full_name,repository_path,approved_action,scope_reason,approval_status
+Contact-CBS Contact - Data Subject Layout,force-app/main/default/layouts/Contact-CBS Contact - Data Subject Layout.layout-meta.xml,MODIFY_REMOVE_CLIENT_ACCESS_FIELDS,Internal dedicated Data Subject layout,APPROVED_BUILD_SCOPE
+Contact-CBS Contact - SingPass,force-app/main/default/layouts/Contact-CBS Contact - SingPass.layout-meta.xml,MODIFY_REMOVE_CLIENT_ACCESS_FIELDS,Internal dedicated Singpass layout,APPROVED_BUILD_SCOPE
+Contact-CBS Contact - Non-SingPass,force-app/main/default/layouts/Contact-CBS Contact - Non-SingPass.layout-meta.xml,MODIFY_REMOVE_CLIENT_ACCESS_FIELDS,Internal dedicated Non-Singpass layout,APPROVED_BUILD_SCOPE
+Contact-Contact Layout,force-app/main/default/layouts/Contact-Contact Layout.layout-meta.xml,RETAIN_NO_FIELD_CHANGE,Master and shared baseline retained after approved internal reassignment,APPROVED_RETAIN
+Contact-CBS Contact - SingPass- Community User,force-app/main/default/layouts/Contact-CBS Contact - SingPass- Community User.layout-meta.xml,RETAIN_DEFER_AIMP09,Shared by external Client User and Data Subject-family Record Types,DEFERRED_AIMP09
+Contact-CBS Contact - Non-SingPass - Community User,force-app/main/default/layouts/Contact-CBS Contact - Non-SingPass - Community User.layout-meta.xml,RETAIN_DEFER_AIMP09,Experience Cloud assignment remains current state,DEFERRED_AIMP09

@@ -65,13 +65,21 @@ This is neither the approved baseline nor the approved target.
 
 Disposition: stop M024-M025.
 
-### C03 - M018 physical API ambiguity
+### C03 - M018 shared-layout scope
 
-Manifest M018 says six Data Subject-family layouts. Five purpose-specific files
-are confirmed. `Contact-Contact Layout` exists but is not explicitly mapped as
-the sixth M018 component.
+Page Layout Assignment evidence supplied on 2026-07-20 confirms
+`Contact-Contact Layout` as the sixth physical M018 component because it is
+assigned to Data Subject, Non-Singpass and Singpass Record Types for multiple
+Profiles.
 
-Disposition: mark the sixth layout `NAME MISMATCH`; do not infer or modify it.
+The same layout is also assigned to Client User and Master. Removing fields
+from it would therefore affect those views.
+
+Disposition: API ambiguity resolved. The internal 12-Profile/46-assignment
+matrix and rollback are approved after effective Permission Set review. The
+shared Contact layout is retained. Both Community layouts and Customer
+Community Plus assignments are retained unchanged under the confirmed
+Experience boundary; redesign is deferred to A-IMP-09.
 
 ### C04 - M030 test API ambiguity
 

@@ -10,7 +10,7 @@ This package combines:
 - 37-row Manifest static validation;
 - metadata dependency and drift analysis;
 - R01-R08 masked Sandbox evidence;
-- R09 pending Setup checklist;
+- R09-01 Contact history capacity evidence and the remaining R09 checklist;
 - three business disposition register drafts;
 - updated implementation Manifest;
 - runtime evidence mapping;
@@ -37,6 +37,8 @@ No Salesforce metadata or record was modified.
 10. A-IMP-08 and A-IMP-09 boundaries reconfirmed.
 11. No new object, API rename, automatic merge/delete, record-type conversion
     or cross-Category change is proposed.
+12. R09-01 Contact history capacity collected: 17 of 20 standard fields
+    tracked; the M025 replacement target is 6 of 20.
 
 ## Runtime evidence summary
 
@@ -49,29 +51,26 @@ No Salesforce metadata or record was modified.
   - Client_User: 0
 - R02: 0 Client User prohibited-data rows
 - R03: 0 legacy Client Admin rows
-- R04: 117 Data Subject-family Contacts carrying client-access values
-  - Approver: 81
-  - Subject: 31
-  - HR: 5
-  - Active Client User = true: 2
+- R04: remediated from 117 rows to 0; RC02 approved
 - R05: 0 duplicate Client User groups
-- R06: 0 groups under the controlled query
-- R07: 2 active linked external users
-- R08: 4 assignments; both users hold both legacy permission sets
-- R09: not complete
+- R06-CORRECTED-01: 0 duplicate groups across all approved active statuses
+- R07: 2 active linked external users; 0 latest-R04 overlaps
+- R08: 4 assignments approved for retention under RC04
+- R09-01: collected; 17 of 20 standard Contact history fields tracked
+- R09-02: administrator confirms Field Audit Trail is not licensed or enabled
+  and A-IMP-02 does not rely on extended retention
+- R09-03: passes; Queue supports Case and has one active direct user member
+- R09-04: passes; executing user can create Case and write all M014 fields
+- R09-05: passes; relevant licences are active and required features are
+  available for the current scope
 
 ## Not completed
 
-1. R09 Setup screenshots or exports.
-2. Business, privacy and security owner approvals.
-3. Reconciliation of current HEAD with the approved metadata baseline.
-4. Explanation of runtime Portal Role value `Subject`.
-5. Cross-status active-request duplicate evidence.
-6. Exact M018 sixth layout API name.
-7. Exact M030 test class API names.
-8. Category B-I regression execution.
-9. Experience Cloud current-state no-regression verification.
-10. Check-only deployment, Sandbox deployment, activation and as-built
+1. Remaining owner decisions not covered by RC02 and RC04.
+2. Exact M030 test class API names.
+3. Category B-I regression execution.
+4. Experience Cloud current-state no-regression verification.
+5. Check-only deployment, Sandbox deployment, activation and as-built
     verification; these activities are not authorised.
 
 ## P1/P2 risks and conflicts
@@ -89,20 +88,22 @@ No Salesforce metadata or record was modified.
   Role values match repository metadata.
 - Contact history is partially and incorrectly configured relative to
   M024-M025.
-- R06 can miss duplicates spanning different active statuses.
-- R09 capacity, queue, Case permission and licence evidence is absent.
-- M018 and M030 contain unresolved API-name scope.
+- RC07 is resolved: the approved corrected R06 found zero cross-status
+  duplicate groups.
+- RC06 is resolved: R09-01, R09-03, R09-04 and R09-05 pass; R09-02 is
+  administrator-confirmed not applicable.
+- RC08 is resolved: the internal M018 matrix is approved, the shared Contact
+  layout is retained, and Community layouts remain unchanged for A-IMP-09.
+- M030 retains unresolved API-name scope.
 - Category B-I and Experience Cloud regressions remain unproven.
 
 ## Changes requiring written approval
 
 No file is eligible for implementation now. Written decisions are required for:
 
-1. M018 sixth physical layout API;
-2. M030 exact test class APIs;
-3. R06 cross-status evidence rule;
-4. M024-M025 history correction;
-5. all runtime-gated component activations.
+1. M030 exact test class APIs;
+2. M024-M025 history correction;
+3. all runtime-gated component activations.
 
 ## Workstream boundaries
 
@@ -117,13 +118,12 @@ Do not start Phase 2 implementation while the remaining stop conditions exist.
 
 Recommended next actions:
 
-1. Complete R09 with an authorised Setup operator.
-2. Obtain remaining named owner reviews not covered by RC02 and RC04.
-3. Use approved metadata baseline `8391a96` for subsequent diffs.
-4. Reconcile the target Org runtime values to baseline `8391a96`.
-5. Resolve M018, M030 and R06 through a controlled document amendment.
-6. Define and execute Category B-I and Experience Cloud regression evidence.
-7. Re-submit the updated evidence package for written project-owner approval.
+1. Obtain remaining named owner reviews not covered by RC02 and RC04.
+2. Use approved metadata baseline `8391a96` for subsequent diffs.
+3. Reconcile the target Org runtime values to baseline `8391a96`.
+4. Resolve M030 through a controlled document amendment.
+5. Define and execute Category B-I and Experience Cloud regression evidence.
+6. Re-submit the updated evidence package for written project-owner approval.
 
 Until those actions are complete, no metadata build, validation deployment,
 Sandbox deployment or activation may begin.

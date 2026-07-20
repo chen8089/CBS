@@ -48,3 +48,54 @@ assignments were addressed by the separate RC04 decision below.
 
 The approval covers the four current assignments only. It does not approve
 additional users, broader permissions or A-IMP-08/A-IMP-09 implementation.
+
+## R09-02 - Shield Field Audit Trail applicability
+
+- Decision date: 2026-07-20
+- Decision source: written administrator confirmation in Cursor conversation
+- Decision: Field Audit Trail is not licensed or not enabled and A-IMP-02 does
+  not rely on extended retention.
+- Result: R09-02 closed as not applicable.
+
+Standard Contact field-history capacity and retention assumptions apply. No
+extended retention or Shield capacity is claimed.
+
+## RC07 - Corrected R06 cross-status rule
+
+- Decision date: 2026-07-20
+- Decision source: written approval in Cursor conversation
+- Decision: group `Pending`, `Sent` and `Viewed` records together without
+  grouping by `Current_Status__c`.
+- Execution result: zero cross-status duplicate groups.
+- Result: RC07 resolved.
+
+This approval corrects the read-only evidence rule. It does not authorise DML,
+backfill, deployment or activation of M013B-M013D.
+
+## RC08 - M018 shared layout strategy
+
+- Decision date: 2026-07-20
+- Decision source: written selection in Cursor conversation
+- Evidence: `Contact-Contact Layout` is the sixth M018 layout and is shared by
+  Data Subject-family, Client User and Master Record Types.
+- Decision: amend the Manifest to add controlled Page Layout Assignment
+  changes so different Record Types use dedicated layouts.
+- Rejected alternatives: modify the shared layout with cross-record-type impact
+  or accept continued Data Subject-family exposure.
+
+The strategy is approved, but implementation remains stopped until the exact
+Profile/Record Type assignment matrix and M021/A-IMP-09 boundaries are added
+to and approved in the Manifest.
+
+### Internal matrix approval
+
+- Effective Permission Set review result: pass
+- Approved internal Profile files: 12
+- Approved assignment changes: 46
+- Approval date: 2026-07-20
+
+The approval excludes Experience Cloud Profile assignment changes. The
+Customer Community Plus Client User/Data Subject shared Community layout
+is retained unchanged under the previously confirmed boundary. Community
+layout redesign remains deferred to A-IMP-09; A-IMP-02 performs no-regression
+verification only.

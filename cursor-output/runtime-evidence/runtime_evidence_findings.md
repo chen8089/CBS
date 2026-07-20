@@ -63,9 +63,11 @@ business owner decision, privacy approval and separately authorised execution.
 
 ### R06 - Active request duplicates
 
-- Rows: 0 under the controlled query.
-- The controlled query groups by active status and can miss duplicates spanning
-  different active statuses. M013B-M013D remain blocked.
+- Original query: 0 groups, but it grouped separately by active status.
+- Corrected rule approved on 2026-07-20.
+- Corrected cross-status query: 0 duplicate groups across `Pending`, `Sent`
+  and `Viewed`.
+- RC07 is resolved. Deployment, backfill and activation gates remain separate.
 
 ### R07 - Linked external users
 
@@ -86,13 +88,21 @@ No A-IMP-08/A-IMP-09 permission change is authorised here.
 
 ### R09 - Setup checks
 
-Not complete. Required operator evidence:
+Partially complete.
 
-- Contact history capacity and tracked fields
-- Shield retention policy
-- CBS Processing Queue active membership
-- Case create permission and required FLS
-- licence and feature availability
+- R09-01 Contact history capacity: collected; 17 of 20 standard fields tracked,
+  with a target of 6 of 20 after controlled M025 replacement.
+- R09-02 Shield retention policy: administrator confirms Field Audit Trail is
+  not licensed or enabled and A-IMP-02 does not rely on extended retention;
+  standard history assumptions apply.
+- R09-03 CBS Processing Queue active membership: passes; Queue exists, supports
+  Case and has one active direct user member.
+- R09-04 Case create permission and required FLS: passes; Case is createable,
+  all nine M014 fields are createable and target picklist values are available.
+- R09-05 licence and feature availability: passes; relevant licences are active
+  and the required features are available for the current scope.
+
+R09 evidence collection is complete pending review. RC06 is resolved.
 
 ## Stop conditions triggered
 
