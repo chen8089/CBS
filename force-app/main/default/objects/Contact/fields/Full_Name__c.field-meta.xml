@@ -5,8 +5,8 @@
     <externalId>false</externalId>
     <label>全名</label>
     <length>255</length>
-    <required>true</required>
-    <trackFeedHistory>true</trackFeedHistory>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
     <type>Text</type>
     <unique>false</unique>

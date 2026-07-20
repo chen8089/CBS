@@ -97,6 +97,9 @@ business record was modified by this implementation activity.
   (`0AfBK00000BUDMT0A5`), all 60 ProfileLayout mappings were verified, the
   shared Contact layout is retained, and Community layouts remain unchanged
   for A-IMP-09.
+- M017/M019/M020 are deployed to ChenTest: the standard-component Client User
+  Lightning Record Page is active for Admin on Small and Large form factors,
+  with no Community or Business Development assignment.
 - RC09 is resolved: M030 was implemented and the six blocking classes passed
   the final post-deployment run `707BK00001B1HY3`.
 - Automated B/C/D/F/I rows passed. E/G/H remain approved not applicable.

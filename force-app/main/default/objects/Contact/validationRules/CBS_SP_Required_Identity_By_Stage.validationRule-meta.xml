@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CBS_SP_Required_Identity_By_Stage</fullName>
+    <active>true</active>
+    <description>Requires Singpass identity fields during active processing and Singpass authentication from Consent Request onward.</description>
+    <errorConditionFormula>AND(
+    $RecordType.DeveloperName = &quot;Singpass&quot;,
+    OR(
+        ISPICKVAL(Data_Subject_Lifecycle_Stage__c, &quot;Upload&quot;),
+        ISPICKVAL(Data_Subject_Lifecycle_Stage__c, &quot;Consent Request&quot;),
+        ISPICKVAL(Data_Subject_Lifecycle_Stage__c, &quot;Active Consent&quot;),
+        ISPICKVAL(Data_Subject_Lifecycle_Stage__c, &quot;Processing&quot;),
+        ISPICKVAL(Data_Subject_Lifecycle_Stage__c, &quot;Report Request&quot;),
+        ISPICKVAL(Data_Subject_Lifecycle_Stage__c, &quot;Report Fulfilment&quot;),
+        ISPICKVAL(Data_Subject_Lifecycle_Stage__c, &quot;Departure&quot;)
+    ),
+    OR(
+        ISBLANK(AccountId),
+        ISBLANK(Full_Name__c),
+        ISBLANK(Email),
+        ISBLANK(TEXT(ID_Type__c)),
+        ISBLANK(ID_Number__c),
+        ISBLANK(Date_of_Birth__c),
+        ISBLANK(TEXT(Employment_Status__c)),
+        AND(
+            NOT(ISPICKVAL(Data_Subject_Lifecycle_Stage__c, &quot;Upload&quot;)),
+            NOT(ISPICKVAL(Authentication_Type__c, &quot;Singpass&quot;))
+        )
+    )
+)</errorConditionFormula>
+    <errorMessage>Complete the required Singpass identity and authentication fields before continuing this active processing stage.</errorMessage>
+</ValidationRule>

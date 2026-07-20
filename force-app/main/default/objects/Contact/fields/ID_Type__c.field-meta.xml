@@ -2,8 +2,8 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>ID_Type__c</fullName>
     <label>证件类型</label>
-    <required>true</required>
-    <trackFeedHistory>true</trackFeedHistory>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
     <type>Picklist</type>
     <valueSet>

@@ -62,6 +62,7 @@ Canonical submission root: `cursor-output/`
 - `runtime-evidence/RC07_corrected_R06_verification_20260720.md`
 - `runtime-evidence/RC08_layout_assignment_verification_20260720.md`
 - `runtime-evidence/M018_layout_separation_deployment_20260720.md`
+- `runtime-evidence/M017_M020_client_user_lightning_page_20260720.md`
 - `runtime-evidence/R09_setup_checklist.csv`
 - `runtime-evidence/Client_User_PII_remediation_register.csv`
 - `runtime-evidence/duplicate_Client_User_disposition_register.csv`

@@ -1,17 +1,17 @@
 manifest_id,action,path,final_status,blocker_or_boundary
-M001,MODIFY,force-app/main/default/objects/Contact/fields/Full_Name__c.field-meta.xml,BLOCKED,Atomic M009 package and Phase 2 approval
-M002,MODIFY,force-app/main/default/objects/Contact/fields/ID_Type__c.field-meta.xml,BLOCKED,Atomic M009 package and Phase 2 approval
-M003,MODIFY,force-app/main/default/objects/Contact/fields/ID_Number__c.field-meta.xml,BLOCKED,Atomic M009 package and Phase 2 approval
-M004,MODIFY,force-app/main/default/objects/Contact/fields/Employment_Status__c.field-meta.xml,BLOCKED,Approved baseline history conflicts with M025 target
+M001,MODIFY,force-app/main/default/objects/Contact/fields/Full_Name__c.field-meta.xml,DEPLOYED_CHENTEST,Global requiredness removed atomically with active M009 controls
+M002,MODIFY,force-app/main/default/objects/Contact/fields/ID_Type__c.field-meta.xml,DEPLOYED_CHENTEST,Global requiredness removed and Client User exposure removed
+M003,MODIFY,force-app/main/default/objects/Contact/fields/ID_Number__c.field-meta.xml,DEPLOYED_CHENTEST,Global requiredness removed and Client User exposure removed
+M004,MODIFY,force-app/main/default/objects/Contact/fields/Employment_Status__c.field-meta.xml,DEPLOYED_CHENTEST,Global requiredness removed; field history retained
 M005|M025,MODIFY,force-app/main/default/objects/Contact/fields/Portal_Role__c.field-meta.xml,BLOCKED,Owner review and controlled history replacement
 M006,MODIFY,force-app/main/default/objects/Contact/recordTypes/Client_User.recordType-meta.xml,BLOCKED,Owner review and no Client User population
 M007,ADD,force-app/main/default/objects/Contact/validationRules/CBS_CU_Required_Core.validationRule-meta.xml,BLOCKED,Approval and tests
 M008A,ADD,force-app/main/default/objects/Contact/validationRules/CBS_CU_Prohibit_Identity_PII.validationRule-meta.xml,BLOCKED,R02 owner review
 M008B,ADD,force-app/main/default/objects/Contact/validationRules/CBS_CU_Prohibit_Consent_Data.validationRule-meta.xml,BLOCKED,R02 owner review
 M008C,ADD,force-app/main/default/objects/Contact/validationRules/CBS_CU_Prohibit_Processing_Data.validationRule-meta.xml,BLOCKED,R02 owner review
-M009A,ADD,force-app/main/default/objects/Contact/validationRules/CBS_DS_Required_Identity_By_Stage.validationRule-meta.xml,BLOCKED,Category B stage regression and atomic package
-M009B,ADD,force-app/main/default/objects/Contact/validationRules/CBS_SP_Required_Identity_By_Stage.validationRule-meta.xml,BLOCKED,Singpass regression and atomic package
-M009C,ADD,force-app/main/default/objects/Contact/validationRules/CBS_NSP_Required_Identity_By_Stage.validationRule-meta.xml,BLOCKED,Non-Singpass regression and atomic package
+M009A,ADD,force-app/main/default/objects/Contact/validationRules/CBS_DS_Required_Identity_By_Stage.validationRule-meta.xml,DEPLOYED_ACTIVE_CHENTEST,Active stage-scoped identity rule verified
+M009B,ADD,force-app/main/default/objects/Contact/validationRules/CBS_SP_Required_Identity_By_Stage.validationRule-meta.xml,DEPLOYED_ACTIVE_CHENTEST,Active Singpass identity and authentication rule verified
+M009C,ADD,force-app/main/default/objects/Contact/validationRules/CBS_NSP_Required_Identity_By_Stage.validationRule-meta.xml,DEPLOYED_ACTIVE_CHENTEST,Active Non-Singpass identity and authentication rule verified
 M010,ADD,force-app/main/default/objects/Contact/validationRules/CBS_DS_Prohibit_Client_Access_Data.validationRule-meta.xml,BLOCKED,RC02 approved; controlled build and activation sequence remain
 M011,ADD,force-app/main/default/objects/Contact/validationRules/CBS_CU_Role_Approval_Consistency.validationRule-meta.xml,BLOCKED,Role dry-run unavailable
 M012|M013D|M014,MODIFY,force-app/main/default/flows/contactApproveCreateConsentRequest.flow-meta.xml,DEPLOYED_CHENTEST,Flow version 6 active; automated regression passed
@@ -23,7 +23,7 @@ M013D|M014,ADD,force-app/main/default/flows/ConsentRequestResolveActiveRequest.f
 M013A|M013B,MODIFY,force-app/main/default/permissionsets/CBS_Implementation_Partner_Admin.permissionset-meta.xml,DEPLOYED_CHENTEST,Executing-user FLS for new fields
 M015,MODIFY,force-app/main/default/classes/BatchExcelUploadController.cls,DEPLOYED_CHENTEST,Portal Role auto-population removed
 M016|M030,MODIFY,force-app/main/default/classes/BatchExcelUploadControllerTest.cls,DEPLOYED_CHENTEST,42 post-deployment methods passed
-M017,MODIFY,force-app/main/default/layouts/Contact-CBS Contact - Client User Layout.layout-meta.xml,BLOCKED,M008 M019 and UI QA
+M017,MODIFY,force-app/main/default/layouts/Contact-CBS Contact - Client User Layout.layout-meta.xml,DEPLOYED_CHENTEST,Prohibited Data Subject fields and actions absent in as-built retrieve
 M018,MODIFY,force-app/main/default/layouts/Contact-CBS Contact - Data Subject Layout.layout-meta.xml,DEPLOYED_CHENTEST,Portal_Role__c removed; retrieved metadata hash verified
 M018,MODIFY,force-app/main/default/layouts/Contact-CBS Contact - SingPass.layout-meta.xml,DEPLOYED_CHENTEST,Portal_Role__c removed; retrieved metadata hash verified
 M018,MODIFY,force-app/main/default/layouts/Contact-CBS Contact - Non-SingPass.layout-meta.xml,DEPLOYED_CHENTEST,Portal_Role__c removed; retrieved metadata hash verified
@@ -42,8 +42,8 @@ M018,MODIFY,force-app/main/default/profiles/Read Only.profile-meta.xml,DEPLOYED_
 M018,MODIFY,force-app/main/default/profiles/Sales Insights Integration User.profile-meta.xml,DEPLOYED_CHENTEST,4 approved assignment changes verified by ProfileLayout
 M018,MODIFY,force-app/main/default/profiles/SolutionManager.profile-meta.xml,DEPLOYED_CHENTEST,4 approved assignment changes verified by ProfileLayout
 M018,MODIFY,force-app/main/default/profiles/Standard.profile-meta.xml,DEPLOYED_CHENTEST,4 approved assignment changes verified by ProfileLayout
-M019,ADD,force-app/main/default/flexipages/CBS_Client_User_Record_Page.flexipage-meta.xml,BLOCKED,M017 M020 approval and QA
-M020,MODIFY,force-app/main/default/applications/Credit_Bureau.app-meta.xml,BLOCKED,M019 and A-IMP-08 boundary
+M019,ADD,force-app/main/default/flexipages/CBS_Client_User_Record_Page.flexipage-meta.xml,DEPLOYED_ACTIVE_CHENTEST,Salesforce standard-component page created and assigned
+M020,MODIFY,force-app/main/default/applications/Credit_Bureau.app-meta.xml,DEPLOYED_ACTIVE_CHENTEST,Admin Small and Large Client_User overrides active; external scope unchanged
 M021,RETAIN,force-app/main/default/profiles/Customer Community Plus User.profile-meta.xml,DEFERRED_AIMP09,Current-state regression only
 M022,MODIFY,force-app/main/default/matchingRules/Contact.matchingRule-meta.xml,BLOCKED,R05 owner review and tests
 M023,ADD,force-app/main/default/duplicateRules/Contact.CBS_Client_User_Email_Account_Duplicate.duplicateRule-meta.xml,BLOCKED,R05 owner review and tests
