@@ -158,7 +158,7 @@
     <nameField>
         <displayFormat>RRI-{00000}</displayFormat>
         <label>明细名称</label>
-        <trackHistory>false</trackHistory>
+        <trackHistory>true</trackHistory>
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Report Request Items</pluralLabel>

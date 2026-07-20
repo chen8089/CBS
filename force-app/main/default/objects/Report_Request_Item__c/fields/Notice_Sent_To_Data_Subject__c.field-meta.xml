@@ -3,7 +3,7 @@
     <fullName>Notice_Sent_To_Data_Subject__c</fullName>
     <defaultValue>false</defaultValue>
     <label>已通知员工</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

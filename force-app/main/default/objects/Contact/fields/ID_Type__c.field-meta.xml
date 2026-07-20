@@ -4,6 +4,7 @@
     <label>证件类型</label>
     <required>true</required>
     <trackFeedHistory>true</trackFeedHistory>
+    <trackHistory>false</trackHistory>
     <type>Picklist</type>
     <valueSet>
         <valueSetDefinition>

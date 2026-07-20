@@ -70,9 +70,9 @@
                 </div>
 
                 <footer class="slds-modal__footer">
-                    <lightning-button label="Cancel" onclick={handleCancel}></lightning-button>
+                    <lightning-button label={actionCancelLabel} onclick={handleCancel}></lightning-button>
                     <lightning-button
-                        label="Upload"
+                        label={actionUploadLabel}
                         variant="brand"
                         onclick={handleUpload}
                         disabled={uploadDisabled}

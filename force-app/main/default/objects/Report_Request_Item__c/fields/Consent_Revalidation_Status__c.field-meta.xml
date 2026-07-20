@@ -3,7 +3,7 @@
     <fullName>Consent_Revalidation_Status__c</fullName>
     <label>Consent Revalidation Status</label>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>

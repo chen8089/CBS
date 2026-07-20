@@ -309,9 +309,16 @@ public without sharing class WithdrawalImportantNotesController {
     }
 
     private Boolean hasWithdrawableActiveConsent(Id subjectId) {
+        if (consentRecord != null) {
+            return true;
+        }
+        if (hasActiveConsentRecord(subjectId)) {
+            return true;
+        }
+
         String contactStatus = getStringFieldValue(contactRecord, new List<String>{ 'Current_Consent_Status__c' });
         if (isActiveContactConsentStatus(contactStatus)) {
-            return consentRecord != null || hasActiveConsentRecord(subjectId);
+            return true;
         }
         return false;
     }

@@ -101,6 +101,8 @@ private class ReportRequestExportServiceTest {
     static void exportAuthorizedListForLatestBatchReturnsOnlyCurrentBatchRows() {
         BatchSeed seed = createBatchSeedData('BATCH-LATEST-001', 3);
         ExportAuthorizationService.bypassProcessingOfficerCheckInTests = true;
+        ReportRequestExportService.skipWhitelistNotificationSendDuringTests = true;
+        ReportRequestExportService.lastWhitelistNotificationRecipientCountForTest = 0;
 
         ReportRequestExportService.BatchExportResult result = ReportRequestExportService.exportAuthorizedListForLatestBatch(
             new List<String>{ 'Data_Subject__c', 'Delivery_Status__c' }
@@ -112,12 +114,18 @@ private class ReportRequestExportServiceTest {
         System.assertEquals(0, result.filteredRows);
         System.assert(result.csvBody.contains('Case_Number'));
         System.assert(result.csvBody.split('\n').size() >= 4);
+        System.assert(
+            ReportRequestExportService.lastWhitelistNotificationRecipientCountForTest >= 3,
+            'Expected whitelist recipients to include data subjects (and optionally HR).'
+        );
     }
 
     @IsTest
     static void exportAuthorizedListForLatestBatchFiltersDepartedAndInvalidConsent() {
         BatchSeed seed = createBatchSeedData('BATCH-LATEST-002', 3);
         ExportAuthorizationService.bypassProcessingOfficerCheckInTests = true;
+        ReportRequestExportService.skipWhitelistNotificationSendDuringTests = true;
+        ReportRequestExportService.lastWhitelistNotificationRecipientCountForTest = 0;
 
         Boolean departedMarked = markContactAsDeparted(seed.dataSubjectIds[0]);
         System.assertEquals(true, departedMarked, 'Test org must support at least one departed-like status field/value.');
@@ -137,6 +145,10 @@ private class ReportRequestExportServiceTest {
         System.assertEquals(2, result.filteredRows);
         System.assert(result.csvBody.contains('Excluded - Departed employee'));
         System.assertEquals(3, result.csvBody.split('\n').size(), 'CSV should include authorized + departed rows.');
+        System.assert(
+            ReportRequestExportService.lastWhitelistNotificationRecipientCountForTest >= 2,
+            'Expected notifications for remaining whitelist rows.'
+        );
     }
 
     private static Id createSubmittedCaseWithItems(Integer subjectCount) {

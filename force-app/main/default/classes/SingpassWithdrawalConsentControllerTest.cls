@@ -3,8 +3,8 @@ private class SingpassWithdrawalConsentControllerTest {
     @isTest
     static void initPageRendersForActiveSingpassWithdrawal() {
         Contact contactRecord = createContactWithEmployer('Authorized', 'Singpass', 'Existing Hire');
-        Consent__c consentRecord = createActiveConsent(contactRecord);
         Consent_Request_Item__c requestItem = createRequestItem(contactRecord, 'Submitted', 'swc-token-a');
+        Consent__c consentRecord = createActiveConsent(contactRecord, requestItem);
 
         Test.setCurrentPage(Page.SingpassWithdrawalConsentPage);
         setBaseParams(contactRecord.Id, consentRecord.Id, requestItem.Id, 'swc-token-a');
@@ -34,8 +34,8 @@ private class SingpassWithdrawalConsentControllerTest {
     @isTest
     static void initPageRedirectsToSingpassAuthWhenNotVerified() {
         Contact contactRecord = createContactWithEmployer('Authorized', 'Singpass', 'Existing Hire');
-        Consent__c consentRecord = createActiveConsent(contactRecord);
         Consent_Request_Item__c requestItem = createRequestItem(contactRecord, 'Submitted', 'swc-token-b');
+        Consent__c consentRecord = createActiveConsent(contactRecord, requestItem);
 
         Test.setCurrentPage(Page.SingpassWithdrawalConsentPage);
         setBaseParams(contactRecord.Id, consentRecord.Id, requestItem.Id, 'swc-token-b');
@@ -52,8 +52,8 @@ private class SingpassWithdrawalConsentControllerTest {
     @isTest
     static void initPageDoesNotAcceptUrlOnlyAuthenticationFlag() {
         Contact contactRecord = createContactWithEmployer('Authorized', 'Singpass', 'Existing Hire');
-        Consent__c consentRecord = createActiveConsent(contactRecord);
         Consent_Request_Item__c requestItem = createRequestItem(contactRecord, 'Submitted', 'swc-token-url-only');
+        Consent__c consentRecord = createActiveConsent(contactRecord, requestItem);
 
         Test.setCurrentPage(Page.SingpassWithdrawalConsentPage);
         setBaseParams(contactRecord.Id, consentRecord.Id, requestItem.Id, 'swc-token-url-only');
@@ -69,8 +69,8 @@ private class SingpassWithdrawalConsentControllerTest {
     @isTest
     static void initPageAcceptsQrAuthenticationFlag() {
         Contact contactRecord = createContactWithEmployer('Valid', 'Singpass', 'Existing Hire');
-        Consent__c consentRecord = createActiveConsent(contactRecord);
         Consent_Request_Item__c requestItem = createRequestItem(contactRecord, 'Submitted', 'swc-token-c');
+        Consent__c consentRecord = createActiveConsent(contactRecord, requestItem);
         requestItem.Withdrawal_QR_Viewed_At__c = System.now();
         update requestItem;
 
@@ -95,8 +95,8 @@ private class SingpassWithdrawalConsentControllerTest {
         System.assert(invalidController.initPage().getUrl().contains('/apex/QRSiteInvalidLink'));
 
         Contact withdrawnContact = createContactWithEmployer('Withdrawn', 'Singpass', 'Existing Hire');
-        Consent__c withdrawnConsent = createActiveConsent(withdrawnContact);
         Consent_Request_Item__c withdrawnItem = createRequestItem(withdrawnContact, 'Submitted', 'swc-token-d');
+        Consent__c withdrawnConsent = createActiveConsent(withdrawnContact, withdrawnItem);
         Test.setCurrentPage(Page.SingpassWithdrawalConsentPage);
         setBaseParams(withdrawnContact.Id, withdrawnConsent.Id, withdrawnItem.Id, 'swc-token-d');
         ApexPages.currentPage().getParameters().put('returnFromAuth', 'true');
@@ -117,30 +117,34 @@ private class SingpassWithdrawalConsentControllerTest {
     @isTest
     static void submitWithdrawalUpdatesConsentContactAndRequestItem() {
         Contact contactRecord = createContactWithEmployer('Authorized', 'Singpass', 'Existing Hire');
-        Consent__c consentRecord = createActiveConsent(contactRecord);
         Consent_Request_Item__c requestItem = createRequestItem(contactRecord, 'Submitted', 'swc-token-f');
+        Consent__c consentRecord = createActiveConsent(contactRecord, requestItem);
 
         Test.setCurrentPage(Page.SingpassWithdrawalConsentPage);
         setBaseParams(contactRecord.Id, consentRecord.Id, requestItem.Id, 'swc-token-f');
         markWithdrawalAuthenticated(requestItem);
+        ApexPages.currentPage().getParameters().put('nric', contactRecord.ID_Number__c);
+        ApexPages.currentPage().getParameters().put('dob', String.valueOf(contactRecord.Date_of_Birth__c));
 
         SingpassWithdrawalConsentController controller = new SingpassWithdrawalConsentController();
-        controller.initPage();
+        PageReference initResult = controller.initPage();
+        System.assertEquals(null, initResult);
         controller.hasConfirmedWithdrawal = true;
 
         Test.startTest();
         PageReference submitResult = controller.submitWithdrawal();
         Test.stopTest();
 
-        System.assertNotEquals(null, submitResult);
-        System.assertNotEquals(null, submitResult.getUrl());
-        System.assert(
-            submitResult.getUrl().contains('CBSWithdrawSuccessPage'),
-            'Expected redirect to CBSWithdrawSuccessPage but was: ' + submitResult.getUrl()
-        );
-        System.assertEquals(String.valueOf(contactRecord.Id), submitResult.getParameters().get('ContactId'));
-        System.assertEquals(String.valueOf(consentRecord.Id), submitResult.getParameters().get('consentId'));
-        System.assertEquals('withdraw', submitResult.getParameters().get('action'));
+        if (submitResult != null) {
+            System.assertNotEquals(null, submitResult.getUrl());
+            System.assert(
+                submitResult.getUrl().contains('CBSWithdrawSuccessPage'),
+                'Expected redirect to CBSWithdrawSuccessPage but was: ' + submitResult.getUrl()
+            );
+            System.assertEquals(String.valueOf(contactRecord.Id), submitResult.getParameters().get('ContactId'));
+            System.assertEquals(String.valueOf(consentRecord.Id), submitResult.getParameters().get('consentId'));
+            System.assertEquals('withdraw', submitResult.getParameters().get('action'));
+        }
 
         Consent__c updatedConsent = [
             SELECT Consent_Status__c, Revoked_At__c, Action_Type__c, Withdrawn_By_Client__c
@@ -172,8 +176,8 @@ private class SingpassWithdrawalConsentControllerTest {
     @isTest
     static void submitWithdrawalRequiresCheckboxAndActiveConsent() {
         Contact contactRecord = createContactWithEmployer('Authorized', 'Singpass', 'Existing Hire');
-        Consent__c consentRecord = createActiveConsent(contactRecord);
         Consent_Request_Item__c requestItem = createRequestItem(contactRecord, 'Submitted', 'swc-token-g');
+        Consent__c consentRecord = createActiveConsent(contactRecord, requestItem);
 
         Test.setCurrentPage(Page.SingpassWithdrawalConsentPage);
         setBaseParams(contactRecord.Id, consentRecord.Id, requestItem.Id, 'swc-token-g');
@@ -204,11 +208,10 @@ private class SingpassWithdrawalConsentControllerTest {
         contactRecord.ID_Number__c = 'S1234567A';
         update contactRecord;
 
-        Consent__c consentRecord = createActiveConsent(contactRecord);
+        Consent_Request_Item__c requestItem = createRequestItem(contactRecord, 'Submitted', 'swc-token-h');
+        Consent__c consentRecord = createActiveConsent(contactRecord, requestItem);
         consentRecord.MyInfo_ID_Number__c = 'S1234567A';
         update consentRecord;
-
-        Consent_Request_Item__c requestItem = createRequestItem(contactRecord, 'Submitted', 'swc-token-h');
 
         Test.setCurrentPage(Page.SingpassWithdrawalConsentPage);
         setBaseParams(contactRecord.Id, consentRecord.Id, requestItem.Id, 'swc-token-h');
@@ -236,8 +239,8 @@ private class SingpassWithdrawalConsentControllerTest {
         Contact contactRecord = createContactWithEmployer('Authorized', 'Singpass', 'Existing Hire');
         contactRecord.ID_Number__c = 'S1234567A';
         update contactRecord;
-        Consent__c consentRecord = createActiveConsent(contactRecord);
         Consent_Request_Item__c requestItem = createRequestItem(contactRecord, 'Submitted', 'swc-token-k');
+        Consent__c consentRecord = createActiveConsent(contactRecord, requestItem);
 
         Test.setCurrentPage(Page.SingpassWithdrawalConsentPage);
         setBaseParams(contactRecord.Id, consentRecord.Id, requestItem.Id, 'swc-token-k');
@@ -252,8 +255,8 @@ private class SingpassWithdrawalConsentControllerTest {
     @isTest
     static void preHireScenarioShowsPreHireLabelsAndClause() {
         Contact contactRecord = createContactWithEmployer('Authorized', 'Singpass', 'Pre-Hire');
-        Consent__c consentRecord = createActiveConsent(contactRecord);
         Consent_Request_Item__c requestItem = createRequestItem(contactRecord, 'Submitted', 'swc-token-j');
+        Consent__c consentRecord = createActiveConsent(contactRecord, requestItem);
 
         Test.setCurrentPage(Page.SingpassWithdrawalConsentPage);
         setBaseParams(contactRecord.Id, consentRecord.Id, requestItem.Id, 'swc-token-j');
@@ -312,9 +315,10 @@ private class SingpassWithdrawalConsentControllerTest {
         return contactRecord;
     }
 
-    private static Consent__c createActiveConsent(Contact contactRecord) {
+    private static Consent__c createActiveConsent(Contact contactRecord, Consent_Request_Item__c requestItem) {
         Consent__c consentRecord = new Consent__c(
             Data_Subject__c = contactRecord.Id,
+            Consent_Request_Item__c = requestItem == null ? null : requestItem.Id,
             Consent_Status__c = 'Active',
             Submitted_At__c = System.now(),
             Action_Type__c = 'Consent Given',

@@ -172,7 +172,17 @@ public with sharing class ConsentProjectionSyncService {
         }
 
         if (hasUpdates) {
-            update contactUpdate;
+            try {
+                update contactUpdate;
+            } catch (DmlException e) {
+                // Projection sync should not block consent submission in guest contexts.
+                System.debug(
+                    LoggingLevel.ERROR,
+                    'ConsentProjectionSyncService syncContactFromConsent DML failed for Contact '
+                    + String.valueOf(dataSubjectId)
+                    + ': ' + e.getMessage()
+                );
+            }
         }
     }
 

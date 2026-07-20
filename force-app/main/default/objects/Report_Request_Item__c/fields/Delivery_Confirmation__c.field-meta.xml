@@ -3,7 +3,7 @@
     <fullName>Delivery_Confirmation__c</fullName>
     <defaultValue>false</defaultValue>
     <label>交付确认</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

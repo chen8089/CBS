@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <IndustriesSettings xmlns="http://soap.sforce.com/2006/04/metadata">
     <enableAccountScoreEnabled>false</enableAccountScoreEnabled>
+    <enableAutoIdentifyDocAITemplate>false</enableAutoIdentifyDocAITemplate>
     <enableDiscoveryFrameworkMetadata>false</enableDiscoveryFrameworkMetadata>
     <enableDontSharePartyprofWPortalOrgPref>false</enableDontSharePartyprofWPortalOrgPref>
     <enableEnhancedQuestionCreation>true</enableEnhancedQuestionCreation>

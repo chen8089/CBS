@@ -93,6 +93,8 @@ public without sharing class ConsentSubmissionService {
             withdrawalConsent.MyInfo_ID_Number__c = activeConsent.MyInfo_ID_Number__c;
             withdrawalConsent.MyInfo_Date_of_Birth__c = activeConsent.MyInfo_Date_of_Birth__c;
             withdrawalConsent.MyInfo_Residential_Address__c = activeConsent.MyInfo_Residential_Address__c;
+            Id linkedRequestItemId = requestItemId == null ? activeConsent.Consent_Request_Item__c : requestItemId;
+            setFieldIfAvailable(withdrawalConsent, 'Consent_Request_Item__c', linkedRequestItemId);
             setFieldIfAvailable(withdrawalConsent, 'Consent_Withdrawn_Date__c', withdrawnAt);
             setFieldIfAvailable(withdrawalConsent, 'Withdrawal_Channel__c', 'Data Subject Singpass');
             setFieldIfAvailable(withdrawalConsent, 'Withdrawal_By__c', UserInfo.getUserId());

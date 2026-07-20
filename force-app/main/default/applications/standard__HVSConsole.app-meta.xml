@@ -21,9 +21,13 @@
     <tabs>standard-Feed</tabs>
     <tabs>standard-CollaborationGroup</tabs>
     <tabs>standard-File</tabs>
+    <tabs>Reports__c</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>HVSConsole_UtilityBar</utilityBar>
     <workspaceConfig>
+        <mappings>
+            <tab>Reports__c</tab>
+        </mappings>
         <mappings>
             <tab>standard-Account</tab>
         </mappings>

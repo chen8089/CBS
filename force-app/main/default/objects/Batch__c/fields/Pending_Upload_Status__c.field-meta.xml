@@ -3,6 +3,7 @@
     <fullName>Pending_Upload_Status__c</fullName>
     <label>Pending Upload Status</label>
     <required>false</required>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>

@@ -3,6 +3,8 @@ import login from '@salesforce/apex/CbsExperienceLoginController.login';
 import resetPassword from '@salesforce/apex/CbsExperienceLoginController.resetPassword';
 import cbsLogo from '@salesforce/resourceUrl/cbsLogo';
 import cbsHomeAssets from '@salesforce/resourceUrl/cbsHomeAssets';
+import USERNAME_REQUIRED_MESSAGE from '@salesforce/label/c.CBS_Login_Username_Required';
+import BRAND_INFORMATION_ARIA_LABEL from '@salesforce/label/c.CBS_A11y_Brand_Information';
 
 const REMEMBERED_USERNAME_KEY = 'cbsExperienceRememberedUsername';
 const DEFAULT_START_URL = '/s/';
@@ -24,6 +26,7 @@ export default class CbsExperienceLogin extends LightningElement {
     @track forgotPasswordUsername = '';
 
     mode = 'login';
+    brandInformationAriaLabel = BRAND_INFORMATION_ARIA_LABEL;
 
     startUrl = DEFAULT_START_URL;
 
@@ -106,7 +109,7 @@ export default class CbsExperienceLogin extends LightningElement {
 
         const normalizedUsername = (this.username || '').trim();
         if (!normalizedUsername) {
-            this.errorMessage = 'Please enter your username.';
+            this.errorMessage = USERNAME_REQUIRED_MESSAGE;
             return;
         }
 
@@ -180,7 +183,7 @@ export default class CbsExperienceLogin extends LightningElement {
 
         const normalizedUsername = (this.forgotPasswordUsername || '').trim();
         if (!normalizedUsername) {
-            this.errorMessage = 'Please enter your username.';
+            this.errorMessage = USERNAME_REQUIRED_MESSAGE;
             this.successMessage = '';
             return;
         }

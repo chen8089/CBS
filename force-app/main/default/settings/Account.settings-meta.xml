@@ -3,7 +3,7 @@
     <enableAccountHistoryTracking>false</enableAccountHistoryTracking>
     <enableAccountInsightsInMobile>false</enableAccountInsightsInMobile>
     <enableAccountTeams>false</enableAccountTeams>
-    <enableContactHistoryTracking>false</enableContactHistoryTracking>
+    <enableContactHistoryTracking>true</enableContactHistoryTracking>
     <enableRelateContactToMultipleAccounts>true</enableRelateContactToMultipleAccounts>
     <showViewHierarchyLink>true</showViewHierarchyLink>
 </AccountSettings>

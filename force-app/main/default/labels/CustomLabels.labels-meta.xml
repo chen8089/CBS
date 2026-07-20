@@ -22,23 +22,23 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>MyInfo API base URL</shortDescription>
-        <value>https://cbs.frensworkz.com</value>
+        <value>https://cbs-auth-api-cb99a585ad5a.herokuapp.com</value>
     </labels>
     <labels>
         <fullName>CBS_MyInfo_Basic_Auth_Password</fullName>
         <categories>CBS,Singpass,MyInfo</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>MyInfo API basic auth password</shortDescription>
-        <value>gqnkiAvM43Dz70gF</value>
+        <shortDescription>Deprecated: use Named Credential for MyInfo auth</shortDescription>
+        <value>DEPRECATED_USE_NAMED_CREDENTIAL</value>
     </labels>
     <labels>
         <fullName>CBS_MyInfo_Basic_Auth_Username</fullName>
         <categories>CBS,Singpass,MyInfo</categories>
         <language>en_US</language>
         <protected>false</protected>
-        <shortDescription>MyInfo API basic auth username</shortDescription>
-        <value>cbs</value>
+        <shortDescription>Deprecated: use Named Credential for MyInfo auth</shortDescription>
+        <value>DEPRECATED_USE_NAMED_CREDENTIAL</value>
     </labels>
     <labels>
         <fullName>Singpass_Login_Config_Json</fullName>
@@ -47,5 +47,117 @@
         <protected>false</protected>
         <shortDescription>SingPass Login runtime configuration JSON</shortDescription>
         <value>{&quot;discoveryUrl&quot;:&quot;https://stg-id.singpass.gov.sg/fapi/.well-known/openid-configuration&quot;,&quot;parEndpoint&quot;:&quot;https://stg-id.singpass.gov.sg/fapi/par&quot;,&quot;clientId&quot;:&quot;cZfR36RYmPK7UM1BpTchYZS21zIzgI37&quot;,&quot;redirectUri&quot;:&quot;https://cbs.frensworkz.com/api/v1/myinfo/callback&quot;,&quot;scope&quot;:&quot;dob email marital name nationality openid passportnumber passtype regadd sex uinfin&quot;,&quot;signingCertificateName&quot;:&quot;CHANGE_ME_SALESFORCE_CERT_FOR_MYINFO_SIGNING_KEY&quot;,&quot;signingKid&quot;:&quot;myinfo-signing-key&quot;,&quot;dpopCertificateName&quot;:&quot;CHANGE_ME_SALESFORCE_DPOP_CERT&quot;,&quot;dpopPublicJwk&quot;:&quot;{\&quot;kty\&quot;:\&quot;EC\&quot;,\&quot;crv\&quot;:\&quot;P-256\&quot;,\&quot;alg\&quot;:\&quot;ES256\&quot;,\&quot;use\&quot;:\&quot;sig\&quot;,\&quot;x\&quot;:\&quot;CHANGE_ME_DPOP_X\&quot;,\&quot;y\&quot;:\&quot;CHANGE_ME_DPOP_Y\&quot;}&quot;,&quot;authenticationContextType&quot;:&quot;APP_AUTHENTICATION_DEFAULT&quot;,&quot;authenticationContextMessage&quot;:&quot;Login to your account&quot;,&quot;jwtTtlSeconds&quot;:60,&quot;stateTtlSeconds&quot;:600,&quot;discoveryCacheSeconds&quot;:3600}</value>
+    </labels>
+    <labels>
+        <fullName>CBS_A11y_Brand_Information</fullName>
+        <categories>CBS,Experience,Accessibility</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Aria label for login page brand information panel</shortDescription>
+        <value>Credit Bureau Singapore brand information</value>
+    </labels>
+    <labels>
+        <fullName>CBS_Action_Cancel</fullName>
+        <categories>CBS,Experience,Actions</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Standard cancel action label</shortDescription>
+        <value>Cancel</value>
+    </labels>
+    <labels>
+        <fullName>CBS_Action_Upload</fullName>
+        <categories>CBS,Experience,Actions</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Standard upload action label</shortDescription>
+        <value>Upload</value>
+    </labels>
+    <labels>
+        <fullName>CBS_EmptyState_NoDataSubjectsFound</fullName>
+        <categories>CBS,Experience,Dashboard</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Empty state title when no data subjects are found</shortDescription>
+        <value>No data subjects found</value>
+    </labels>
+    <labels>
+        <fullName>CBS_EmptyState_TryAnotherFilter</fullName>
+        <categories>CBS,Experience,Dashboard</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Empty state guidance to adjust filters or search</shortDescription>
+        <value>Try another filter or adjust your search.</value>
+    </labels>
+    <labels>
+        <fullName>CBS_Login_Username_Required</fullName>
+        <categories>CBS,Experience,Login</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Validation message when login username is empty</shortDescription>
+        <value>Please enter your username.</value>
+    </labels>
+    <labels>
+        <fullName>CBS_Nav_Batch</fullName>
+        <categories>CBS,Experience,Navigation</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Portal navigation label for Batch</shortDescription>
+        <value>Batch</value>
+    </labels>
+    <labels>
+        <fullName>CBS_Nav_Consent</fullName>
+        <categories>CBS,Experience,Navigation</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Portal navigation label for Consent</shortDescription>
+        <value>Consent</value>
+    </labels>
+    <labels>
+        <fullName>CBS_Nav_Exceptions</fullName>
+        <categories>CBS,Experience,Navigation</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Portal navigation label for Exceptions</shortDescription>
+        <value>Exceptions</value>
+    </labels>
+    <labels>
+        <fullName>CBS_Nav_Home</fullName>
+        <categories>CBS,Experience,Navigation</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Portal navigation label for Home</shortDescription>
+        <value>Home</value>
+    </labels>
+    <labels>
+        <fullName>CBS_Nav_Report_Requests</fullName>
+        <categories>CBS,Experience,Navigation</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Portal navigation label for Report Requests</shortDescription>
+        <value>Report Requests</value>
+    </labels>
+    <labels>
+        <fullName>CBS_Nav_Resignation_Departure</fullName>
+        <categories>CBS,Experience,Navigation</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Portal navigation label for Resignation / Departure</shortDescription>
+        <value>Resignation / Departure</value>
+    </labels>
+    <labels>
+        <fullName>CBS_NonSingpass_Section2_IdentityInfo</fullName>
+        <categories>CBS,Guest Site,Identity Form</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Section title for identity information block</shortDescription>
+        <value>Section 2: Identity Information</value>
+    </labels>
+    <labels>
+        <fullName>CBS_NonSingpass_Upload_Accepted_Hint</fullName>
+        <categories>CBS,Guest Site,Identity Form</categories>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Upload file type and size hint</shortDescription>
+        <value>Accepted: JPG, JPEG, PNG, PDF. Max 5MB.</value>
     </labels>
 </CustomLabels>

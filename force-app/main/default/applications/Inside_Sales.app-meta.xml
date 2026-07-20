@@ -18,6 +18,7 @@
     <tabs>standard-Contact</tabs>
     <tabs>standard-Account</tabs>
     <tabs>standard-Campaign</tabs>
+    <tabs>Reports__c</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>Lead_Generation_UtilityBar</utilityBar>
 </CustomApplication>

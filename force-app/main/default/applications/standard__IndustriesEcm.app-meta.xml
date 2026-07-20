@@ -18,9 +18,13 @@
     <tabs>standard-ProductCategory</tabs>
     <tabs>standard-QualificationProcedure</tabs>
     <tabs>standard-ProductConfigurationRule</tabs>
+    <tabs>Reports__c</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>IndustriesEcm_UtilityBar</utilityBar>
     <workspaceConfig>
+        <mappings>
+            <tab>Reports__c</tab>
+        </mappings>
         <mappings>
             <tab>standard-AttributeCategory</tab>
         </mappings>

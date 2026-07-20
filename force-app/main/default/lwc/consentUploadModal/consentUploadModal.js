@@ -3,6 +3,8 @@ import { loadScript } from 'lightning/platformResourceLoader';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import SHEETJS from '@salesforce/resourceUrl/sheetjs';
 import validateAndUploadConsents from '@salesforce/apex/ConsentUploadController.validateAndUploadConsents';
+import ACTION_CANCEL_LABEL from '@salesforce/label/c.CBS_Action_Cancel';
+import ACTION_UPLOAD_LABEL from '@salesforce/label/c.CBS_Action_Upload';
 import { readAsArrayBuffer } from './readFile';
 
 const REQUIRED_HEADER_DEFS = [
@@ -18,6 +20,9 @@ const ALLOWED_EXTENSIONS = ['xlsx', 'xls', 'csv'];
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 
 export default class ConsentUploadModal extends LightningElement {
+    actionCancelLabel = ACTION_CANCEL_LABEL;
+    actionUploadLabel = ACTION_UPLOAD_LABEL;
+
     @track isOpen = true;
     @track batchName = '';
     @track fileName = '';

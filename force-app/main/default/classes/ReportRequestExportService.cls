@@ -1,4 +1,8 @@
 public without sharing class ReportRequestExportService {
+    @TestVisible
+    private static Boolean skipWhitelistNotificationSendDuringTests = true;
+    @TestVisible
+    private static Integer lastWhitelistNotificationRecipientCountForTest = 0;
     private static final List<String> CORE_EXPORT_COLUMNS = new List<String>{
         'Case_Number',
         'Report_Request_Item_Id',
@@ -241,7 +245,7 @@ public without sharing class ReportRequestExportService {
         }
 
         List<Case> relatedCases = [
-            SELECT Id, CaseNumber, AccountId, ContactId
+            SELECT Id, CaseNumber, AccountId, ContactId, Submitted_By__c, Submitted_By__r.Email
             FROM Case
             WHERE Source_Report__c IN :reportIds
         ];
@@ -252,7 +256,7 @@ public without sharing class ReportRequestExportService {
             }
             reportIdStrings.add(String.valueOf(batchValue));
             relatedCases = [
-                SELECT Id, CaseNumber, AccountId, ContactId
+                SELECT Id, CaseNumber, AccountId, ContactId, Submitted_By__c, Submitted_By__r.Email
                 FROM Case
                 WHERE Consent_Batch_Reference__c IN :reportIdStrings
             ];
@@ -320,6 +324,7 @@ public without sharing class ReportRequestExportService {
         Map<String, String> caseContactFieldByColumn = resolveCaseContactFieldByColumn();
         Map<Id, SObject> contactSnapshotById = loadCaseContactSnapshots(caseById.values(), caseContactFieldByColumn);
         result.csvBody = buildCsvBody(csvItems, exportFields, caseById, departedItemIds, contactSnapshotById, caseContactFieldByColumn);
+        sendWhitelistDownloadNotifications(csvItems, caseById, result.batchReference);
         if (shouldMarkExported == true) {
             markAuthorizedExported(exportableItems);
         }
@@ -342,6 +347,7 @@ public without sharing class ReportRequestExportService {
         if (itemFieldMap.containsKey('Data_Subject__c')) {
             queryFieldSet.add('Data_Subject__c');
             queryFieldSet.add('Data_Subject__r.Name');
+            queryFieldSet.add('Data_Subject__r.Email');
         }
         queryFieldSet.addAll(exportFields);
 
@@ -452,10 +458,114 @@ public without sharing class ReportRequestExportService {
             return new List<Case>();
         }
         return [
-            SELECT Id, CaseNumber, AccountId, ContactId
+            SELECT Id, CaseNumber, AccountId, ContactId, Submitted_By__c, Submitted_By__r.Email
             FROM Case
             WHERE Id IN :candidateCaseIds
         ];
+    }
+
+    private static void sendWhitelistDownloadNotifications(
+        List<Report_Request_Item__c> csvItems,
+        Map<Id, Case> caseById,
+        String batchReference
+    ) {
+        Set<String> uniqueEmails = new Set<String>();
+        List<String> recipientEmails = new List<String>();
+        Set<String> caseNumbers = new Set<String>();
+        Set<String> dataSubjectNames = new Set<String>();
+        if (csvItems != null) {
+            for (Report_Request_Item__c itemRecord : csvItems) {
+                if (itemRecord == null) {
+                    continue;
+                }
+                Case parentCase = caseById == null ? null : caseById.get(itemRecord.Report_Request_Case__c);
+                if (parentCase != null && !String.isBlank(parentCase.CaseNumber)) {
+                    caseNumbers.add(parentCase.CaseNumber);
+                }
+                if (itemRecord.Data_Subject__r != null && !String.isBlank(itemRecord.Data_Subject__r.Name)) {
+                    dataSubjectNames.add(itemRecord.Data_Subject__r.Name.trim());
+                }
+                addRecipientEmail(recipientEmails, uniqueEmails, itemRecord.Data_Subject__r == null ? null : itemRecord.Data_Subject__r.Email);
+                addRecipientEmail(recipientEmails, uniqueEmails, parentCase != null && parentCase.Submitted_By__r != null
+                    ? parentCase.Submitted_By__r.Email
+                    : null);
+            }
+        }
+        lastWhitelistNotificationRecipientCountForTest = recipientEmails.size();
+        if (recipientEmails.isEmpty()) {
+            return;
+        }
+        if (Test.isRunningTest() && skipWhitelistNotificationSendDuringTests) {
+            return;
+        }
+
+        List<Messaging.SingleEmailMessage> emailsToSend = new List<Messaging.SingleEmailMessage>();
+        for (String recipient : recipientEmails) {
+            Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
+            email.setToAddresses(new List<String>{ recipient });
+            email.setSaveAsActivity(false);
+            email.setSubject('【CBS 官方通知】授权凭证使用通知（批次 ' + String.valueOf(batchReference) + '）');
+            email.setPlainTextBody(buildWhitelistDownloadBody(batchReference, caseNumbers, dataSubjectNames));
+            emailsToSend.add(email);
+        }
+        try {
+            Messaging.sendEmail(emailsToSend);
+        } catch (Exception ex) {
+            // Download should not be blocked by notification failures.
+            System.debug('Whitelist notification send failed: ' + ex.getMessage());
+        }
+    }
+
+    private static void addRecipientEmail(
+        List<String> recipientEmails,
+        Set<String> uniqueEmails,
+        String rawEmail
+    ) {
+        if (recipientEmails == null || uniqueEmails == null || String.isBlank(rawEmail)) {
+            return;
+        }
+        String normalized = rawEmail.trim().toLowerCase();
+        if (String.isBlank(normalized) || uniqueEmails.contains(normalized)) {
+            return;
+        }
+        uniqueEmails.add(normalized);
+        recipientEmails.add(rawEmail.trim());
+    }
+
+    private static String buildWhitelistDownloadBody(
+        String batchReference,
+        Set<String> caseNumbers,
+        Set<String> dataSubjectNames
+    ) {
+        List<String> caseNumberList = new List<String>();
+        if (caseNumbers != null) {
+            caseNumberList.addAll(caseNumbers);
+            caseNumberList.sort();
+        }
+        List<String> dataSubjectNameList = new List<String>();
+        if (dataSubjectNames != null) {
+            dataSubjectNameList.addAll(dataSubjectNames);
+            dataSubjectNameList.sort();
+        }
+
+        String caseNumbersText = caseNumberList.isEmpty() ? 'N/A' : String.join(caseNumberList, ', ');
+        String namesText = dataSubjectNameList.isEmpty() ? '相关数据主体' : String.join(dataSubjectNameList, '、');
+
+        List<String> lines = new List<String>();
+        lines.add('尊敬的用户：');
+        lines.add('');
+        lines.add('您提交的征信请求中，' + namesText + '的授权凭证已被使用。');
+        lines.add('本次操作为白名单下载环节触发，用于后续征信处理流程。');
+        lines.add('');
+        lines.add('批次号：' + String.valueOf(batchReference));
+        lines.add('关联 Case：' + caseNumbersText);
+        lines.add('处理时间：' + String.valueOf(System.now()));
+        lines.add('');
+        lines.add('如您对本次使用有任何疑问，请及时联系 CBS 服务团队核查。');
+        lines.add('');
+        lines.add('此致');
+        lines.add('CBS 服务团队');
+        return String.join(lines, '\n');
     }
 
     private static Map<String, String> resolveCaseContactFieldByColumn() {

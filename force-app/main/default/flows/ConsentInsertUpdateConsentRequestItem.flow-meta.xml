@@ -87,7 +87,7 @@
     </recordLookups>
     <recordUpdates>
         <name>UpdateConsent</name>
-        <label>UpdateConsent</label>
+        <label>Update Consent Record</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <faultConnector>

@@ -417,16 +417,19 @@ public without sharing class SingpassWithdrawalConsentController {
     }
 
     private Boolean hasWithdrawableActiveConsent() {
-        String contactStatus = getStringFieldValue(contactRecord, new List<String>{ 'Current_Consent_Status__c' });
-        if (!isActiveContactConsentStatus(contactStatus)) {
-            return false;
-        }
-
         if (consentRecord != null && isActiveConsentRecordStatus(consentRecord.Consent_Status__c)) {
             return consentRecord.Data_Subject__c == parseId(contactId);
         }
 
-        return hasActiveConsentRecord(parseId(contactId));
+        if (hasActiveConsentRecord(parseId(contactId))) {
+            return true;
+        }
+
+        String contactStatus = getStringFieldValue(contactRecord, new List<String>{ 'Current_Consent_Status__c' });
+        if (!isActiveContactConsentStatus(contactStatus)) {
+            return false;
+        }
+        return true;
     }
 
     private void populateDisplayValues() {

@@ -10,8 +10,12 @@
     <tabs>standard-DecisionTable</tabs>
     <tabs>standard-ExpressionSetTemplate</tabs>
     <tabs>standard-ExpressionSet</tabs>
+    <tabs>Reports__c</tabs>
     <uiType>Lightning</uiType>
     <workspaceConfig>
+        <mappings>
+            <tab>Reports__c</tab>
+        </mappings>
         <mappings>
             <tab>standard-DecisionTable</tab>
         </mappings>

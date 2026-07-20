@@ -3,7 +3,7 @@
     <fullName>Completion_Notification_Sent__c</fullName>
     <defaultValue>false</defaultValue>
     <label>Completion Notification Sent</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

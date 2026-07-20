@@ -4,6 +4,7 @@
     <label>Employment status</label>
     <required>true</required>
     <trackFeedHistory>true</trackFeedHistory>
+    <trackHistory>true</trackHistory>
     <type>Picklist</type>
     <valueSet>
         <valueSetDefinition>

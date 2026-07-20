@@ -287,6 +287,16 @@
         <relatedList>RelatedCampaignMemberList</relatedList>
     </relatedLists>
     <relatedLists>
+        <fields>OPPORTUNITY.NAME</fields>
+        <fields>CONTACT.NAME</fields>
+        <fields>REVENUE_SHARE</fields>
+        <fields>OPPORTUNITY.AMOUNT</fields>
+        <fields>OPPORTUNITY.STAGE_NAME</fields>
+        <fields>OPPORTUNITY.CLOSE_DATE</fields>
+        <fields>CORE.USERS.FULL_NAME</fields>
+        <relatedList>RelatedCampaignInfluence2CampaignList</relatedList>
+    </relatedLists>
+    <relatedLists>
         <fields>CAMPAIGN.NAME</fields>
         <fields>CAMPAIGN.TOT_NUM_RESPONSES</fields>
         <fields>CAMPAIGN.TOTAL_NUM_LEADS</fields>

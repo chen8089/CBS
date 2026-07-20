@@ -6,7 +6,7 @@
     <referenceTo>Consent__c</referenceTo>
     <relationshipName>Report_Request_Items_Consent</relationshipName>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Lookup</type>
 </CustomField>

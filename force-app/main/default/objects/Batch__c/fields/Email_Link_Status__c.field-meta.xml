@@ -3,6 +3,7 @@
     <fullName>Email_Link_Status__c</fullName>
     <label>Email Link Status</label>
     <required>false</required>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>

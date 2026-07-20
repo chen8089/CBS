@@ -4,5 +4,6 @@
     <defaultValue>false</defaultValue>
     <label>不允许联系</label>
     <trackFeedHistory>true</trackFeedHistory>
+    <trackHistory>false</trackHistory>
     <type>Checkbox</type>
 </CustomField>

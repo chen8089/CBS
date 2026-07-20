@@ -158,12 +158,14 @@ private class QRSiteSingpassNdiAuthCtrlTest {
             res.setStatusCode(200);
             if (isAuthorizationFlow == true) {
                 System.assertEquals('POST', req.getMethod());
+                System.assert(req.getEndpoint().startsWith('callout:CBS_MyInfo_API'));
                 System.assert(req.getEndpoint().contains('/api/v1/myinfo/authorization-url'));
                 res.setBody('{"authorization_url":"https://singpass.example/authorize?state=ok"}');
                 return res;
             }
 
             System.assertEquals('GET', req.getMethod());
+            System.assert(req.getEndpoint().startsWith('callout:CBS_MyInfo_API'));
             System.assert(req.getEndpoint().contains('/api/v1/myinfo/profile/'));
             res.setBody(
                 '{"ref_id":"cbs-ref-001","myinfo_profile":{"person_info":{'

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Product__c</fullName>
-    <label>Product</label>
+    <label>Legacy Product</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
@@ -13,47 +13,47 @@
             <value>
                 <fullName>GC1040</fullName>
                 <default>false</default>
-                <label>GC1040</label>
+                <label>Legacy - GC1040</label>
             </value>
             <value>
                 <fullName>GC1060</fullName>
                 <default>false</default>
-                <label>GC1060</label>
+                <label>Legacy - GC1060</label>
             </value>
             <value>
                 <fullName>GC3020</fullName>
                 <default>false</default>
-                <label>GC3020</label>
+                <label>Legacy - GC3020</label>
             </value>
             <value>
                 <fullName>GC3040</fullName>
                 <default>false</default>
-                <label>GC3040</label>
+                <label>Legacy - GC3040</label>
             </value>
             <value>
                 <fullName>GC3060</fullName>
                 <default>false</default>
-                <label>GC3060</label>
+                <label>Legacy - GC3060</label>
             </value>
             <value>
                 <fullName>GC5020</fullName>
                 <default>false</default>
-                <label>GC5020</label>
+                <label>Legacy - GC5020</label>
             </value>
             <value>
                 <fullName>GC5040</fullName>
                 <default>false</default>
-                <label>GC5040</label>
+                <label>Legacy - GC5040</label>
             </value>
             <value>
                 <fullName>GC5060</fullName>
                 <default>false</default>
-                <label>GC5060</label>
+                <label>Legacy - GC5060</label>
             </value>
             <value>
                 <fullName>GC1020</fullName>
                 <default>false</default>
-                <label>GC1020</label>
+                <label>Legacy - GC1020</label>
             </value>
         </valueSetDefinition>
     </valueSet>

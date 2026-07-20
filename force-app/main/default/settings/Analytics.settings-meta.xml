@@ -13,15 +13,20 @@
     <enableAnalyticsSharingEnable>true</enableAnalyticsSharingEnable>
     <enableAutoCompleteCombo>true</enableAutoCompleteCombo>
     <enableAzureDLGen2OutputConnector>false</enableAzureDLGen2OutputConnector>
+    <enableCioHistoryReportingPref>false</enableCioHistoryReportingPref>
+    <enableCrmaSubsForExpCloud>false</enableCrmaSubsForExpCloud>
     <enableCrtSetupLightningUiPref>true</enableCrtSetupLightningUiPref>
+    <enableCurrencySupportInDCRPref>false</enableCurrencySupportInDCRPref>
     <enableDashboardComponentSnapshot>true</enableDashboardComponentSnapshot>
     <enableDashboardFlexiTable>true</enableDashboardFlexiTable>
     <enableDashboardSubOrgEmailPref>false</enableDashboardSubOrgEmailPref>
     <enableDataCloudReportingPref>true</enableDataCloudReportingPref>
+    <enableDimensionalHierarchyInDcrPref>false</enableDimensionalHierarchyInDcrPref>
     <enableEmailReportsToPortalUsers>false</enableEmailReportsToPortalUsers>
     <enableFloatingReportHeaders>true</enableFloatingReportHeaders>
     <enableIncrementalUpsert>false</enableIncrementalUpsert>
     <enableInsights>false</enableInsights>
+    <enableJoinedReportInDcrPref>false</enableJoinedReportInDcrPref>
     <enableLightningReportBuilder>true</enableLightningReportBuilder>
     <enableLotusNotesImages>false</enableLotusNotesImages>
     <enableMassEnableReportBuilder>true</enableMassEnableReportBuilder>

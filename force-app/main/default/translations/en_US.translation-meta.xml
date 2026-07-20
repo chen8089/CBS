@@ -21,6 +21,26 @@
         <name>Success_Manager</name>
     </customApplications>
     <customLabels>
+        <label><!-- Aria label for login page brand information panel --></label>
+        <name>CBS_A11y_Brand_Information</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Standard cancel action label --></label>
+        <name>CBS_Action_Cancel</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Standard upload action label --></label>
+        <name>CBS_Action_Upload</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Empty state title when no data subjects are found --></label>
+        <name>CBS_EmptyState_NoDataSubjectsFound</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Empty state guidance to adjust filters or search --></label>
+        <name>CBS_EmptyState_TryAnotherFilter</name>
+    </customLabels>
+    <customLabels>
         <label><!-- CBS group mail recipients for report request submissions --></label>
         <name>CBS_Group_Mail_Recipients</name>
     </customLabels>
@@ -29,16 +49,52 @@
         <name>CBS_Guest_Site_Base_Url</name>
     </customLabels>
     <customLabels>
+        <label><!-- Validation message when login username is empty --></label>
+        <name>CBS_Login_Username_Required</name>
+    </customLabels>
+    <customLabels>
         <label><!-- MyInfo API base URL --></label>
         <name>CBS_MyInfo_Api_Base_Url</name>
     </customLabels>
     <customLabels>
-        <label><!-- MyInfo API basic auth password --></label>
+        <label><!-- Deprecated: use Named Credential for MyInfo auth --></label>
         <name>CBS_MyInfo_Basic_Auth_Password</name>
     </customLabels>
     <customLabels>
-        <label><!-- MyInfo API basic auth username --></label>
+        <label><!-- Deprecated: use Named Credential for MyInfo auth --></label>
         <name>CBS_MyInfo_Basic_Auth_Username</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Portal navigation label for Batch --></label>
+        <name>CBS_Nav_Batch</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Portal navigation label for Consent --></label>
+        <name>CBS_Nav_Consent</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Portal navigation label for Exceptions --></label>
+        <name>CBS_Nav_Exceptions</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Portal navigation label for Home --></label>
+        <name>CBS_Nav_Home</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Portal navigation label for Report Requests --></label>
+        <name>CBS_Nav_Report_Requests</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Portal navigation label for Resignation / Departure --></label>
+        <name>CBS_Nav_Resignation_Departure</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Section title for identity information block --></label>
+        <name>CBS_NonSingpass_Section2_IdentityInfo</name>
+    </customLabels>
+    <customLabels>
+        <label><!-- Upload file type and size hint --></label>
+        <name>CBS_NonSingpass_Upload_Accepted_Hint</name>
     </customLabels>
     <customLabels>
         <label><!-- SingPass Login runtime configuration JSON --></label>

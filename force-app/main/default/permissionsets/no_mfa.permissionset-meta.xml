@@ -3,8 +3,4 @@
     <hasActivationRequired>false</hasActivationRequired>
     <label>no mfa</label>
     <license>Salesforce</license>
-    <userPermissions>
-        <enabled>true</enabled>
-        <name>BypassMFAForUiLogins</name>
-    </userPermissions>
 </PermissionSet>

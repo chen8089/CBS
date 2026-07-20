@@ -20,6 +20,7 @@
     <tabs>standard-Contact</tabs>
     <tabs>standard-Contract</tabs>
     <tabs>standard-Event</tabs>
+    <tabs>Reports__c</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>Relationship_Management_UtilityBar</utilityBar>
 </CustomApplication>

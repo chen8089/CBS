@@ -4,6 +4,7 @@
     <label>Upload Status</label>
     <required>false</required>
     <trackFeedHistory>true</trackFeedHistory>
+    <trackHistory>true</trackHistory>
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>

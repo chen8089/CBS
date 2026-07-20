@@ -3,7 +3,7 @@
     <fullName>Expiry_Triggered__c</fullName>
     <defaultValue>false</defaultValue>
     <label>是否触发过期</label>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Checkbox</type>
 </CustomField>

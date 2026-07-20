@@ -35,23 +35,6 @@
       "renderPriority" : "NEUTRAL",
       "renditionMap" : { },
       "type" : "component"
-    }, {
-      "componentAttributes" : {
-        "display" : "LEVELS_POINTS",
-        "excludeInternalUsers" : false,
-        "knowledgeLabel" : "Knows about",
-        "numberOfUsers" : 5,
-        "showContextUser" : false,
-        "showTooltip" : false,
-        "showUserRank" : false,
-        "title" : "Leaderboard",
-        "tooltipText" : "Earn points and climb to new levels when you contribute in the experience!"
-      },
-      "componentName" : "forceCommunity:reputationLeaderboard42",
-      "id" : "49c2f214-05cb-4d86-8a0b-386e0eef11ee",
-      "renderPriority" : "NEUTRAL",
-      "renditionMap" : { },
-      "type" : "component"
     } ],
     "id" : "584c44d5-5616-4cfa-aee1-7089ff463885",
     "regionName" : "sidebar",

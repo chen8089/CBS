@@ -17,6 +17,7 @@ public without sharing class QRSiteSingpassNdiAuthCtrl {
     private static final String PARAM_REF_ID = 'refId';
     private static final String PARAM_RETURN_URL = 'returnUrl';
     private static final String TYPE_PREHIRE = 'prehire';
+    private static final String MYINFO_NAMED_CREDENTIAL = 'callout:CBS_MyInfo_API';
     private static final Set<String> ALLOWED_RETURN_URLS = new Set<String>{
         PAGE_EMPLOYEE_CONSENT_FORM,
         PAGE_PREHIRE_CONSENT_FORM,
@@ -29,6 +30,9 @@ public without sharing class QRSiteSingpassNdiAuthCtrl {
             Map<String, String> params = ApexPages.currentPage().getParameters();
             String contactId = firstNonBlank(params.get('contactId'), params.get('ContactId'));
             String token = params.get('token');
+            if (String.isBlank(token)) {
+                token = resolveTokenForRequestItem(contactId, params);
+            }
             if (String.isBlank(contactId) || String.isBlank(token)) {
                 return buildRedirect(PAGE_INVALID_LINK);
             }
@@ -40,6 +44,10 @@ public without sharing class QRSiteSingpassNdiAuthCtrl {
                 String redirectTo = buildCallbackUrl(params, generatedRefId);
                 String authorizationUrl = requestAuthorizationUrl(generatedRefId, redirectTo);
                 if (String.isBlank(authorizationUrl)) {
+                    System.debug(
+                        LoggingLevel.ERROR,
+                        'MyInfo authorization-url response did not contain authorization_url. refId=' + generatedRefId
+                    );
                     return buildRedirect(PAGE_INVALID_LINK);
                 }
                 PageReference launchPage = new PageReference(authorizationUrl);
@@ -113,6 +121,33 @@ public without sharing class QRSiteSingpassNdiAuthCtrl {
         );
     }
 
+    private static String resolveTokenForRequestItem(String contactIdRaw, Map<String, String> params) {
+        Id contactId = parseId(contactIdRaw);
+        Id requestItemId = parseId(firstNonBlank(params.get('requestItemId'), params.get('consentRequestItemId')));
+        if (contactId == null || requestItemId == null) {
+            return null;
+        }
+
+        List<Consent_Request_Item__c> rows = [
+            SELECT Id, Data_Subject__c, Secure_Token__c, Consent_Link_Expires_At__c
+            FROM Consent_Request_Item__c
+            WHERE Id = :requestItemId
+            LIMIT 1
+        ];
+        if (rows.isEmpty()) {
+            return null;
+        }
+
+        Consent_Request_Item__c requestItem = rows[0];
+        if (requestItem.Data_Subject__c != contactId) {
+            return null;
+        }
+        if (requestItem.Consent_Link_Expires_At__c != null && System.now() > requestItem.Consent_Link_Expires_At__c) {
+            return null;
+        }
+        return requestItem.Secure_Token__c;
+    }
+
     private static Boolean isWithdrawalCallback(Map<String, String> params) {
         String action = blankToNull(params.get('action'));
         String returnUrl = getSafeReturnUrl(params.get(PARAM_RETURN_URL));
@@ -121,48 +156,126 @@ public without sharing class QRSiteSingpassNdiAuthCtrl {
 
     private static String requestAuthorizationUrl(String refId, String redirectTo) {
         HttpRequest req = new HttpRequest();
-        req.setEndpoint(getBaseUrl() + '/api/v1/myinfo/authorization-url');
+        req.setEndpoint(buildMyInfoEndpoint('/api/v1/myinfo/authorization-url'));
         req.setMethod('POST');
         req.setHeader('Content-Type', 'application/json');
         req.setHeader('Accept', 'application/json');
-        req.setHeader('Authorization', 'Basic ' + getBasicAuthToken());
+        req.setTimeout(120000);
         req.setBody(JSON.serialize(new Map<String, Object>{
             'ref_id' => refId,
             'redirect_to' => redirectTo
         }));
 
-        HttpResponse res = new Http().send(req);
-        if (res == null || res.getStatusCode() < 200 || res.getStatusCode() >= 300) {
+        HttpResponse res;
+        try {
+            res = new Http().send(req);
+        } catch (CalloutException e) {
+            logCalloutException('authorization-url', e);
+            throw e;
+        }
+        if (res == null) {
+            System.debug(LoggingLevel.ERROR, 'MyInfo authorization-url returned null response.');
+            throw new CalloutException('MyInfo authorization-url call failed.');
+        }
+
+        Integer statusCode = res.getStatusCode();
+        String responseBody = summarizeForLog(res.getBody());
+        if (statusCode == 401 || statusCode == 403) {
+            System.debug(
+                LoggingLevel.ERROR,
+                'MyInfo authorization-url authentication failed. status=' + statusCode + ', body=' + responseBody
+            );
+            throw new CalloutException('MyInfo authorization-url call failed.');
+        }
+        if (statusCode < 200 || statusCode >= 300) {
+            System.debug(
+                LoggingLevel.ERROR,
+                'MyInfo authorization-url unexpected status. status=' + statusCode + ', body=' + responseBody
+            );
             throw new CalloutException('MyInfo authorization-url call failed.');
         }
 
         Map<String, Object> payload = parseJsonObject(res.getBody());
-        return firstNonBlank(
+        String authorizationUrl = firstNonBlank(
             getAsString(payload, 'authorization_url'),
             getAsString(payload, 'authorizationUrl'),
             getAsString(payload, 'url')
         );
+        if (String.isBlank(authorizationUrl)) {
+            System.debug(
+                LoggingLevel.ERROR,
+                'MyInfo authorization-url succeeded but response URL is empty. status=' + statusCode + ', body=' + responseBody
+            );
+        }
+        return authorizationUrl;
     }
 
     private static Map<String, Object> fetchProfile(String refId) {
         HttpRequest req = new HttpRequest();
-        req.setEndpoint(getBaseUrl() + '/api/v1/myinfo/profile/' + EncodingUtil.urlEncode(refId, 'UTF-8'));
+        req.setEndpoint(buildMyInfoEndpoint('/api/v1/myinfo/profile/' + EncodingUtil.urlEncode(refId, 'UTF-8')));
         req.setMethod('GET');
         req.setHeader('Accept', 'application/json');
-        req.setHeader('Authorization', 'Basic ' + getBasicAuthToken());
+        req.setTimeout(120000);
 
-        HttpResponse res = new Http().send(req);
+        HttpResponse res;
+        try {
+            res = new Http().send(req);
+        } catch (CalloutException e) {
+            logCalloutException('profile', e);
+            throw e;
+        }
         if (res == null) {
+            System.debug(LoggingLevel.ERROR, 'MyInfo profile returned null response. refId=' + refId);
             return new Map<String, Object>();
+        }
+        Integer statusCode = res.getStatusCode();
+        String responseBody = summarizeForLog(res.getBody());
+        if (statusCode == 401 || statusCode == 403) {
+            System.debug(
+                LoggingLevel.ERROR,
+                'MyInfo profile authentication failed. refId=' + refId + ', status=' + statusCode + ', body=' + responseBody
+            );
         }
         if (res.getStatusCode() == 404) {
             // No profile captured yet; continue to consent form without prefill.
             return new Map<String, Object>();
         }
         if (res.getStatusCode() < 200 || res.getStatusCode() >= 300) {
+            System.debug(
+                LoggingLevel.ERROR,
+                'MyInfo profile unexpected status. refId=' + refId + ', status=' + statusCode + ', body=' + responseBody
+            );
             throw new CalloutException('MyInfo profile call failed.');
         }
         return parseJsonObject(res.getBody());
+    }
+
+    private static void logCalloutException(String endpointName, Exception e) {
+        String message = e == null ? '' : blankIfNull(e.getMessage());
+        String normalized = String.isBlank(message) ? '' : message.toLowerCase();
+        if (normalized.contains('read timed out') || normalized.contains('connect timed out') || normalized.contains('timeout')) {
+            System.debug(
+                LoggingLevel.ERROR,
+                'MyInfo ' + endpointName + ' callout timeout. message=' + message
+            );
+            return;
+        }
+        System.debug(
+            LoggingLevel.ERROR,
+            'MyInfo ' + endpointName + ' callout exception. message=' + message
+        );
+    }
+
+    private static String summarizeForLog(String rawBody) {
+        if (String.isBlank(rawBody)) {
+            return '(empty)';
+        }
+        String compact = rawBody.replace('\n', ' ').replace('\r', ' ').trim();
+        Integer maxLength = 500;
+        if (compact.length() > maxLength) {
+            return compact.substring(0, maxLength) + '...';
+        }
+        return compact;
     }
 
     private static void applyMockProfileParams(PageReference consentPage, Map<String, Object> profilePayload) {
@@ -228,21 +341,12 @@ public without sharing class QRSiteSingpassNdiAuthCtrl {
         return getByPaths(data, new List<String>{ 'registeredAddress', 'address' });
     }
 
-    private static String getBaseUrl() {
-        String configured = blankToNull(System.Label.CBS_MyInfo_Api_Base_Url);
-        if (String.isBlank(configured)) {
-            throw new CalloutException('CBS_MyInfo_Api_Base_Url is not configured.');
+    private static String buildMyInfoEndpoint(String path) {
+        if (String.isBlank(path)) {
+            throw new CalloutException('MyInfo endpoint path is required.');
         }
-        return configured.endsWith('/') ? configured.left(configured.length() - 1) : configured;
-    }
-
-    private static String getBasicAuthToken() {
-        String username = blankToNull(System.Label.CBS_MyInfo_Basic_Auth_Username);
-        String password = blankToNull(System.Label.CBS_MyInfo_Basic_Auth_Password);
-        if (String.isBlank(username) || String.isBlank(password)) {
-            throw new CalloutException('MyInfo Basic Auth credentials are not configured.');
-        }
-        return EncodingUtil.base64Encode(Blob.valueOf(username + ':' + password));
+        String normalized = path.startsWith('/') ? path : ('/' + path);
+        return MYINFO_NAMED_CREDENTIAL + normalized;
     }
 
     private static String buildCallbackUrl(Map<String, String> params, String refId) {

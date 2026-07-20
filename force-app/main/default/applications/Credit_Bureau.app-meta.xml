@@ -235,6 +235,7 @@
     <tabs>Consent__c</tabs>
     <tabs>Consent_Request_Item__c</tabs>
     <tabs>standard-Case</tabs>
+    <tabs>Reports__c</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>Cridet_Bureau_UtilityBar</utilityBar>
     <workspaceConfig>
@@ -243,6 +244,9 @@
         </mappings>
         <mappings>
             <tab>Consent__c</tab>
+        </mappings>
+        <mappings>
+            <tab>Reports__c</tab>
         </mappings>
         <mappings>
             <tab>standard-Account</tab>

@@ -3,4 +3,5 @@
     <fullName>OtherAddress</fullName>
     <encryptionScheme>None</encryptionScheme>
     <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
 </CustomField>

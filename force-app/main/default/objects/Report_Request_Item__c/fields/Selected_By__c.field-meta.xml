@@ -6,7 +6,7 @@
     <referenceTo>User</referenceTo>
     <relationshipName>Report_Request_Items_User</relationshipName>
     <required>false</required>
-    <trackHistory>false</trackHistory>
+    <trackHistory>true</trackHistory>
     <trackTrending>false</trackTrending>
     <type>Lookup</type>
 </CustomField>

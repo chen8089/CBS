@@ -275,6 +275,18 @@ public without sharing class QRSiteSingpassEmpConsentCtrl {
                 return successPage;
             } catch (DmlException e) {
                 Database.rollback(savepointBeforeSubmit);
+                String dmlStatusCode = '';
+                String dmlMessage = blankIfNull(e.getMessage());
+                if (e.getNumDml() > 0) {
+                    dmlStatusCode = String.valueOf(e.getDmlStatusCode(0));
+                    dmlMessage = blankIfNull(e.getDmlMessage(0));
+                }
+                System.debug(
+                    LoggingLevel.ERROR,
+                    'QRSiteSingpassEmpConsentCtrl submitConsent DML failed. '
+                    + 'statusCode=' + dmlStatusCode
+                    + ', message=' + dmlMessage
+                );
                 ApexPages.addMessage(new ApexPages.Message(
                     ApexPages.Severity.ERROR,
                     'We could not submit your consent. Please try again later.'

@@ -114,6 +114,15 @@
             color: #FFFFFF;
         }
 
+        .close-note {
+            color: #4B5563;
+            display: none;
+            font-size: 12px;
+            line-height: 1.5;
+            margin: 10px 0 0;
+            text-align: center;
+        }
+
         .error-box {
             background-color: #FFFFFF;
             color: #000000;
@@ -154,14 +163,13 @@
     </style>
     <script>
         function closeThisPage() {
+            var closeHint = document.getElementById('closeHint');
+            if (closeHint) {
+                closeHint.style.display = 'block';
+            }
+
             window.open('', '_self');
             window.close();
-
-            setTimeout(function() {
-                if (window.history.length > 1) {
-                    window.history.back();
-                }
-            }, 120);
         }
     </script>
 </head>
@@ -198,6 +206,7 @@
 
                 <div class="button-row">
                     <button type="button" class="singpass-btn" onclick="closeThisPage();">{!closePageButtonLabel}</button>
+                    <p id="closeHint" class="close-note">If this page did not close automatically, you may now close this browser tab or window.</p>
                 </div>
             </div>
         </apex:outputPanel>
