@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <types>
+        <members>Consent_Request_Item__c.Active_Request_Key__c</members>
+        <members>Consent_Request_Item__c.Consent_Purpose__c</members>
+        <name>CustomField</name>
+    </types>
+    <types>
+        <members>CBS_Implementation_Partner_Admin</members>
+        <name>PermissionSet</name>
+    </types>
+    <version>67.0</version>
+</Package>

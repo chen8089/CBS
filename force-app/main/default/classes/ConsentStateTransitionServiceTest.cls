@@ -51,15 +51,23 @@ private class ConsentStateTransitionServiceTest {
         String uniqueSuffix = String.valueOf(DateTime.now().getTime()) + String.valueOf(Math.abs(Crypto.getRandomInteger()));
         Contact contact = new Contact(
             LastName = 'State Transition Test',
-            Email = 'state.transition+' + uniqueSuffix + '@example.com',
+            RecordTypeId = dataSubjectRecordTypeId(),
             Date_of_Birth__c = Date.newInstance(1990, 1, 1),
             Employment_Status__c = 'Existing Hire',
             Full_Name__c = 'State Transition Test',
             ID_Number__c = 'S' + uniqueSuffix.right(7),
             ID_Type__c = 'NRIC',
-            Portal_Role__c = 'Approver'
+            Consent_Type__c = 'Per-Report Consent'
         );
         insert contact;
         return contact;
+    }
+
+    private static Id dataSubjectRecordTypeId() {
+        Map<String, Schema.RecordTypeInfo> infos =
+            Contact.SObjectType.getDescribe().getRecordTypeInfosByDeveloperName();
+        return infos.containsKey('Data_Subject') && infos.get('Data_Subject').isAvailable()
+            ? infos.get('Data_Subject').getRecordTypeId()
+            : null;
     }
 }

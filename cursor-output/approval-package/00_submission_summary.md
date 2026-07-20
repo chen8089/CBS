@@ -1,6 +1,6 @@
 # A-IMP-02 Phase 2 Approval Submission Summary
 
-Submission status: STOPPED - written project-owner approval required
+Submission status: A-IMP-02 PHASE 2 CHENTEST IMPLEMENTATION APPROVED
 
 ## Scope
 
@@ -17,7 +17,8 @@ This package combines:
 - risk/conflict register;
 - final candidate file list.
 
-No Salesforce metadata or record was modified.
+Approved scoped Salesforce metadata was deployed to ChenTest. No Salesforce
+business record was modified by this implementation activity.
 
 ## Completed
 
@@ -64,14 +65,14 @@ No Salesforce metadata or record was modified.
 - R09-05: passes; relevant licences are active and required features are
   available for the current scope
 
-## Not completed
+## Formally approved exceptions
 
-1. Remaining owner decisions not covered by RC02 and RC04.
-2. Exact M030 test class API names.
-3. Category B-I regression execution.
-4. Experience Cloud current-state no-regression verification.
-5. Check-only deployment, Sandbox deployment, activation and as-built
-    verification; these activities are not authorised.
+1. The user approved on behalf of B/C/D/F/I and Experience/Community owners
+   and the project owner.
+2. Manual rows B-08, D-01 and F-02 are waived.
+3. Experience Cloud page/screenshot evidence is waived.
+4. Four historical Client User-linked Consent Request Items are approved for
+   retention without remediation.
 
 ## P1/P2 risks and conflicts
 
@@ -92,18 +93,26 @@ No Salesforce metadata or record was modified.
   duplicate groups.
 - RC06 is resolved: R09-01, R09-03, R09-04 and R09-05 pass; R09-02 is
   administrator-confirmed not applicable.
-- RC08 is resolved: the internal M018 matrix is approved, the shared Contact
-  layout is retained, and Community layouts remain unchanged for A-IMP-09.
-- M030 retains unresolved API-name scope.
-- Category B-I and Experience Cloud regressions remain unproven.
+- RC08 is resolved: the internal M018 matrix was deployed to ChenTest
+  (`0AfBK00000BUDMT0A5`), all 60 ProfileLayout mappings were verified, the
+  shared Contact layout is retained, and Community layouts remain unchanged
+  for A-IMP-09.
+- RC09 is resolved: M030 was implemented and the six blocking classes passed
+  the final post-deployment run `707BK00001B1HY3`.
+- Automated B/C/D/F/I rows passed. E/G/H remain approved not applicable.
+- RC10 is resolved by formal approved exception.
+- RC11 is resolved by formal approved exception.
+- RC12-RC15 are not silently waived by this RC10/RC11 decision and retain
+  their separately documented controls.
 
 ## Changes requiring written approval
 
-No file is eligible for implementation now. Written decisions are required for:
+No component is eligible for Production deployment now. Written decisions are
+required for:
 
-1. M030 exact test class APIs;
-2. M024-M025 history correction;
-3. all runtime-gated component activations.
+1. M024-M025 history correction;
+2. all remaining runtime-gated activations outside the approved RC10/RC11
+   scope.
 
 ## Workstream boundaries
 
@@ -114,16 +123,14 @@ No file is eligible for implementation now. Written decisions are required for:
 
 ## Recommendation
 
-Do not start Phase 2 implementation while the remaining stop conditions exist.
+RC10 and RC11 may be marked resolved by approved exception. Do not infer
+Production deployment authority from this ChenTest approval.
 
 Recommended next actions:
 
-1. Obtain remaining named owner reviews not covered by RC02 and RC04.
+1. Retain the written Phase 2 approval and exception records.
 2. Use approved metadata baseline `8391a96` for subsequent diffs.
-3. Reconcile the target Org runtime values to baseline `8391a96`.
-4. Resolve M030 through a controlled document amendment.
-5. Define and execute Category B-I and Experience Cloud regression evidence.
-6. Re-submit the updated evidence package for written project-owner approval.
+3. Address RC12-RC15 separately before any scope they control is promoted.
+4. Obtain separate written authority before Production deployment.
 
-Until those actions are complete, no metadata build, validation deployment,
-Sandbox deployment or activation may begin.
+RC10/RC11 closure is permitted. Production deployment remains unauthorised.

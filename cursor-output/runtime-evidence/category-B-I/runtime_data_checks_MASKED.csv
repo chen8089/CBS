@@ -1,0 +1,6 @@
+check_id,executed_at_utc,org_id,result,count_or_range,interpretation
+RC10-DATA-01,2026-07-20T12:25:00Z,00DBK00000C9kEP2AZ,PASS,0 duplicate active-key groups,Database unique-key population has no duplicates
+RC10-DATA-02,2026-07-20T12:25:00Z,00DBK00000C9kEP2AZ,INFO,31 unkeyed active requests,Legacy Pending Sent or Viewed requests pre-date active-key maintenance
+RC10-DATA-03,2026-07-20T12:25:00Z,00DBK00000C9kEP2AZ,INFO,3 Client User Contacts,Runtime population count only
+RC10-DATA-04,2026-07-20T12:25:00Z,00DBK00000C9kEP2AZ,APPROVED_RETAIN,4 Client User-linked CRIs,Formal risk acceptance approved retention without remediation
+RC10-DATA-05,2026-07-20T12:25:00Z,00DBK00000C9kEP2AZ,INFO,2026-06-11T01:58:33Z to 2026-07-06T10:04:32Z,Historical Client User CRI creation range; no record identifiers exported

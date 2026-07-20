@@ -915,9 +915,6 @@ public with sharing class BatchExcelUploadController {
             if (contactFields.containsKey(FLD_CONTACT_BATCH) && batchId != null) {
                 c.put(FLD_CONTACT_BATCH, batchId);
             }
-            if (contactFields.containsKey('Portal_Role__c') && c.get('Portal_Role__c') == null) {
-                c.put('Portal_Role__c', firstActivePicklistValue(contactFields.get('Portal_Role__c')));
-            }
 
             contacts.add(c);
         }

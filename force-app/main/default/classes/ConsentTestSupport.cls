@@ -44,6 +44,9 @@ public class ConsentTestSupport {
         Consent_Request_Item__c requestItem = new Consent_Request_Item__c(
             Data_Subject__c = contact.Id,
             Current_Status__c = 'Sent',
+            Consent_Purpose__c = String.isBlank(contact.Consent_Type__c)
+                ? 'Per-Report Consent'
+                : contact.Consent_Type__c,
             Uploaded_Full_Name__c = contact.Full_Name__c,
             Uploaded_ID_Number__c = contact.ID_Number__c,
             Uploaded_Date_of_Birth__c = contact.Date_of_Birth__c

@@ -83,10 +83,14 @@ Experience boundary; redesign is deferred to A-IMP-09.
 
 ### C04 - M030 test API ambiguity
 
-M030 identifies a logical regression suite but no exact Apex class API names.
+Initial finding: M030 identified a logical regression suite but no exact Apex
+class API names.
 
-Disposition: no new test class may be named or created without approval.
-Existing tests may be scanned but not expanded under an invented API.
+Disposition: resolved on 2026-07-20. The project owner approved
+`AImp02ContactSeparationTest` for creation, `BatchExcelUploadControllerTest`
+for modification, four existing deployment-blocking regression classes and
+`UatClientUserIsolationE2ETest` as non-blocking Sandbox UAT. The SeeAllData UAT
+class may skip and cannot be used as sole deployment evidence.
 
 ### C05 - R06 cross-status coverage gap
 

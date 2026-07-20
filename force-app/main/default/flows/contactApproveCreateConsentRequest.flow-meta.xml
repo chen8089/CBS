@@ -1,22 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <apiVersion>66.0</apiVersion>
+    <apiVersion>67.0</apiVersion>
     <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
-    <assignments>
-        <name>Handle_Fault</name>
-        <label>Handle Fault</label>
+    <decisions>
+        <name>Data_Subject_Family_Only</name>
+        <label>Data Subject Family Only</label>
         <locationX>0</locationX>
         <locationY>0</locationY>
-        <assignmentItems>
-            <assignToReference>FaultPathMarker</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Consent request creation fault handled</stringValue>
-            </value>
-        </assignmentItems>
-    </assignments>
+        <defaultConnectorLabel>Client User or Unsupported Record Type</defaultConnectorLabel>
+        <rules>
+            <name>Data_Subject_Singpass_Or_Non_Singpass</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Data_Subject</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Singpass</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Non_Singpass</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Resolve_Active_Consent_Request</targetReference>
+            </connector>
+            <label>Data Subject Family</label>
+        </rules>
+    </decisions>
+    <description>Creates or reuses a consent request only for Data Subject-family Contacts. Client Users exit without consent automation.</description>
     <environments>Default</environments>
-    <interviewLabel>Contact Approved - Create Consent Request Item {!$Flow.CurrentDateTime}</interviewLabel>
+    <interviewLabel>Contact Approved - Resolve Consent Request Item {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Contact Approved - Create Consent Request Item</label>
     <processMetadataValues>
         <name>BuilderType</name>
@@ -37,64 +61,11 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
-    <recordCreates>
-        <name>Consent_Request</name>
-        <label>Consent Request</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
-        <faultConnector>
-            <targetReference>Handle_Fault</targetReference>
-        </faultConnector>
-        <inputAssignments>
-            <field>Data_Subject__c</field>
-            <value>
-                <elementReference>$Record.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Uploaded_Date_of_Birth__c</field>
-            <value>
-                <elementReference>$Record.Date_of_Birth__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Uploaded_Email__c</field>
-            <value>
-                <elementReference>$Record.Email</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Uploaded_Employment_Status__c</field>
-            <value>
-                <elementReference>$Record.Employment_Status__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Uploaded_Full_Name__c</field>
-            <value>
-                <elementReference>$Record.Full_Name__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Uploaded_ID_Number__c</field>
-            <value>
-                <elementReference>$Record.ID_Number__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>Uploaded_ID_Type__c</field>
-            <value>
-                <elementReference>$Record.ID_Type__c</elementReference>
-            </value>
-        </inputAssignments>
-        <object>Consent_Request_Item__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordCreates>
     <start>
         <locationX>0</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Consent_Request</targetReference>
+            <targetReference>Data_Subject_Family_Only</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -109,11 +80,17 @@
         <triggerType>RecordAfterSave</triggerType>
     </start>
     <status>Active</status>
-    <variables>
-        <name>FaultPathMarker</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-    </variables>
+    <subflows>
+        <name>Resolve_Active_Consent_Request</name>
+        <label>Resolve Active Consent Request</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <flowName>ConsentRequestResolveActiveRequest</flowName>
+        <inputAssignments>
+            <name>contactRecord</name>
+            <value>
+                <elementReference>$Record</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
 </Flow>

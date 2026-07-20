@@ -9,6 +9,7 @@ private class ExperienceClientDataIsolationTest {
         Contact requesterA = new Contact(
             LastName = 'RR Requester A',
             AccountId = accountA.Id,
+            RecordTypeId = contactRecordTypeId('Client_User'),
             Email = 'rr.requester.a@test.com',
             Full_Name__c = 'RR Requester A',
             ID_Type__c = 'NRIC',
@@ -19,6 +20,7 @@ private class ExperienceClientDataIsolationTest {
         Contact requesterB = new Contact(
             LastName = 'RR Requester B',
             AccountId = accountB.Id,
+            RecordTypeId = contactRecordTypeId('Client_User'),
             Email = 'rr.requester.b@test.com',
             Full_Name__c = 'RR Requester B',
             ID_Type__c = 'NRIC',
@@ -29,34 +31,43 @@ private class ExperienceClientDataIsolationTest {
         Contact subjectA = new Contact(
             LastName = 'RR Subject A',
             AccountId = accountA.Id,
+            RecordTypeId = contactRecordTypeId('Data_Subject'),
             Email = 'rr.subject.a@test.com',
             Full_Name__c = 'RR Subject A',
             ID_Type__c = 'NRIC',
             ID_Number__c = 'S2234569A',
             Employment_Status__c = 'Existing Employee',
-            Portal_Role__c = 'Subject'
+            Consent_Type__c = 'Per-Report Consent'
         );
         Contact subjectB = new Contact(
             LastName = 'RR Subject B',
             AccountId = accountB.Id,
+            RecordTypeId = contactRecordTypeId('Data_Subject'),
             Email = 'rr.subject.b@test.com',
             Full_Name__c = 'RR Subject B',
             ID_Type__c = 'NRIC',
             ID_Number__c = 'S2234570A',
             Employment_Status__c = 'Existing Employee',
-            Portal_Role__c = 'Subject'
+            Consent_Type__c = 'Per-Report Consent'
         );
-        insert new List<Contact>{ requesterA, requesterB, subjectA, subjectB };
+        ConsentRequestItemTriggerHandler.suppressConsentEmail = true;
+        try {
+            insert new List<Contact>{ requesterA, requesterB, subjectA, subjectB };
+        } finally {
+            ConsentRequestItemTriggerHandler.suppressConsentEmail = false;
+        }
 
         insert new List<Consent__c>{
             new Consent__c(
                 Data_Subject__c = subjectA.Id,
+                Consent_Request_Item__c = ensureRequestItem(subjectA),
                 Consent_Status__c = 'Active',
                 Consent_Expiry_Date__c = Date.today().addDays(30),
                 Match_Status__c = 'Matched'
             ),
             new Consent__c(
                 Data_Subject__c = subjectB.Id,
+                Consent_Request_Item__c = ensureRequestItem(subjectB),
                 Consent_Status__c = 'Active',
                 Consent_Expiry_Date__c = Date.today().addDays(30),
                 Match_Status__c = 'Matched'
@@ -146,6 +157,39 @@ private class ExperienceClientDataIsolationTest {
             PortalReportRequestController.overrideContactIdForTests = null;
             PortalReportRequestController.overrideAccountIdForTests = null;
             ReportRequestSubmissionService.skipRunningUserContextValidationForTests = false;
+        }
+    }
+
+    private static Id contactRecordTypeId(String developerName) {
+        Map<String, Schema.RecordTypeInfo> infos =
+            Contact.SObjectType.getDescribe().getRecordTypeInfosByDeveloperName();
+        return infos.containsKey(developerName) && infos.get(developerName).isAvailable()
+            ? infos.get(developerName).getRecordTypeId()
+            : null;
+    }
+
+    private static Id ensureRequestItem(Contact subject) {
+        List<Consent_Request_Item__c> existing = [
+            SELECT Id
+            FROM Consent_Request_Item__c
+            WHERE Data_Subject__c = :subject.Id
+            ORDER BY CreatedDate DESC
+            LIMIT 1
+        ];
+        if (!existing.isEmpty()) {
+            return existing[0].Id;
+        }
+        ConsentRequestItemTriggerHandler.suppressConsentEmail = true;
+        try {
+            Consent_Request_Item__c requestItem = new Consent_Request_Item__c(
+                Data_Subject__c = subject.Id,
+                Current_Status__c = 'Sent',
+                Consent_Purpose__c = 'Per-Report Consent'
+            );
+            insert requestItem;
+            return requestItem.Id;
+        } finally {
+            ConsentRequestItemTriggerHandler.suppressConsentEmail = false;
         }
     }
 }

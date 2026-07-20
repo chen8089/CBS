@@ -1,0 +1,3 @@
+manifest_id,component_type,component_api,action,approved_scope,category_boundary,approval_date,status
+M013D,Flow,ConsentRequestResolveActiveRequest,CREATE,"Resolve existing Pending Sent or Viewed CRI for the same Data Subject Account and purpose; otherwise create one Pending CRI",No resend or communication-event creation; Category F retains communication history,2026-07-20,APPROVED
+M013D,Flow,contactApproveCreateConsentRequest,MODIFY,Invoke approved resolver only for Data_Subject Singpass and Non_Singpass Contacts,Client_User exits without CRI,2026-07-20,APPROVED

@@ -99,3 +99,70 @@ Customer Community Plus Client User/Data Subject shared Community layout
 is retained unchanged under the previously confirmed boundary. Community
 layout redesign remains deferred to A-IMP-09; A-IMP-02 performs no-regression
 verification only.
+
+## M030 exact test suite approval
+
+- Approval date: 2026-07-20
+- `AImp02ContactSeparationTest`: approved for creation
+- `BatchExcelUploadControllerTest`: approved for modification
+- `ReportRequestItemTriggerHandlerTest`: retain and run
+- `ConsentStateTransitionServiceTest`: retain and run
+- `ConsentRequestResolverServiceTest`: retain and run
+- `ExperienceClientDataIsolationTest`: retain and run
+- `UatClientUserIsolationE2ETest`: Sandbox UAT only
+
+`UatClientUserIsolationE2ETest` uses `SeeAllData=true`, may skip when suitable
+users are unavailable and is not deployment-blocking evidence by itself.
+
+This resolves RC09. The classes were implemented and executed in ChenTest;
+final post-deployment run `707BK00001B1HY3` passed all 59 methods.
+
+## RC10 implementation and Category E/G/H applicability
+
+- Approval date: 2026-07-20
+- Target: `cbsneworg@creditbureau.com.sg.chentest`
+- Org ID: `00DBK00000C9kEP2AZ`
+- Approved implementation: M012-M016, M013A-D dependencies and M030.
+- Category E: approved NOT APPLICABLE.
+- Category G: approved NOT APPLICABLE.
+- Category H: approved NOT APPLICABLE.
+
+The user confirmed that the E/G/H decisions represent the corresponding
+business-owner authorities. Unknown individual names are not inferred.
+
+The scoped check-only and ChenTest deployment succeeded. This approval did not
+authorise Salesforce data remediation, Production deployment, or waiver of
+the B/C/D/F/I owner sign-offs.
+
+Before the final approval below, RC10 and RC11 had these open items:
+
+- four historical Client User-linked CRIs required approved disposition;
+- manual B-08, D-01 and F-02 evidence was pending;
+- B/C/D/F/I owner sign-offs were pending;
+- Experience page review and owner sign-off were pending.
+
+## A-IMP-02 Phase 2 final implementation approval
+
+- Approval date: 2026-07-20
+- Decision source: explicit written confirmation in Cursor
+- Authority: user representing B/C/D/F/I owners, Experience/Community owner
+  and project owner
+- Decision: approve all remaining outstanding items and formally accept the
+  associated risks.
+
+Approved exceptions:
+
+1. retain the four historical Client User-linked Consent Request Items without
+   data remediation;
+2. waive B-08, D-01 and F-02 manual UAT evidence;
+3. waive Experience page screenshot evidence;
+4. approve B/C/D/F/I and Experience/Community owner sign-offs.
+
+Result:
+
+- RC10: `RESOLVED_APPROVED_EXCEPTION`
+- RC11: `RESOLVED_APPROVED_EXCEPTION`
+- A-IMP-02 Phase 2 ChenTest implementation: **APPROVED**
+
+No Salesforce data change was executed. This decision does not independently
+authorise Production deployment.

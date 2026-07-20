@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <types>
+        <members>AImp02ContactSeparationTest</members>
+        <name>ApexClass</name>
+    </types>
+    <types>
+        <members>Consent_Request_Item__c.Active_Request_Key__c</members>
+        <members>Consent_Request_Item__c.Consent_Purpose__c</members>
+        <name>CustomField</name>
+    </types>
+    <types>
+        <members>Consent_Request_Item_Maintain_Active_Key</members>
+        <members>ConsentRequestResolveActiveRequest</members>
+        <members>contactApproveCreateConsentRequest</members>
+        <name>Flow</name>
+    </types>
+    <version>67.0</version>
+</Package>

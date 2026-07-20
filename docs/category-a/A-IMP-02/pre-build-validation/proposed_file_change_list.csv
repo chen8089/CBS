@@ -20,7 +20,7 @@ ADD,M013A,CustomField,Consent_Request_Item__c.Consent_Purpose__c,force-app/main/
 ADD,M013B,CustomField,Consent_Request_Item__c.Active_Request_Key__c,force-app/main/default/objects/Consent_Request_Item__c/fields/Active_Request_Key__c.field-meta.xml,NOT FOUND,R06 runtime gated and cross-status conflict
 ADD,M013C,Flow,Consent_Request_Item_Maintain_Active_Key,force-app/main/default/flows/Consent_Request_Item_Maintain_Active_Key.flow-meta.xml,NOT FOUND,R06 runtime gated
 MODIFY,M015,ApexClass,BatchExcelUploadController,force-app/main/default/classes/BatchExcelUploadController.cls,FOUND,Remove Data Subject Portal Role population
-MODIFY,M016,ApexClass,BatchExcelUploadControllerTest,force-app/main/default/classes/BatchExcelUploadControllerTest.cls,FOUND,M030 exact suite names unresolved
+MODIFY,M016|M030,ApexClass,BatchExcelUploadControllerTest,force-app/main/default/classes/BatchExcelUploadControllerTest.cls,FOUND,Approved upload role-separation test changes
 MODIFY,M017,Layout,Contact-CBS Contact - Client User Layout,force-app/main/default/layouts/Contact-CBS Contact - Client User Layout.layout-meta.xml,FOUND,M008A-M008C and M019 dependencies
 MODIFY,M018,Layout,Contact-CBS Contact - Data Subject Layout,force-app/main/default/layouts/Contact-CBS Contact - Data Subject Layout.layout-meta.xml,FOUND,Preserve Category B-I fields
 MODIFY,M018,Layout,Contact-CBS Contact - SingPass,force-app/main/default/layouts/Contact-CBS Contact - SingPass.layout-meta.xml,FOUND,Current HEAD contains baseline drift
@@ -50,7 +50,12 @@ DEFERRED,M028,SharingRules,Contact,force-app/main/default/sharingRules/Contact.s
 DEFERRED,M028,SharingSet,AccountSharing,force-app/main/default/sharingSets/AccountSharing.sharingSet-meta.xml,FOUND,Retain Account Edit baseline
 DEFERRED,M028,SharingSettings,Sharing,force-app/main/default/settings/Sharing.settings-meta.xml,FOUND,Retain baseline
 READ_ONLY,M029,DataRemediation,Client User and Data Subject records,N/A,RUNTIME GATED,Execute R01-R09 externally
-PENDING_APPROVAL,M030,ApexTest,A-IMP-02 regression suite,N/A,NAME MISMATCH,Exact test class API names not controlled
+CREATE,M030,ApexTest,AImp02ContactSeparationTest,force-app/main/default/classes/AImp02ContactSeparationTest.cls,APPROVED_NEW,Deterministic deployment-blocking core separation tests
+RETAIN_RUN,M030,ApexTest,ReportRequestItemTriggerHandlerTest,force-app/main/default/classes/ReportRequestItemTriggerHandlerTest.cls,FOUND,Active request and duplicate controls
+RETAIN_RUN,M030,ApexTest,ConsentStateTransitionServiceTest,force-app/main/default/classes/ConsentStateTransitionServiceTest.cls,FOUND,Terminal state and transition controls
+RETAIN_RUN,M030,ApexTest,ConsentRequestResolverServiceTest,force-app/main/default/classes/ConsentRequestResolverServiceTest.cls,FOUND,Resolution and reuse dependencies
+RETAIN_RUN,M030,ApexTest,ExperienceClientDataIsolationTest,force-app/main/default/classes/ExperienceClientDataIsolationTest.cls,FOUND,Deterministic Experience isolation evidence
+RETAIN_UAT,M030,ApexTest,UatClientUserIsolationE2ETest,force-app/main/default/classes/UatClientUserIsolationE2ETest.cls,FOUND_NON_BLOCKING,SeeAllData Sandbox UAT may skip
 PENDING_APPROVAL,N/A,ApexClass,ConsentRequestItemTriggerHandler,force-app/main/default/classes/ConsentRequestItemTriggerHandler.cls,FOUND,Manifest-external regression dependency; do not modify
 PENDING_APPROVAL,N/A,ApexTrigger,consentRequestItemTrigger,force-app/main/default/triggers/consentRequestItemTrigger.trigger,FOUND,Manifest-external regression dependency; do not modify
 PENDING_APPROVAL,N/A,ApexClass,ConsentGuestAuthService,force-app/main/default/classes/ConsentGuestAuthService.cls,FOUND,Manifest-external regression dependency; do not modify

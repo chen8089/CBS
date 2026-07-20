@@ -6583,14 +6583,14 @@
         <recordType>Contact.Client_User</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Contact-CBS Contact - Data Subject Layout</layout>
+        <layout>Contact-Contact Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Contact-CBS Contact - Non-SingPass</layout>
         <recordType>Contact.Non_Singpass</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Contact-CBS Contact - SingPass</layout>
+        <layout>Contact-CBS Contact - Data Subject Layout</layout>
         <recordType>Contact.Data_Subject</recordType>
     </layoutAssignments>
     <layoutAssignments>

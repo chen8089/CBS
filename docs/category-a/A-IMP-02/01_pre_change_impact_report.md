@@ -68,14 +68,14 @@ Resolved by approved precedence:
 - External profile/layout correction and full Experience Cloud redesign remain
   deferred under D08, M021 and M026-M028.
 
-Unresolved conflicts:
+Initial conflicts (subsequently dispositioned in the approval package):
 
 1. M018 says six Data Subject-family layouts. Five purpose-specific physical
    layouts were identified. The controlled documents do not map the sixth API
    name unambiguously; `Contact-Contact Layout` must not be assumed without
    approval.
-2. M030 names a logical regression suite but does not provide exact Apex test
-   class API names.
+2. M030 originally named a logical regression suite without exact Apex test
+   class API names. The exact seven-class set was approved on 2026-07-20.
 3. Approved R06 groups by `Current_Status__c`. This does not detect two active
    requests with the same Data Subject/Account/purpose when their active
    statuses differ, for example one Pending and one Sent. M013B-M013D must stop
@@ -122,7 +122,8 @@ Expected Validation Rule path pattern:
 - M026-M028 current permission, route and sharing state is confirmed; analyse
   only.
 - M029 is runtime analysis and has no metadata file.
-- M030 remains blocked because exact test class API names are not controlled.
+- M030 exact API names are approved; implementation and execution remain
+  blocked pending final Phase 2 approval.
 
 ## 6. Authorised R01-R09 read-only checks
 
@@ -258,9 +259,11 @@ Confirmed new files/components:
 Unresolved and excluded:
 
 - M018 sixth layout
-- M030 test class names
 - Any A-IMP-08 permission component
 - Any A-IMP-09 Experience Cloud redesign
+
+Approved M030 scope is recorded in
+`cursor-output/final-approval-input/M030_test_suite_amendment_approved.csv`.
 
 ## 8. Risks and stop conditions
 
@@ -269,7 +272,8 @@ Unresolved and excluded:
 - Reconcile current HEAD against the approved baseline before build.
 - Stop M018 until its sixth physical API name is approved.
 - Stop M013B-M013D until R06 cross-status uniqueness evidence is resolved.
-- Stop M030 until exact test API names are approved.
+- Stop deployment until the approved M030 deployment-blocking tests are
+  implemented and pass.
 - Do not activate M008A-M008C, M010, M013B-M013D, M022-M025 without the
   corresponding runtime gate and owner-approved disposition.
 - Stop if CBS Processing Queue has no active member or the deployment context
@@ -280,8 +284,9 @@ Unresolved and excluded:
 
 ## 9. Gate conclusion
 
-Static analysis is complete. Runtime evidence is unavailable in this
-metadata-only environment. The unresolved M018, M030 and R06 issues prevent a
-complete conditional build plan for those rows.
+Static analysis is complete. M018, M030 and corrected R06 now have approved
+controlled dispositions. Test implementation, Category B-I regression,
+Experience Cloud no-regression and remaining owner gates still prevent
+deployment.
 
 AWAITING A-IMP-02 MANIFEST APPROVAL

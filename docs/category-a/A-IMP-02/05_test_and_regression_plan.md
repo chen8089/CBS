@@ -12,6 +12,22 @@ Target org placeholder: `TARGET_ORG`
 - R01-R09 evidence and required owner dispositions are approved.
 - All runtime-gated controls remain inactive until their individual gates pass.
 
+## Approved M030 exact test set
+
+Deployment-blocking:
+
+- `AImp02ContactSeparationTest` — create
+- `BatchExcelUploadControllerTest` — modify
+- `ReportRequestItemTriggerHandlerTest` — retain and run
+- `ConsentStateTransitionServiceTest` — retain and run
+- `ConsentRequestResolverServiceTest` — retain and run
+- `ExperienceClientDataIsolationTest` — retain and run
+
+Sandbox UAT only:
+
+- `UatClientUserIsolationE2ETest` — retain and run separately; because it uses
+  `SeeAllData=true` and may skip, it cannot be the sole deployment evidence.
+
 ## Static and metadata validation
 
 1. Validate every changed path against M001-M030.

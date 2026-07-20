@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Profile xmlns="http://soap.sforce.com/2006/04/metadata">
+    <layoutAssignments><layout>Contact-Contact Layout</layout></layoutAssignments>
+    <layoutAssignments><layout>Contact-CBS Contact - Client User Layout</layout><recordType>Contact.Client_User</recordType></layoutAssignments>
+    <layoutAssignments><layout>Contact-CBS Contact - Data Subject Layout</layout><recordType>Contact.Data_Subject</recordType></layoutAssignments>
+    <layoutAssignments><layout>Contact-CBS Contact - Non-SingPass</layout><recordType>Contact.Non_Singpass</recordType></layoutAssignments>
+    <layoutAssignments><layout>Contact-CBS Contact - SingPass</layout><recordType>Contact.Singpass</recordType></layoutAssignments>
+</Profile>

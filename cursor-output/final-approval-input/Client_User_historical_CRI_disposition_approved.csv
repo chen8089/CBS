@@ -1,0 +1,2 @@
+disposition_id,record_scope,record_count,created_date_range,approved_disposition,approval_authority,approval_date,data_change_executed,status
+RC10-DATA-04,"Historical Consent Request Items linked to Client User Contacts",4,"2026-06-11T01:58:33Z to 2026-07-06T10:04:32Z",RETAIN_WITHOUT_REMEDIATION,"User representing all named owners and project owner",2026-07-20,false,APPROVED_RISK_ACCEPTANCE

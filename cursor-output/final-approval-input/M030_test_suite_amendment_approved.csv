@@ -1,0 +1,8 @@
+manifest_id,test_class_api,action,execution_role,required_coverage,repository_path,approval_date,status
+M030,AImp02ContactSeparationTest,CREATE,DEPLOYMENT_BLOCKING,"Client User zero Consent Request; Data Subject Singpass and Non-Singpass continuity; active request reuse; terminal immutability; Flow fault Case sanitation",force-app/main/default/classes/AImp02ContactSeparationTest.cls,2026-07-20,APPROVED
+M030,BatchExcelUploadControllerTest,MODIFY,DEPLOYMENT_BLOCKING,"Upload role separation; Client User access fields remain blank or false",force-app/main/default/classes/BatchExcelUploadControllerTest.cls,2026-07-20,APPROVED
+M030,ReportRequestItemTriggerHandlerTest,RETAIN_AND_RUN,DEPLOYMENT_BLOCKING,"Active request and duplicate controls",force-app/main/default/classes/ReportRequestItemTriggerHandlerTest.cls,2026-07-20,APPROVED
+M030,ConsentStateTransitionServiceTest,RETAIN_AND_RUN,DEPLOYMENT_BLOCKING,"Terminal-state protection and state transitions",force-app/main/default/classes/ConsentStateTransitionServiceTest.cls,2026-07-20,APPROVED
+M030,ConsentRequestResolverServiceTest,RETAIN_AND_RUN,DEPLOYMENT_BLOCKING,"Request resolution and reuse dependencies",force-app/main/default/classes/ConsentRequestResolverServiceTest.cls,2026-07-20,APPROVED
+M030,ExperienceClientDataIsolationTest,RETAIN_AND_RUN,DEPLOYMENT_BLOCKING,"Deterministic Experience Cloud data isolation regression",force-app/main/default/classes/ExperienceClientDataIsolationTest.cls,2026-07-20,APPROVED
+M030,UatClientUserIsolationE2ETest,RETAIN_SANDBOX_UAT,SANDBOX_UAT_NON_BLOCKING,"Current-state external-user isolation; SeeAllData test may skip and cannot be sole deployment evidence",force-app/main/default/classes/UatClientUserIsolationE2ETest.cls,2026-07-20,APPROVED_WITH_LIMITATION

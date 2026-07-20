@@ -1,0 +1,9 @@
+category,owner_role,scope_decision,required_result,approval_authority,approval_date,status,evidence_reference
+B,Consent and Upload Business Owners,IN_SCOPE,Automated rows PASS; manual evidence formally waived,User representing all named owners and project owner,2026-07-20,APPROVED_RISK_ACCEPTANCE,Cursor written Phase 2 approval
+C,Report Business Owner,IN_SCOPE,All automated C rows PASS,User representing all named owners and project owner,2026-07-20,APPROVED,Cursor written Phase 2 approval
+D,Report Processing Owner,IN_SCOPE,Automated row PASS; manual evidence formally waived,User representing all named owners and project owner,2026-07-20,APPROVED_RISK_ACCEPTANCE,Cursor written Phase 2 approval
+E,Departure Business Owner,NOT_APPLICABLE,Written N/A accepted,User representing corresponding business owner,2026-07-20,APPROVED_NOT_APPLICABLE,Cursor written approval
+F,Communications Business Owner,IN_SCOPE,Automated row PASS; manual evidence formally waived,User representing all named owners and project owner,2026-07-20,APPROVED_RISK_ACCEPTANCE,Cursor written Phase 2 approval
+G,Matching Business Owner,NOT_APPLICABLE,Written N/A accepted,User representing corresponding business owner,2026-07-20,APPROVED_NOT_APPLICABLE,Cursor written approval
+H,Withdrawal Business Owner,NOT_APPLICABLE,Written N/A accepted,User representing corresponding business owner,2026-07-20,APPROVED_NOT_APPLICABLE,Cursor written approval
+I,Authentication Business Owner,IN_SCOPE,All automated I rows PASS,User representing all named owners and project owner,2026-07-20,APPROVED,Cursor written Phase 2 approval

@@ -1,0 +1,7 @@
+class_name,outcome,method_count,test_run_id,started_at_utc,org_id,executing_user
+AImp02ContactSeparationTest,PASS,6,707BK00001B1HY3,2026-07-20T12:31:51Z,00DBK00000C9kEP2AZ,cbsneworg@creditbureau.com.sg.chentest
+BatchExcelUploadControllerTest,PASS,42,707BK00001B1HY3,2026-07-20T12:31:51Z,00DBK00000C9kEP2AZ,cbsneworg@creditbureau.com.sg.chentest
+ConsentRequestResolverServiceTest,PASS,2,707BK00001B1HY3,2026-07-20T12:31:51Z,00DBK00000C9kEP2AZ,cbsneworg@creditbureau.com.sg.chentest
+ConsentStateTransitionServiceTest,PASS,2,707BK00001B1HY3,2026-07-20T12:31:51Z,00DBK00000C9kEP2AZ,cbsneworg@creditbureau.com.sg.chentest
+ExperienceClientDataIsolationTest,PASS,3,707BK00001B1HY3,2026-07-20T12:31:51Z,00DBK00000C9kEP2AZ,cbsneworg@creditbureau.com.sg.chentest
+ReportRequestItemTriggerHandlerTest,PASS,4,707BK00001B1HY3,2026-07-20T12:31:51Z,00DBK00000C9kEP2AZ,cbsneworg@creditbureau.com.sg.chentest

@@ -8,6 +8,7 @@ private class ConsentRequestResolverServiceTest {
 
         insert new Consent__c(
             Data_Subject__c = contact.Id,
+            Consent_Request_Item__c = requestItem.Id,
             Consent_Status__c = 'Active',
             Submitted_At__c = System.now(),
             Action_Type__c = 'Consent Given'
@@ -41,6 +42,7 @@ private class ConsentRequestResolverServiceTest {
         Consent_Request_Item__c requestItem = ConsentTestSupport.createRequestItem(contact);
         Consent__c consent = new Consent__c(
             Data_Subject__c = contact.Id,
+            Consent_Request_Item__c = requestItem.Id,
             Consent_Status__c = 'Active',
             Submitted_At__c = System.now(),
             Action_Type__c = 'Consent Given'
@@ -57,15 +59,23 @@ private class ConsentRequestResolverServiceTest {
         String uniqueSuffix = String.valueOf(DateTime.now().getTime()) + String.valueOf(Math.abs(Crypto.getRandomInteger()));
         Contact contact = new Contact(
             LastName = 'Resolver Test',
-            Email = 'resolver.test+' + uniqueSuffix + '@example.com',
+            RecordTypeId = dataSubjectRecordTypeId(),
             Date_of_Birth__c = Date.newInstance(1990, 1, 1),
             Employment_Status__c = 'Existing Hire',
             Full_Name__c = 'Resolver Test',
             ID_Number__c = 'S' + uniqueSuffix.right(7),
             ID_Type__c = 'NRIC',
-            Portal_Role__c = 'Approver'
+            Consent_Type__c = 'Per-Report Consent'
         );
         insert contact;
         return contact;
+    }
+
+    private static Id dataSubjectRecordTypeId() {
+        Map<String, Schema.RecordTypeInfo> infos =
+            Contact.SObjectType.getDescribe().getRecordTypeInfosByDeveloperName();
+        return infos.containsKey('Data_Subject') && infos.get('Data_Subject').isAvailable()
+            ? infos.get('Data_Subject').getRecordTypeId()
+            : null;
     }
 }

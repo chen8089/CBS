@@ -76,8 +76,26 @@ private class BatchExcelUploadControllerTest {
         return r;
     }
 
+    private static List<String> validHeaders() {
+        return new List<String>{
+            'Full Name',
+            'Email Address',
+            'ID Type',
+            'ID Number',
+            'Date of Birth',
+            'Employment Status'
+        };
+    }
+
     private static void applyContactDefaults(Contact c) {
         Map<String, Schema.SObjectField> fm = Schema.SObjectType.Contact.fields.getMap();
+        if (c.RecordTypeId == null) {
+            Map<String, Schema.RecordTypeInfo> infos =
+                Contact.SObjectType.getDescribe().getRecordTypeInfosByDeveloperName();
+            if (infos.containsKey('Data_Subject') && infos.get('Data_Subject').isAvailable()) {
+                c.RecordTypeId = infos.get('Data_Subject').getRecordTypeId();
+            }
+        }
         if (fm.containsKey('Full_Name__c') && c.get('Full_Name__c') == null) {
             c.put('Full_Name__c', 'Existing Contact');
         }
@@ -93,9 +111,19 @@ private class BatchExcelUploadControllerTest {
         if (fm.containsKey('ID_Number__c') && c.get('ID_Number__c') == null) {
             c.put('ID_Number__c', 'S0000000X');
         }
-        if (fm.containsKey('Portal_Role__c') && c.get('Portal_Role__c') == null) {
-            c.put('Portal_Role__c', firstActivePicklistValue(fm.get('Portal_Role__c')));
+        if (fm.containsKey('Consent_Type__c') && c.get('Consent_Type__c') == null) {
+            c.put('Consent_Type__c', 'Per-Report Consent');
         }
+    }
+
+    private static void assertClientAccessFieldsBlank(Contact contact) {
+        System.assertEquals(null, contact.Portal_Role__c, 'Data Subject upload must not populate Portal Role.');
+        System.assertEquals(false, contact.Can_Approve__c, 'Data Subject upload must not grant approval access.');
+        System.assertEquals(
+            false,
+            contact.Is_Active_Client_User__c,
+            'Data Subject upload must not mark the Contact as an active Client User.'
+        );
     }
 
     private static Boolean consentRecordTypesExistInOrg() {
@@ -146,7 +174,8 @@ private class BatchExcelUploadControllerTest {
 
         List<Contact> contacts = [
             SELECT Id, AccountId, Batch_Id__c, Email, RecordType.DeveloperName,
-                Current_Consent_Status__c, Data_Subject_Lifecycle_Stage__c
+                Current_Consent_Status__c, Data_Subject_Lifecycle_Stage__c,
+                Portal_Role__c, Can_Approve__c, Is_Active_Client_User__c
             FROM Contact
             WHERE Batch_Id__c = :result.batchId
         ];
@@ -155,6 +184,7 @@ private class BatchExcelUploadControllerTest {
             System.assertEquals(testAccountId(), c.AccountId);
             System.assertEquals(result.batchId, c.Batch_Id__c);
             System.assertEquals('Singpass', c.RecordType.DeveloperName);
+            assertClientAccessFieldsBlank(c);
             String canonicalConsentStatus = ConsentStatusModelService.normalizeContactConsentStatus(c.Current_Consent_Status__c);
             String canonicalLifecycle = ConsentStatusModelService.normalizeLifecycleStage(c.Data_Subject_Lifecycle_Stage__c);
             System.assert(
@@ -324,7 +354,8 @@ private class BatchExcelUploadControllerTest {
 
         System.assertEquals(1, result.successRows);
         Contact c = [
-            SELECT RecordType.DeveloperName, Authentication_Type__c, ID_Type__c
+            SELECT RecordType.DeveloperName, Authentication_Type__c, ID_Type__c,
+                Portal_Role__c, Can_Approve__c, Is_Active_Client_User__c
             FROM Contact
             WHERE Email = 'passport.user@test.com'
             LIMIT 1
@@ -335,6 +366,7 @@ private class BatchExcelUploadControllerTest {
             System.assertEquals('Non-Singpass', (String) c.get('Authentication_Type__c'));
         }
         System.assertEquals('Passport', (String) c.get('ID_Type__c'));
+        assertClientAccessFieldsBlank(c);
     }
 
     @IsTest
@@ -768,8 +800,30 @@ private class BatchExcelUploadControllerTest {
         }
         applyContactDefaults(existing);
         insert existing;
+        List<Consent_Request_Item__c> requestItems = [
+            SELECT Id
+            FROM Consent_Request_Item__c
+            WHERE Data_Subject__c = :existing.Id
+            ORDER BY CreatedDate DESC
+            LIMIT 1
+        ];
+        if (requestItems.isEmpty()) {
+            ConsentRequestItemTriggerHandler.suppressConsentEmail = true;
+            try {
+                Consent_Request_Item__c requestItem = new Consent_Request_Item__c(
+                    Data_Subject__c = existing.Id,
+                    Current_Status__c = 'Sent',
+                    Consent_Purpose__c = 'Per-Report Consent'
+                );
+                insert requestItem;
+                requestItems.add(requestItem);
+            } finally {
+                ConsentRequestItemTriggerHandler.suppressConsentEmail = false;
+            }
+        }
         insert new Consent__c(
             Data_Subject__c = existing.Id,
+            Consent_Request_Item__c = requestItems[0].Id,
             Consent_Status__c = 'Active',
             Submitted_At__c = System.now(),
             Action_Type__c = 'Consent Given'
@@ -940,5 +994,261 @@ private class BatchExcelUploadControllerTest {
             'Upload completed with exceptions. Please review the Exceptions list.',
             result.message
         );
+    }
+
+    @IsTest
+    static void testValidateAndUpload_rejectsOversizeFile() {
+        BatchExcelUploadController.UploadValidationResult result =
+            BatchExcelUploadController.validateAndUpload(
+                'Oversize',
+                'oversize.xlsx',
+                JSON.serialize(new List<BatchExcelUploadController.BatchUploadRow>{
+                    validRow(2, 'oversize@test.com', 'S3030303A')
+                }),
+                JSON.serialize(validHeaders()),
+                (10 * 1024 * 1024) + 1,
+                null,
+                null
+            );
+        System.assertEquals(false, result.success);
+        System.assertEquals('Upload File Exceeds Size Limit', result.errorReason);
+    }
+
+    @IsTest
+    static void testValidateAndUpload_rejectsUnreadableRows() {
+        BatchExcelUploadController.UploadValidationResult result =
+            BatchExcelUploadController.validateAndUpload(
+                'Unreadable',
+                'unreadable.csv',
+                '{not-json',
+                JSON.serialize(validHeaders()),
+                10,
+                null,
+                'text/csv'
+            );
+        System.assertEquals(false, result.success);
+        System.assertEquals('No Readable Records in File', result.errorReason);
+    }
+
+    @IsTest
+    static void testValidateAndUpload_rejectsEmptyRows() {
+        BatchExcelUploadController.UploadValidationResult result =
+            BatchExcelUploadController.validateAndUpload(
+                'Empty',
+                'empty.xlsx',
+                '[]',
+                JSON.serialize(validHeaders()),
+                10,
+                null,
+                null
+            );
+        System.assertEquals(false, result.success);
+        System.assertEquals('Empty Upload File', result.errorReason);
+    }
+
+    @IsTest
+    static void testValidateAndUpload_rejectsBlankOnlyRows() {
+        BatchExcelUploadController.BatchUploadRow blankRow =
+            new BatchExcelUploadController.BatchUploadRow();
+        blankRow.rowNumber = 2;
+        BatchExcelUploadController.UploadValidationResult result =
+            BatchExcelUploadController.validateAndUpload(
+                'Blank',
+                'blank.csv',
+                JSON.serialize(new List<BatchExcelUploadController.BatchUploadRow>{ blankRow }),
+                JSON.serialize(validHeaders()),
+                10,
+                null,
+                'text/csv'
+            );
+        System.assertEquals(false, result.success);
+        System.assertEquals('No Readable Records in File', result.errorReason);
+    }
+
+    @IsTest
+    static void testValidateAndUpload_successSavesFileToBatch() {
+        useTestAccount();
+        if (!consentRecordTypesExistInOrg()) {
+            return;
+        }
+        String fileBody = EncodingUtil.base64Encode(Blob.valueOf(
+            'Full Name,Email Address,ID Type,ID Number,Date of Birth,Employment Status'
+        ));
+        BatchExcelUploadController.UploadValidationResult result =
+            BatchExcelUploadController.validateAndUpload(
+                'File Save',
+                'file-save.csv',
+                JSON.serialize(new List<BatchExcelUploadController.BatchUploadRow>{
+                    validRow(2, 'file.save@test.com', 'S4040404B')
+                }),
+                JSON.serialize(validHeaders()),
+                100,
+                fileBody,
+                'text/csv'
+            );
+        System.assertEquals(true, result.success);
+        System.assertNotEquals(null, result.uploadResult);
+        System.assertNotEquals(null, result.uploadResult.batchId);
+        System.assertEquals(
+            1,
+            [SELECT COUNT() FROM ContentDocumentLink WHERE LinkedEntityId = :result.uploadResult.batchId]
+        );
+    }
+
+    @IsTest
+    static void testValidateAndUpload_rejectsNullRowsPayload() {
+        BatchExcelUploadController.UploadValidationResult result =
+            BatchExcelUploadController.validateAndUpload(
+                'Null Rows',
+                'null-rows.csv',
+                'null',
+                JSON.serialize(validHeaders()),
+                10,
+                null,
+                null
+            );
+        System.assertEquals(false, result.success);
+        System.assertEquals('No Readable Records in File', result.errorReason);
+    }
+
+    @IsTest
+    static void testValidateAndUpload_rejectsRowLimit() {
+        List<BatchExcelUploadController.BatchUploadRow> rows =
+            new List<BatchExcelUploadController.BatchUploadRow>();
+        for (Integer i = 0; i < 5001; i++) {
+            BatchExcelUploadController.BatchUploadRow row =
+                new BatchExcelUploadController.BatchUploadRow();
+            row.rowNumber = i + 2;
+            rows.add(row);
+        }
+        BatchExcelUploadController.UploadValidationResult result =
+            BatchExcelUploadController.validateAndUpload(
+                'Too Many Rows',
+                'too-many.xlsx',
+                JSON.serialize(rows),
+                JSON.serialize(validHeaders()),
+                100,
+                null,
+                null
+            );
+        System.assertEquals(false, result.success);
+        System.assertEquals('Upload File Exceeds Size Limit', result.errorReason);
+    }
+
+    @IsTest
+    static void testValidateAndUpload_rejectsBlankHeaderPayload() {
+        BatchExcelUploadController.UploadValidationResult result =
+            BatchExcelUploadController.validateAndUpload(
+                'No Headers',
+                'no-headers.csv',
+                JSON.serialize(new List<BatchExcelUploadController.BatchUploadRow>{
+                    validRow(2, 'no.headers@test.com', 'S5050505C')
+                }),
+                null,
+                100,
+                null,
+                null
+            );
+        System.assertEquals(false, result.success);
+        System.assertEquals('No Readable Records in File', result.errorReason);
+    }
+
+    @IsTest
+    static void testValidateAndUpload_rejectsUnexpectedHeader() {
+        List<String> headers = validHeaders();
+        headers.add('');
+        headers.add('Unexpected Column');
+        BatchExcelUploadController.UploadValidationResult result =
+            BatchExcelUploadController.validateAndUpload(
+                'Unexpected Header',
+                'unexpected-header.csv',
+                JSON.serialize(new List<BatchExcelUploadController.BatchUploadRow>{
+                    validRow(2, 'unexpected.header@test.com', 'S6060606D')
+                }),
+                JSON.serialize(headers),
+                100,
+                null,
+                null
+            );
+        System.assertEquals(false, result.success);
+        System.assertEquals('Invalid Column Header', result.errorReason);
+    }
+
+    @IsTest
+    static void testValidateAndUpload_rejectsInvalidBase64FileBody() {
+        useTestAccount();
+        if (!consentRecordTypesExistInOrg()) {
+            return;
+        }
+        BatchExcelUploadController.UploadValidationResult result =
+            BatchExcelUploadController.validateAndUpload(
+                'Invalid Body',
+                'invalid-body.csv',
+                JSON.serialize(new List<BatchExcelUploadController.BatchUploadRow>{
+                    validRow(2, 'invalid.body@test.com', 'S7070707E')
+                }),
+                JSON.serialize(validHeaders()),
+                100,
+                'not-valid-base64*',
+                'text/csv'
+            );
+        System.assertEquals(false, result.success);
+        System.assertEquals('Upload Failed', result.errorReason);
+    }
+
+    @IsTest
+    static void testValidateAndUpload_rejectsBlankRowsJson() {
+        BatchExcelUploadController.UploadValidationResult result =
+            BatchExcelUploadController.validateAndUpload(
+                'Blank Json',
+                'blank-json.csv',
+                '',
+                JSON.serialize(validHeaders()),
+                100,
+                null,
+                null
+            );
+        System.assertEquals(false, result.success);
+        System.assertEquals('No Readable Records in File', result.errorReason);
+    }
+
+    @IsTest
+    static void testValidateAndUpload_rejectsMissingAndTrailingExtensions() {
+        String rowsJson = JSON.serialize(new List<BatchExcelUploadController.BatchUploadRow>{
+            validRow(2, 'extension@test.com', 'S8080808F')
+        });
+        BatchExcelUploadController.UploadValidationResult missingExtension =
+            BatchExcelUploadController.validateAndUpload(
+                'No Extension',
+                'upload',
+                rowsJson,
+                JSON.serialize(validHeaders()),
+                100,
+                null,
+                null
+            );
+        BatchExcelUploadController.UploadValidationResult trailingDot =
+            BatchExcelUploadController.validateAndUpload(
+                'Trailing Dot',
+                'upload.',
+                rowsJson,
+                JSON.serialize(validHeaders()),
+                100,
+                null,
+                null
+            );
+        System.assertEquals('Invalid File Format', missingExtension.errorReason);
+        System.assertEquals('Invalid File Format', trailingDot.errorReason);
+    }
+
+    @IsTest
+    static void testUploadBatchContacts_rejectsNullRows() {
+        useTestAccount();
+        try {
+            BatchExcelUploadController.uploadBatchContacts(null, 'Null Rows', 'null-rows.csv');
+            System.assert(false, 'Expected null rows to be rejected.');
+        } catch (AuraHandledException ex) {
+            System.assert(ex.getMessage().contains('Script-thrown exception'));
+        }
     }
 }

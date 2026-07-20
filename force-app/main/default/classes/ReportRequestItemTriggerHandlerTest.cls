@@ -16,6 +16,7 @@ private class ReportRequestItemTriggerHandlerTest {
             AccountId = seedData.clientAccount.Id,
             ContactId = seedData.requester.Id,
             Status = 'New',
+            Exception_Type__c = 'Other',
             Origin = 'Portal',
             Subject = 'Trigger eligibility blocking test'
         );
@@ -48,6 +49,7 @@ private class ReportRequestItemTriggerHandlerTest {
             AccountId = seedData.clientAccount.Id,
             ContactId = seedData.requester.Id,
             Status = 'New',
+            Exception_Type__c = 'Other',
             Origin = 'Portal',
             Subject = 'Trigger eligibility allow test'
         );
@@ -80,6 +82,7 @@ private class ReportRequestItemTriggerHandlerTest {
             AccountId = seedData.clientAccount.Id,
             ContactId = seedData.requester.Id,
             Status = 'New',
+            Exception_Type__c = 'Other',
             Origin = 'Portal',
             Subject = 'Trigger eligibility update blocking test'
         );
@@ -131,6 +134,7 @@ private class ReportRequestItemTriggerHandlerTest {
             AccountId = seedData.clientAccount.Id,
             ContactId = seedData.requester.Id,
             Status = 'New',
+            Exception_Type__c = 'Other',
             Origin = 'Portal',
             Subject = 'Trigger mixed eligibility bulk test'
         );

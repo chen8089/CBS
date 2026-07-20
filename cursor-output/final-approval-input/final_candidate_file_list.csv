@@ -14,32 +14,34 @@ M009B,ADD,force-app/main/default/objects/Contact/validationRules/CBS_SP_Required
 M009C,ADD,force-app/main/default/objects/Contact/validationRules/CBS_NSP_Required_Identity_By_Stage.validationRule-meta.xml,BLOCKED,Non-Singpass regression and atomic package
 M010,ADD,force-app/main/default/objects/Contact/validationRules/CBS_DS_Prohibit_Client_Access_Data.validationRule-meta.xml,BLOCKED,RC02 approved; controlled build and activation sequence remain
 M011,ADD,force-app/main/default/objects/Contact/validationRules/CBS_CU_Role_Approval_Consistency.validationRule-meta.xml,BLOCKED,Role dry-run unavailable
-M012|M013D|M014,MODIFY,force-app/main/default/flows/contactApproveCreateConsentRequest.flow-meta.xml,BLOCKED,M030 and Category B-I regression; R06 and R09 gates satisfied
+M012|M013D|M014,MODIFY,force-app/main/default/flows/contactApproveCreateConsentRequest.flow-meta.xml,DEPLOYED_CHENTEST,Flow version 6 active; automated regression passed
 M012|M013D|M014,REVIEW_ONLY,force-app/main/default/flowDefinitions/contactApproveCreateConsentRequest.flowDefinition-meta.xml,BLOCKED,Do not change unless approved versioning requires it
-M013A,ADD,force-app/main/default/objects/Consent_Request_Item__c/fields/Consent_Purpose__c.field-meta.xml,BLOCKED,Backfill quality and owner review
-M013B,ADD,force-app/main/default/objects/Consent_Request_Item__c/fields/Active_Request_Key__c.field-meta.xml,CONDITIONAL_BUILD_ONLY,R06 gate satisfied; backfill rehearsal and activation remain prohibited
-M013C,ADD,force-app/main/default/flows/Consent_Request_Item_Maintain_Active_Key.flow-meta.xml,CONDITIONAL_BUILD_ONLY,R06 gate satisfied; backfill rehearsal and activation remain prohibited
-M015,MODIFY,force-app/main/default/classes/BatchExcelUploadController.cls,BLOCKED,Regression and controlled implementation gate
-M016,MODIFY,force-app/main/default/classes/BatchExcelUploadControllerTest.cls,BLOCKED,M030 exact API names and regression
+M013A,ADD,force-app/main/default/objects/Consent_Request_Item__c/fields/Consent_Purpose__c.field-meta.xml,DEPLOYED_CHENTEST,Legacy purpose/backfill disposition remains
+M013B,ADD,force-app/main/default/objects/Consent_Request_Item__c/fields/Active_Request_Key__c.field-meta.xml,DEPLOYED_CHENTEST,Unique field deployed; 31 legacy active records remain unkeyed
+M013C,ADD,force-app/main/default/flows/Consent_Request_Item_Maintain_Active_Key.flow-meta.xml,DEPLOYED_ACTIVE_CHENTEST,Flow version 1 active and tested
+M013D|M014,ADD,force-app/main/default/flows/ConsentRequestResolveActiveRequest.flow-meta.xml,DEPLOYED_ACTIVE_CHENTEST,Reuse and sanitised fault paths passed
+M013A|M013B,MODIFY,force-app/main/default/permissionsets/CBS_Implementation_Partner_Admin.permissionset-meta.xml,DEPLOYED_CHENTEST,Executing-user FLS for new fields
+M015,MODIFY,force-app/main/default/classes/BatchExcelUploadController.cls,DEPLOYED_CHENTEST,Portal Role auto-population removed
+M016|M030,MODIFY,force-app/main/default/classes/BatchExcelUploadControllerTest.cls,DEPLOYED_CHENTEST,42 post-deployment methods passed
 M017,MODIFY,force-app/main/default/layouts/Contact-CBS Contact - Client User Layout.layout-meta.xml,BLOCKED,M008 M019 and UI QA
-M018,MODIFY,force-app/main/default/layouts/Contact-CBS Contact - Data Subject Layout.layout-meta.xml,APPROVED_BUILD_SCOPE,Category B-I regression required before deployment
-M018,MODIFY,force-app/main/default/layouts/Contact-CBS Contact - SingPass.layout-meta.xml,APPROVED_BUILD_SCOPE,Category B-I regression required before deployment
-M018,MODIFY,force-app/main/default/layouts/Contact-CBS Contact - Non-SingPass.layout-meta.xml,APPROVED_BUILD_SCOPE,Category B-I regression required before deployment
+M018,MODIFY,force-app/main/default/layouts/Contact-CBS Contact - Data Subject Layout.layout-meta.xml,DEPLOYED_CHENTEST,Portal_Role__c removed; retrieved metadata hash verified
+M018,MODIFY,force-app/main/default/layouts/Contact-CBS Contact - SingPass.layout-meta.xml,DEPLOYED_CHENTEST,Portal_Role__c removed; retrieved metadata hash verified
+M018,MODIFY,force-app/main/default/layouts/Contact-CBS Contact - Non-SingPass.layout-meta.xml,DEPLOYED_CHENTEST,Portal_Role__c removed; retrieved metadata hash verified
 M018,RETAIN,force-app/main/default/layouts/Contact-CBS Contact - SingPass- Community User.layout-meta.xml,DEFERRED_AIMP09_RETAIN,Shared external layout retained; current-state no-regression only
 M018,RETAIN,force-app/main/default/layouts/Contact-CBS Contact - Non-SingPass - Community User.layout-meta.xml,DEFERRED_AIMP09_RETAIN,Experience layout retained; current-state no-regression only
 M018,RETAIN,force-app/main/default/layouts/Contact-Contact Layout.layout-meta.xml,RETAIN_SHARED_NO_FIELD_CHANGE,Data Subject-family assignments must move through an approved exact Profile mapping
-M018,MODIFY,force-app/main/default/profiles/Admin.profile-meta.xml,APPROVED_BUILD_SCOPE,2 approved assignment changes; regression required before deployment
-M018,MODIFY,force-app/main/default/profiles/Analytics Cloud Integration User.profile-meta.xml,APPROVED_BUILD_SCOPE,4 approved assignment changes; effective access review passed
-M018,MODIFY,force-app/main/default/profiles/Analytics Cloud Security User.profile-meta.xml,APPROVED_BUILD_SCOPE,4 approved assignment changes; effective access review passed
-M018,MODIFY,force-app/main/default/profiles/ContractManager.profile-meta.xml,APPROVED_BUILD_SCOPE,4 approved assignment changes; regression required before deployment
-M018,MODIFY,force-app/main/default/profiles/CPQ Integration User.profile-meta.xml,APPROVED_BUILD_SCOPE,4 approved assignment changes; effective access review passed
-M018,MODIFY,force-app/main/default/profiles/End User.profile-meta.xml,APPROVED_BUILD_SCOPE,4 approved assignment changes; regression required before deployment
-M018,MODIFY,force-app/main/default/profiles/Executive Sponsor.profile-meta.xml,APPROVED_BUILD_SCOPE,4 approved assignment changes; regression required before deployment
-M018,MODIFY,force-app/main/default/profiles/MarketingProfile.profile-meta.xml,APPROVED_BUILD_SCOPE,4 approved assignment changes; regression required before deployment
-M018,MODIFY,force-app/main/default/profiles/Read Only.profile-meta.xml,APPROVED_BUILD_SCOPE,4 approved assignment changes; regression required before deployment
-M018,MODIFY,force-app/main/default/profiles/Sales Insights Integration User.profile-meta.xml,APPROVED_BUILD_SCOPE,4 approved assignment changes; effective access review passed
-M018,MODIFY,force-app/main/default/profiles/SolutionManager.profile-meta.xml,APPROVED_BUILD_SCOPE,4 approved assignment changes; regression required before deployment
-M018,MODIFY,force-app/main/default/profiles/Standard.profile-meta.xml,APPROVED_BUILD_SCOPE,4 approved assignment changes; regression required before deployment
+M018,MODIFY,force-app/main/default/profiles/Admin.profile-meta.xml,DEPLOYED_CHENTEST,2 approved assignment changes verified by ProfileLayout
+M018,MODIFY,force-app/main/default/profiles/Analytics Cloud Integration User.profile-meta.xml,DEPLOYED_CHENTEST,4 approved assignment changes verified by ProfileLayout
+M018,MODIFY,force-app/main/default/profiles/Analytics Cloud Security User.profile-meta.xml,DEPLOYED_CHENTEST,4 approved assignment changes verified by ProfileLayout
+M018,MODIFY,force-app/main/default/profiles/ContractManager.profile-meta.xml,DEPLOYED_CHENTEST,4 approved assignment changes verified by ProfileLayout
+M018,MODIFY,force-app/main/default/profiles/CPQ Integration User.profile-meta.xml,DEPLOYED_CHENTEST,4 approved assignment changes verified by ProfileLayout
+M018,MODIFY,force-app/main/default/profiles/End User.profile-meta.xml,DEPLOYED_CHENTEST,4 approved assignment changes verified by ProfileLayout
+M018,MODIFY,force-app/main/default/profiles/Executive Sponsor.profile-meta.xml,DEPLOYED_CHENTEST,4 approved assignment changes verified by ProfileLayout
+M018,MODIFY,force-app/main/default/profiles/MarketingProfile.profile-meta.xml,DEPLOYED_CHENTEST,4 approved assignment changes verified by ProfileLayout
+M018,MODIFY,force-app/main/default/profiles/Read Only.profile-meta.xml,DEPLOYED_CHENTEST,4 approved assignment changes verified by ProfileLayout
+M018,MODIFY,force-app/main/default/profiles/Sales Insights Integration User.profile-meta.xml,DEPLOYED_CHENTEST,4 approved assignment changes verified by ProfileLayout
+M018,MODIFY,force-app/main/default/profiles/SolutionManager.profile-meta.xml,DEPLOYED_CHENTEST,4 approved assignment changes verified by ProfileLayout
+M018,MODIFY,force-app/main/default/profiles/Standard.profile-meta.xml,DEPLOYED_CHENTEST,4 approved assignment changes verified by ProfileLayout
 M019,ADD,force-app/main/default/flexipages/CBS_Client_User_Record_Page.flexipage-meta.xml,BLOCKED,M017 M020 approval and QA
 M020,MODIFY,force-app/main/default/applications/Credit_Bureau.app-meta.xml,BLOCKED,M019 and A-IMP-08 boundary
 M021,RETAIN,force-app/main/default/profiles/Customer Community Plus User.profile-meta.xml,DEFERRED_AIMP09,Current-state regression only
@@ -60,4 +62,12 @@ M028,RETAIN,force-app/main/default/sharingRules/Contact.sharingRules-meta.xml,DE
 M028,RETAIN,force-app/main/default/sharingSets/AccountSharing.sharingSet-meta.xml,DEFERRED_AIMP09,No sharing change
 M028,RETAIN,force-app/main/default/settings/Sharing.settings-meta.xml,DEFERRED_AIMP09,No sharing change
 M029,READ_ONLY,cursor-output/runtime-evidence/,ANALYSIS_INCOMPLETE,RC02 approved and R09 complete; other runtime decisions remain
-M030,PENDING_APPROVAL,N/A,BLOCKED,Exact test API names unresolved
+M030,CREATE,force-app/main/default/classes/AImp02ContactSeparationTest.cls,DEPLOYED_CHENTEST,6 post-deployment methods passed
+M030,CREATE,force-app/main/default/classes/AImp02ContactSeparationTest.cls-meta.xml,DEPLOYED_CHENTEST,Apex class metadata
+M030,MODIFY_AND_RUN,force-app/main/default/classes/ReportRequestItemTriggerHandlerTest.cls,DEPLOYED_CHENTEST,4 post-deployment methods passed
+M030,MODIFY_AND_RUN,force-app/main/default/classes/ConsentStateTransitionServiceTest.cls,DEPLOYED_CHENTEST,2 post-deployment methods passed
+M030,MODIFY_AND_RUN,force-app/main/default/classes/ConsentRequestResolverServiceTest.cls,DEPLOYED_CHENTEST,2 post-deployment methods passed
+M030,MODIFY_AND_RUN,force-app/main/default/classes/ExperienceClientDataIsolationTest.cls,DEPLOYED_CHENTEST,3 post-deployment methods passed
+M030,MODIFY,force-app/main/default/classes/ConsentTestSupport.cls,DEPLOYED_CHENTEST,Required lookup and purpose fixture support
+M030,MODIFY,force-app/main/default/classes/ReportRequestTestSupport.cls,DEPLOYED_CHENTEST,Client User/Data Subject and required lookup fixture support
+M030,RETAIN_SANDBOX_UAT,force-app/main/default/classes/UatClientUserIsolationE2ETest.cls,PASSED_SUPPLEMENTAL_UAT,Two-account prerequisite confirmed; not sole deployment evidence

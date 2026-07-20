@@ -22,6 +22,12 @@ Canonical submission root: `cursor-output/`
 - `final-approval-input/M018_permission_set_effective_access_review.md`
 - `final-approval-input/M018_manifest_amendment_approved.csv`
 - `final-approval-input/M018_layout_scope_approved.csv`
+- `final-approval-input/M030_test_suite_amendment_approved.csv`
+- `final-approval-input/M013D_resolver_subflow_amendment_approved.csv`
+- `final-approval-input/category_B-I_regression_matrix.csv`
+- `final-approval-input/category_B-I_owner_approval_register.csv`
+- `final-approval-input/RC10_RC11_closure_status_20260720.md`
+- `final-approval-input/Client_User_historical_CRI_disposition_approved.csv`
 
 ## Runtime evidence
 
@@ -55,11 +61,18 @@ Canonical submission root: `cursor-output/`
 - `runtime-evidence/R06_corrected_cross_status_20260720T104759Z_MASKED.csv`
 - `runtime-evidence/RC07_corrected_R06_verification_20260720.md`
 - `runtime-evidence/RC08_layout_assignment_verification_20260720.md`
+- `runtime-evidence/M018_layout_separation_deployment_20260720.md`
 - `runtime-evidence/R09_setup_checklist.csv`
 - `runtime-evidence/Client_User_PII_remediation_register.csv`
 - `runtime-evidence/duplicate_Client_User_disposition_register.csv`
 - `runtime-evidence/Active_Request_duplicate_disposition_register.csv`
 - `runtime-evidence/disposition_register_status.md`
+- `runtime-evidence/category-B-I/evidence_index.csv`
+- `runtime-evidence/category-B-I/RC10_deployment_and_test_evidence_20260720.md`
+- `runtime-evidence/category-B-I/post_deploy_blocking_test_results.csv`
+- `runtime-evidence/category-B-I/runtime_data_checks_MASKED.csv`
+- `runtime-evidence/category-B-I/RC11_sandbox_uat_evidence_20260720.md`
+- `runtime-evidence/category-B-I/manual_uat_and_owner_approval_gaps.md`
 
 ## Completeness
 
@@ -79,6 +92,10 @@ Canonical submission root: `cursor-output/`
 - Final candidate file list: present
 - Submission summary: present
 - Git branch/commit record: present
+- RC10 check-only, deployment and automated test evidence: present
+- RC11 supplemental two-account sharing evidence: present
 
-Package status: incomplete because remaining owner decisions, API-name
-resolutions and regression evidence are missing.
+Package status: complete for RC10/RC11 Phase 2 ChenTest approval. Manual
+evidence and historical-CRI gaps are closed by explicit approved exception.
+RC12-RC15 remain separately controlled and Production deployment is not
+authorised.

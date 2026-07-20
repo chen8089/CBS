@@ -32,7 +32,8 @@ Do not execute deployment commands unless all applicable conditions hold:
 - Implement only approved Manifest rows.
 - Keep runtime-gated rules and automation inactive.
 - Exclude M021 and M026-M028 changes.
-- Exclude unresolved M018/M030 scope.
+- Include only the approved scoped M018 changes and approved exact M030 test
+  classes; exclude unapproved Experience redesign.
 - Review every changed file against the physical-file list.
 
 ### Wave 2 - Check-only validation

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>67.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Clear_Active_Key</name>
+        <label>Clear Active Key</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Active_Request_Key__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Set_Active_Key</name>
+        <label>Set Active Key</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>$Record.Active_Request_Key__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ComputedActiveRequestKey</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <decisions>
+        <name>Is_Active_Status</name>
+        <label>Is Active Status</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Clear_Active_Key</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Terminal or Blank</defaultConnectorLabel>
+        <rules>
+            <name>Pending_Sent_Or_Viewed</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Current_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Pending</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Current_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Sent</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>$Record.Current_Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Viewed</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Active_Key</targetReference>
+            </connector>
+            <label>Pending Sent or Viewed</label>
+        </rules>
+    </decisions>
+    <description>Maintains the case-insensitive unique key for active consent requests. Terminal requests clear the key to permit a new valid cycle.</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>ComputedActiveRequestKey</name>
+        <dataType>String</dataType>
+        <expression>CASESAFEID({!$Record.Data_Subject__c}) &amp; &quot;|&quot; &amp; CASESAFEID({!Get_Data_Subject.AccountId}) &amp; &quot;|&quot; &amp; TEXT({!$Record.Consent_Purpose__c})</expression>
+    </formulas>
+    <interviewLabel>Maintain Active Consent Request Key {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Consent Request Item Maintain Active Key</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>Get_Data_Subject</name>
+        <label>Get Data Subject</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Is_Active_Status</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>$Record.Data_Subject__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Contact</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <runInMode>SystemModeWithoutSharing</runInMode>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Data_Subject</targetReference>
+        </connector>
+        <object>Consent_Request_Item__c</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordBeforeSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>
