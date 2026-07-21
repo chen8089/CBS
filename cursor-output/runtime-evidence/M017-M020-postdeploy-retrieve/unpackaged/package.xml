@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <types>
+        <members>Credit_Bureau</members>
+        <name>CustomApplication</name>
+    </types>
+    <types>
+        <members>CBS_Client_User_Record_Page</members>
+        <name>FlexiPage</name>
+    </types>
+    <types>
+        <members>Contact-CBS Contact - Client User Layout</members>
+        <name>Layout</name>
+    </types>
+    <version>67.0</version>
+</Package>
