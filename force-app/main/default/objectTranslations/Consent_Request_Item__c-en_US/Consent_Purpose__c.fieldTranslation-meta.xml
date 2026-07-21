@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <label><!-- Consent Purpose --></label>
+    <name>Consent_Purpose__c</name>
+    <picklistValues>
+        <masterLabel>Per-Report Consent</masterLabel>
+        <translation><!-- Per-Report Consent --></translation>
+    </picklistValues>
+    <picklistValues>
+        <masterLabel>Term-Based Consent</masterLabel>
+        <translation><!-- Term-Based Consent --></translation>
+    </picklistValues>
+</CustomFieldTranslation>
