@@ -1,0 +1,665 @@
+
+CBS Salesforce Category A
+A-IMP-03 — 客户账户生命周期与客户入驻
+Cursor 受控执行提示词（中文执行版）
+当前授权状态：本文件仅授权 A-IMP-03 Phase 1 分析。首次运行时不得修改任何 metadata 源文件，不得执行 Salesforce DML，不得部署或激活任何组件，不得进行生产操作或 UAT。
+
+控制项
+内容
+文档编号
+CBS-A-IMP-03-CURSOR-CN
+版本
+v1.0
+发布日期
+19 July 2026
+工作流
+A-IMP-01.2 — Account Lifecycle and Client Onboarding
+权威设计
+Category A Solution Design v1.4
+批准实施计划
+A-IMP-01 v1.1 Corrected
+技术基线
+Credit Bureau Sandbox 20260715.zip
+SHA-256
+a3c337d997a556dca2cd53492a5621dce09a39b4f9454ac0d24e7d88a6a93a80
+Salesforce API
+67.0
+前置依赖
+A-IMP-02 v1.1；Phase 2 前必须基于最新 post-A-IMP-02 metadata 重新校验
+首次运行
+仅执行 Phase 1，最终停止语句为 AWAITING A-IMP-03 MANIFEST APPROVAL
+
+1. 批准决定与授权边界
+已确认设计决定
+批准结论
+Account 生命周期
+复用并扩展现有 Client_Status__c；目标值为 Prospect、Onboarding、Active、Suspended、Terminated。
+入驻总体状态
+使用 Account 状态字段与标准 Task 清单，不创建自定义 Onboarding 对象。
+审批机制
+优先使用 Flow Approval Process；仅在功能或版本确实不支持且获得书面批准后，才可考虑 Classic Approval Process。
+入驻发起人
+由 CBS Business Development 发起和协调；不得审批自己的提交。
+完成控制
+Flow 自动校验前置条件与清单完成情况，由授权 CBS Administrator 作最终独立审批。
+实施授权
+本文件仅批准 Phase 1 分析；Phase 2、数据整改、部署、激活和生产发布均需单独书面批准。
+
+2. 目的、范围与追溯关系
+本文件是 Category A 工作流 A-IMP-03 的受控 Cursor 执行提示词。目标是在不改变现有业务数据的前提下，分析并准备基于标准 Account、标准 Task、声明式 Flow 与独立最终审批的客户账户生命周期和客户入驻实现方案。
+2.1 本工作流范围
+Account 客户生命周期值、入驻状态和状态转换控制。
+Account 入驻字段、审计标记、系统受控字段和校验规则。
+标准 Task 清单字段、Client Onboarding Task Type、当前周期与证据控制。
+Start Onboarding、Task Synchronisation、Mark Ready / Submit、审批、退回 / 取消及完成通知的自动化设计。
+只读验证 Opportunity、Contract、Salesforce Files、Client User Contact 和外部 User 前置条件。
+现有 Account 基线分析、Client Code 重复清单与非破坏性整改计划。
+必要的字段历史、持久化故障证据、部署顺序、回滚和 as-built 证据设计。
+仅为技术测试所需的最小内部布局 / 动作暴露；最终 Lightning 页面设计仍属于 A-IMP-11。
+2.2 不在本工作流范围内
+Opportunity 阶段重构、Lead 排除及 Closed Won handoff 实施，属于 A-IMP-04。
+Contract 激活、续约、修订、终止及最终 Files 规范，属于 A-IMP-05。
+Client Access Request 审批与 User provisioning，属于 A-IMP-06。
+Business Development Role、Permission Set、App 与用户分配，属于 A-IMP-08。
+Experience Cloud 隔离、外部 Profile 与 Sharing，属于 A-IMP-09。
+最终 Reports、Dashboards、SLA 精简与广泛审计目录，属于 A-IMP-10。
+最终 Account Lightning Page、Path 与视觉实现，属于 A-IMP-11。
+Production deployment、UAT、自动数据整改、自定义 Onboarding 对象、自定义 LWC 或未批准 Apex。
+追溯类别
+受控范围
+Requirements
+A-REQ-001、A-REQ-014、A-REQ-016、A-REQ-017、A-REQ-023、A-REQ-024
+Design Decisions
+A-DD-001、A-DD-002、A-DD-005、A-DD-007、A-DD-010
+Acceptance Criteria
+A-WS03-AC01 至 A-WS03-AC20
+前置依赖
+A-IMP-02 v1.1；Phase 2 前必须完成 rebase、diff 与回归校验
+
+3. 来源优先级与受控命名规则
+优先级
+来源
+控制作用
+1
+本提示词中已确认的 A-IMP-03 项目决定
+本工作流最高执行优先级。
+2
+Category A Solution Design v1.4
+批准的功能目标与视觉意图。
+3
+A-IMP-01 v1.1 Corrected
+规范技术决定、API 命名与工作流边界。
+4
+本 A-IMP-03 中文 Cursor 提示词
+本工作流具体执行规则。
+5
+A-IMP-02 v1.1 Impact Report 与 Exact Manifest
+前置依赖和组件冲突控制。
+6
+现有 metadata 与运行时证据
+仅代表 current state，不得覆盖批准的 target state。
+
+命名冲突处理：若 Solution Design 与 A-IMP-01 的候选字段名不一致，以 A-IMP-01 v1.1 的受控实施命名为准；Cursor 不得自行创建 Section 13 中的别名字段。任何现有组件冲突、名称占用或技术限制必须进入 Manifest 决策项并停止相关实施。
+
+设计概念
+规范实施规则
+Account 字段命名
+使用 Onboarding_Status__c、Onboarding_Cycle__c、Onboarding_Progress__c、Onboarding_Submitted_By__c、Onboarding_Submitted_At__c、Onboarding_Approved__c、Onboarding_Approved_By__c、Onboarding_Approved_At__c、Onboarding_Completed_At__c、Onboarding_Return_Reason__c、Onboarding_Cancel_Reason__c。
+Task 字段命名
+使用 Checklist_Item_Code__c、Checklist_Sequence__c、Is_Mandatory__c、Onboarding_Cycle__c、Evidence_Reference__c、Completed_By__c、Completed_At__c。Access Review 字段留给 A-IMP-07。
+进度计算
+Phase 1 必须证明单一 Flow-maintained Percent 字段能够满足 A-WS03-AC05。若需要 count 字段或唯一 checklist key，须提出 Manifest amendment 并停止。
+Ready / Submit 动作
+优先由 CBS_Submit_Onboarding_Review 通过受控输入模式 MARK_READY 与 SUBMIT 实现。
+Return / Cancel 动作
+优先由 CBS_Onboarding_Return_Cancel 通过 RETURN 与 CANCEL 模式实现。
+审批引擎
+使用 Flow Approval Process；Classic 仅为经批准的功能差距 fallback。
+禁止新增架构
+不得创建自定义 Onboarding 对象、Account Record Type、自定义 LWC、自定义 Apex Service、Checklist Custom Metadata Type 或 Opportunity-to-Contract lookup。
+
+4. 已验证的 current-state metadata 基线
+ID
+已验证 current state
+实施影响
+F01
+Account 未检索到 Record Type 或 Validation Rule；history disabled。
+不存在受控入驻入口、转换或标准审计模型。
+F02
+Client_Status__c 仅有 Active / Inactive，且标签为中文。
+无法表达 Prospect、Onboarding、Suspended、Terminated。
+F03
+Client_Code__c 为 Text(255)，非 unique、非 required，标签为中文。
+实施唯一性前必须先完成空值、重复与格式分析。
+F04
+Account 不存在批准的 onboarding 字段。
+状态、gate、cycle 与审批证据均未实施。
+F05
+CBS Account Layout 仅含基础控制，相关列表主要为 Batch。
+尚不是完整的客户入驻工作区。
+F06
+Account_Record_Page_Three_Column 为通用页面，暴露 Edit / Delete 和普通相关列表。
+缺少 onboarding Path、guidance、approval status 和基于角色的 actions。
+F07
+未检索到 Account / Task onboarding Flow 或 Account approval metadata。
+自动化与审批不存在。
+F08
+Task 无自定义字段或 validation；Type 仅 Call / Meeting / Other；Status 仅 Open / Completed。
+标准 Task 可复用，但无法表达受控清单、证据与周期。
+F09
+Credit Bureau App 不含 Opportunity、Contract、Task navigation。
+导航调整属于 A-IMP-08，不在本工作流实施。
+F10
+Opportunity 为通用阶段；Contract 状态为 Draft / In Approval Process / Activated。
+A-IMP-03 只读验证前置条件，不重构其生命周期。
+F11
+静态 metadata 无法证明 Contract Files 与实际文件证据。
+必须执行 connected-org read-only 查询与 Setup 检查。
+F12
+未检索到控制 Client Code 的 Account duplicate / matching rule。
+完成数据画像后才能决定确定性唯一控制。
+F13
+Notification_Email__c、Email_Domain__c、SLA_Days__c、Approval_Required__c 存在混合标签且无 history。
+只保留简单 Account defaults；完整 SLA / audit 属于 A-IMP-10。
+F14
+Account internal sharing 为 Read/Write，external sharing 为 Private。
+本工作流不得修改 sharing 或扩大 external visibility。
+F15
+静态 metadata 不包含 record counts、Files、role assignments、approval feature state 和现有 Account 基线决定。
+Phase 2 前必须完成运行时证据。
+
+4.1 必须扫描的组件清单
+metadata domain
+起始组件
+Account
+Account.object-meta.xml；Client_Code__c；Client_Status__c；Notification_Email__c；Email_Domain__c；SLA_Days__c；Approval_Required__c；compact layout；list views；sharing；history。
+Task
+Task.object-meta.xml；Type、Status、Subject、WhatId、WhoId、ActivityDate、OwnerId；TaskType 与 TaskStatus standard value sets；list views。
+Layouts / Pages
+Account-CBS Account Layout；Account-Account Layout；Account_Record_Page_Three_Column；quick actions；app/profile assignments。
+Automation
+所有触及 Account 或 Task 的 Flow、approval asset、Process Builder / workflow remnants、trigger、Apex、invocable action、notification mechanism。
+Commercial dependencies
+OpportunityStage、Opportunity metadata、ContractStatus、Contract layout、ContentDocumentLink / Files 使用。
+Security
+Profile、Permission Set / Group、Role、Queue 及 Account / Task onboarding 字段 FLS。
+A-IMP-02 dependency
+所有 A-IMP-02 changed / proposed Contact fields、Flow、validation、layout；识别 overlap 与 rebase 要求。
+Runtime data
+Account、Opportunity、Contract、Files、Task、Contact、external User、assignment、history capacity 与 approval feature state。
+
+5. 两道审批门槛的 Cursor 执行模型
+Gate 1 — Phase 1 Analysis Only：首次运行不得修改任何源文件。Cursor 必须扫描 repository 与 connected Sandbox，输出 impact report、R01–R12 evidence、exact manifest 和 candidate file list，然后以固定语句停止。
+
+Gate 2 — Controlled Build：仅在项目负责人书面批准 Exact Manifest 后才能进入。即使进入 Gate 2，数据整改、Flow / Approval 激活、Sandbox 部署和 Production 部署仍是独立审批门槛。
+
+Phase 1 允许
+Phase 1 禁止
+读取 metadata、受控文档与 connected-org 配置。
+修改任何 metadata source file。
+生成只读 SOQL 与 Setup 检查。
+执行 DML、写入型 anonymous Apex、更新记录的 Flow、Data Loader 变更。
+校验 API 名称、dependencies、limits 与 feature availability。
+deploy、activate 或 deactivate metadata。
+准备 exact manifest、technical design、test 和 rollback draft。
+创建未批准 object、field、Flow、permission、page change。
+只在 cursor-output 目录创建分析文件。
+提交 implementation metadata 或更改 controlled baseline。
+
+6. Phase 1 分析要求
+6.1 基线与依赖验证
+核验 metadata ZIP SHA-256 与 source API version。
+确认 Git branch 与 clean baseline commit。
+记录分析使用 15 July 2026 原始基线，还是已批准的 post-A-IMP-02 retrieve。
+将 A-IMP-02 Manifest 与 working tree 比较，识别 Account、Task、Contact、Flow、permission、page overlap。
+Phase 2 不得从 stale branch 开始；implementation branch 必须 rebase 到批准的 A-IMP-02 as-built baseline。
+6.2 精确 metadata 扫描
+清点所有 Account / Task field、validation rule、layout、flexipage、compact layout、list view、quick action、Flow、approval asset、Apex trigger/class 与 permission reference。
+搜索 Client_Status__c、Client_Code__c、Notification_Email__c、SLA_Days__c、Approval_Required__c、Account status literals、Task Type 与 Task Status。
+识别所有可能与 onboarding 字段或 Task completion 冲突的现有 automation。
+对 Section 3 所有规范 API 名称执行 collision check；未经 Manifest 决定不得使用替代名称。
+识别 connected org 中存在但 ZIP 未检索到的 approval definition、Flow version、queue、notification type、assignment。
+6.3 运行时数据与功能证据
+仅生成并执行 Section 9 的 R01–R12 只读证据计划。
+每条记录 Org ID、username、timestamp、query text、row count 与 masked export location。
+不得把客户、联系人或合同机密信息复制到公共 repository 或无保护聊天。
+记录 Flow Approval Process availability、Account history capacity、Task history capability、Contract File evidence 与 active automation assignments。
+在提出 lifecycle migration 前，为每个现有 Account 建立 baseline decision register。
+6.4 Exact Manifest 与实施建议
+逐行填充提供的 Exact Metadata Manifest 模板，并使用 FOUND、NOT FOUND、NAME MISMATCH、READY、RUNTIME GATED、DEFERRED、HOLD 或 ANALYSIS ONLY。
+每个候选组件必须记录 current behaviour、target behaviour、dependency、requirement、design decision、acceptance criterion、deployment wave 与 rollback。
+明确区分 metadata deployment 与 assignment、approval activation、Flow activation、baseline data change、site / app exposure 等 runtime action。
+Phase 2 前列出所有 proposed file path；Manifest 外组件不得构建。
+未决事项必须给出 options、impact、risk 与 recommendation；Cursor 不得静默选择。
+7. 不可协商的 Target Design
+7.1 Account 生命周期与入驻状态
+Onboarding Status
+Client Status
+含义
+允许的下一步
+Not Started
+Prospect
+无 active onboarding cycle。
+前置条件通过后可执行 Start Onboarding。
+In Progress
+Onboarding
+Mandatory checklist Tasks 正在完成。
+Business Development 与指定 owner 完成当前周期 Tasks。
+Ready for Review
+Onboarding
+Mandatory readiness work 已完成。
+Submit 动作执行最终自动校验。
+Pending Approval
+Onboarding
+Account 锁定等待最终 CBS assessment。
+授权 Administrator 审批、退回或按规则取消。
+Returned
+Onboarding
+需要补充证据或修正。
+回到 In Progress / Ready，修正后重新提交。
+Completed
+Active
+最终审批与完成证据已记录。
+可进入 A-IMP-06 的受控 New Access。
+Cancelled
+Prospect 或 Suspended
+完成前停止入驻。
+必须填写原因；access gate 保持 false。
+
+7.2 受控 Account 字段
+API Name
+类型
+控制规则
+Client_Status__c
+现有 Picklist
+新增 Prospect、Onboarding、Active、Suspended、Terminated；完成迁移前不得停用 Inactive。
+Client_Code__c
+现有 Text
+入驻前 required；完成重复整改后再实施唯一性。Phase 1 决定安全 enforcement 方式。
+Onboarding_Status__c
+Picklist
+Not Started、In Progress、Ready for Review、Pending Approval、Returned、Completed、Cancelled。
+Onboarding_Cycle__c
+Number(3,0)
+系统受控 current cycle，仅 Start Flow 递增。
+Onboarding_Progress__c
+Percent(3,0)
+Flow 维护当前 mandatory completion percentage；未经批准不得增加 count fields。
+Onboarding_Submitted_By__c
+Lookup(User)
+系统写入 maker。
+Onboarding_Submitted_At__c
+DateTime
+系统写入 submission time。
+Onboarding_Approved__c
+Checkbox
+authoritative access gate；仅最终审批后为 true。
+Onboarding_Approved_By__c
+Lookup(User)
+审批流程系统写入。
+Onboarding_Approved_At__c
+DateTime
+审批流程系统写入。
+Onboarding_Completed_At__c
+DateTime
+最终审批完成时系统写入。
+Onboarding_Return_Reason__c
+Long Text Area
+仅记录最新非敏感退回说明；Approval History 为权威审计。
+Onboarding_Cancel_Reason__c
+Long Text Area
+取消时 mandatory。
+
+7.3 受控 Task 清单字段
+API Name
+类型
+控制规则
+Task.Type
+Standard value
+新增 Client Onboarding；不得影响普通 Task。
+Checklist_Item_Code__c
+Text(40) 或经批准 Restricted Picklist
+受控 item code 01–09；Phase 1 确认最安全类型。
+Checklist_Sequence__c
+Number(3,0)
+显示与处理顺序。
+Is_Mandatory__c
+Checkbox
+只有 current-cycle mandatory Task 阻塞提交。
+Onboarding_Cycle__c
+Number(3,0)
+必须等于 Account current cycle。
+Evidence_Reference__c
+Long Text Area
+仅允许非敏感 Salesforce record / File reference；不得记录凭证或复制 PII。
+Completed_By__c
+Lookup(User)
+第一次受控完成时系统写入。
+Completed_At__c
+DateTime
+第一次受控完成时系统写入。
+
+7.4 受控清单目录
+序号
+清单项
+默认负责人
+Mandatory
+完成证据
+01
+确认客户法定名称与唯一 Client Code
+Business Development
+是
+Account Name 与 Client Code 已核实。
+02
+确认 Account Owner 与主要运营联系人
+Business Development
+是
+Owner 已分配且存在适当 Contact。
+03
+确认商业 Opportunity 已 Closed Won
+Business Development
+是
+至少一个相关 Closed Won Opportunity。
+04
+创建并核实标准 Contract
+Business Development
+是
+相关 Contract 具有有效 Status、Start Date、Contract Term。
+05
+上传并核实已签署合同文件
+Business Development
+是
+已签署协议在 Contract Files 中可见。
+06
+确认必要的客户级服务设置
+Business Development
+是
+Notification Email 与批准的简单 defaults 完整。
+07
+确认初始 Client User 候选人与角色
+Business Development
+是
+Client User Contact 已用途分离；不得激活 User。
+08
+确认 CBS 运营与 Experience Cloud readiness
+Authorised Administrator
+是
+必要管理、package 与 site readiness 已确认。
+09
+记录可选实施备注或依赖
+指定内部负责人
+否
+非阻塞备注，不含 secrets 或复制的 PII。
+
+清单治理：删除 mandatory item、新增 mandatory item 或改变 required completion evidence 均属于 Solution Design change。Owner 与 due-day offset 可在 Phase 1 提议，但未经批准不得改变目录。
+
+7.5 受控自动化目录
+Component
+Type
+Required behaviour
+CBS_Start_Client_Onboarding
+Screen Flow
+校验 Account、Closed Won Opportunity 与 no active cycle；递增 cycle；设置状态；按目录创建一次 Tasks；产生持久化 fault evidence。
+CBS_Onboarding_Task_Synchronisation
+Task Record-triggered Flow
+仅处理 Client Onboarding Task；维护完成证据与 Account progress；忽略 ordinary / prior-cycle Task；reopen 时 Ready 返回 In Progress。
+CBS_Submit_Onboarding_Review
+Screen / Autolaunched Flow
+MARK_READY 模式校验 mandatory completion；SUBMIT 模式重新校验 Account、Opportunity、Contract、File evidence，写入 submitter 并调用 approval。
+CBS_Onboarding_Approval
+Flow Approval Process
+指定授权 Administrator；submitter 不得审批；支持 approve、return、recall；Classic fallback 需另行批准。
+CBS_Onboarding_Return_Cancel
+Autolaunched Flow
+RETURN 必须有 checker comments 并解锁修正；CANCEL 必须有 reason 并按规则关闭未完成清单。
+CBS_Onboarding_Completion_Notification
+Autolaunched Flow
+记录 completion evidence 并发送内部通知；不得激活 external User。
+
+7.6 强制业务控制
+不得创建自定义 Onboarding 对象或自定义 LWC。
+Account Name、Owner、唯一 Client Code、Notification Email 未完成，Account 为 Terminated，无 Closed Won Opportunity，或已有 active cycle 时，Start 必须被阻止。
+每个批准清单项在 current cycle 只能存在一个 Task；创建逻辑必须幂等并能处理并发。若需要新 unique key field，必须停止并提交 Manifest amendment。
+Mandatory item 03–08 在没有 non-sensitive evidence reference 时不得完成。
+Business Development 通过 direct edit 不得把 Client Status 设置为 Active，不得把 Onboarding Status 设置为 Pending Approval / Completed，也不得写入 approval audit fields。
+任何 current mandatory Task 未完成、progress 不一致、Opportunity / Contract / File evidence 缺失或 maker 等于 checker 时，Submit 必须阻止。
+审批成功必须记录 approver 与 timestamp，将 Onboarding_Approved__c 设为 true、Onboarding Status 设为 Completed、Client Status 设为 Active。
+Return 必须保留 approval history，并使 Account 继续不具备 access eligibility。
+Cancellation 必须填写原因，并保持 approval false。
+External user 不得读取 onboarding fields、Tasks、approval history、Opportunity、Contract 或 Contract File。
+A-IMP-03 不得激活 User、分配 Permission Set 或修改 Experience Cloud sharing。
+8. 数据整改与现有 Account 基线控制
+步骤
+必须执行的动作
+审批门槛
+1. Inventory
+导出 Account lifecycle fields、Client Codes、owners、notification email、related Opportunity、Contract、Files、Tasks 与 active external Users。
+只读。
+2. Classify
+将每个 Account 分类为 prospective、onboarding、active、suspended、terminated 或非 CBS client Account。
+CBS business owner review。
+3. Duplicate resolution
+识别 duplicate / missing Client Code，提出修正建议。
+不得自动编号、merge 或 update。
+4. Baseline decision
+每个 existing Active Account 必须选择：重建证据并审批；经授权 grandfather exception；启动新 onboarding cycle；暂停待补证；或排除为非 client。
+每个 Account 或批准规则须书面确认。
+5. Dry run
+准备可逆 before / after CSV 与 expected counts。
+不得 DML。
+6. Activation order
+先部署 values / fields；再做经批准的数据整改；最后启用 uniqueness、validation、history 与 active automation。
+counts reconciled 且获得书面批准。
+7. Verify
+重新查询并核对 statuses、Tasks、related records 与 access eligibility。
+不得出现 silent assumption 或 unintended access。
+
+关键基线规则：任何现有 Active Account 都不得被自动视为已完成并批准 onboarding。在写入 Onboarding_Approved__c 前，必须由 CBS 数据 / 业务负责人批准该 Account 的 baseline 方法与证据标准。
+
+9. R01–R12 只读运行时证据计划
+所有运行时查询均为只读。每项输出必须记录 Org ID、执行用户、时间、查询文本、行数与受保护输出路径。评审副本必须遮蔽客户名称、用户名、联系人和合同信息。
+ID
+证据范围
+必须取得的结果
+R01
+Account lifecycle profile
+按 Client_Status__c 统计；Client Code、Owner、Notification Email 空值；Account Type / Record Type 分布。
+R02
+Duplicate Client Code
+识别完全重复、去空格与大小写归一化重复；列出受影响 Account 与依赖。
+R03
+Existing Account baseline
+Active / Inactive Account 的 Opportunity、Contract、Files、Task、Contact 与 active external User 证据。
+R04
+Opportunity prerequisite
+每个 Account 的 Closed Won 与其他 stages；识别 Active client 缺少 Closed Won evidence。
+R05
+Contract readiness
+每个 Account 的 Contract Status、Start Date、Contract Term、End Date、Owner；识别缺失或无效前置条件。
+R06
+Contract Files
+Contract 的 ContentDocumentLink 证据与已签署文档 naming convention。
+R07
+Existing Task usage
+Task Type / Status / Subject / WhatId 分布；onboarding-like Tasks；普通 Task collision risk。
+R08
+External Users
+按 Contact 与 Account 的 active User；识别 onboarding baseline 前已有 access 的 Account。
+R09
+Roles and permissions
+现有 Role、Permission Set assignment、Queue 与可能 submit / approve / edit onboarding fields 的用户。
+R10
+Feature and capacity
+Flow Approval Process availability、approval limits、Account history slots、Task history capability、Flow limits 与 notification / fault mechanism。
+R11
+Automation / configuration drift
+active Flow versions、trigger、workflow / process remnants、app / page assignment、ZIP 中缺失的 approval assets。
+R12
+Latest-baseline comparison
+fresh retrieve / hash / diff 对比 15 July baseline 与最新 A-IMP-02 branch / as-built。
+
+10. Security 与工作流边界
+边界
+A-IMP-03 规则
+A-IMP-02 Client User / Data Subject separation
+不得修改 Contact purpose logic、consent automation 或 PII controls。Phase 2 前必须 rebase 并执行回归。
+A-IMP-04 Opportunity
+只读验证 Closed Won evidence。不得改变 stages、sales process、validation、Lead access 或 handoff。
+A-IMP-05 Contract
+只读验证 readiness 与 File evidence。不得实施 activation、renewal、amendment、termination 或 final layout convention。
+A-IMP-06 Access Request
+仅定义 Account gate interface。不得创建 / 修改 access Case 或 provisioning Flow。
+A-IMP-08 Roles and permissions
+可提出 required permission matrix，但不得创建或分配 Business Development Role / Permission Set。
+A-IMP-09 External isolation
+只执行 no-regression checks。不得改变 OWD、sharing set、external profile 或 site routes。
+A-IMP-10 Audit / reporting
+仅可提议 onboarding process evidence 所必需的 selected history；完整 report/dashboard catalogue 与 SLA rationalisation 继续 deferred。
+A-IMP-11 Pages
+仅可提议技术测试所需的最小 layout / action exposure；最终 Account page、Path 与 visual implementation deferred。
+
+11. 验证与验收测试计划
+Test
+Scenario
+Expected result
+T01
+在符合条件的 Prospect Account 启动 onboarding。
+创建一个 cycle；状态正确；精确创建 9 个 Tasks，code、owner、mandatory、due date 正确。
+T02
+缺少唯一 Client Code 或 Notification Email 时启动。
+阻止并返回可操作提示；无部分更新、无 Tasks。
+T03
+无 Closed Won Opportunity 时启动。
+阻止；无数据副作用。
+T04
+已有 active cycle 时再次启动。
+阻止；不生成重复 checklist。
+T05
+完成普通 Task 或 prior-cycle Task。
+不改变 onboarding progress。
+T06
+Mandatory item 03–08 无 evidence 完成。
+阻止。
+T07
+有 evidence 完成 current mandatory Task。
+Completed By / At 写入一次，Account progress 重新计算一次。
+T08
+Reopen current mandatory Task。
+progress 降低；Ready Account 返回 In Progress；原 evidence 仍可审计。
+T09
+所有 mandatory Tasks 完成后 Mark Ready。
+状态变为 Ready for Review；不自动审批。
+T10
+仍有 open mandatory Task 或 count mismatch 时 Mark Ready。
+阻止。
+T11
+缺少 Contract 或 executed File evidence 时 Submit。
+阻止；不创建 approval request。
+T12
+Submit valid Account。
+submitter / time 写入；状态 Pending Approval；approval-controlled fields 锁定。
+T13
+submitter 尝试 self-approval。
+阻止。
+T14
+授权 Administrator return。
+必须填写 comments；状态 Returned；approval false；解锁修正；history 保留。
+T15
+修正后 resubmit。
+重新校验成功；新 approval action 可审计。
+T16
+授权 Administrator approve。
+approved fields / time 写入；status Completed；Client Status Active；gate true。
+T17
+完成前 cancel。
+必须填写 reason；approval false；open checklist 按规则处理；无 access eligibility。
+T18
+direct edit 尝试写 protected fields / statuses。
+在批准的 admin remediation path 外均阻止。
+T19
+existing Active Account 无 baseline decision。
+不得自动写入 approval marker。
+T20
+external user context。
+看不到 onboarding fields、Tasks、approval history 或 commercial evidence。
+T21
+A-IMP-02 regression。
+Client User / Data Subject separation 与 consent automation 不变。
+T22
+Idempotency / concurrency。
+重复或并发 start / task events 不生成重复 cycle 或 checklist item。
+T23
+Fault-path。
+产生持久化、已清理的技术证据；不得 silent partial state。
+T24
+Fresh retrieve 与 diff。
+只出现 approved manifest changes；无 production / UAT action。
+
+12. Cursor 必须交付的文件
+文件名
+最低内容要求
+01_pre_change_impact_report.md
+baseline / hash、source precedence、current-state findings、dependency graph、feature / limit findings、R01–R12 results、risks 与 stop conditions。
+02_exact_metadata_manifest.csv
+component type、API name、path、action、current / target state、disposition、dependency、requirement、decision、acceptance criterion、wave、rollback。
+03_runtime_query_pack.soql.md
+只读 R01–R12 queries 与 Setup checks；不得包含 DML。
+04_runtime_evidence_register.csv
+Org ID、user、time、query、row count、masked output、finding。
+05_existing_account_baseline_decision_register.csv
+Account identifier、current evidence、proposed target state、baseline option、owner、approval、exception。
+06_candidate_file_change_list.csv
+每个拟 create / modify / retain / defer 的 file path。
+07_test_plan.md
+T01–T24，包括 setup、user context、expected result、evidence。
+08_deployment_runbook_draft.md
+拟定 build / deploy / activation sequence、manual runtime actions 与 approval gates。
+09_rollback_runbook_draft.md
+Flow / approval deactivation、metadata restore、value rollback、data restore 与 verification。
+10_conflicts_and_decisions.md
+所有 naming、feature、data、dependency、design conflict，含 options、impact、risk、recommendation。
+package-A-IMP-03-draft.xml
+仅为 draft manifest；不授权 deployment。
+destructiveChanges.xml
+必须为空。
+
+13. 强制停止条件
+baseline hash、API version 或 project structure 不匹配，且没有已批准的新基线记录。
+A-IMP-02 已更改重叠组件，但 A-IMP-03 branch 未 rebase。
+任何 proposed component name 与现有 metadata 冲突或偏离规范命名。
+Client Code duplicates、status mapping 或 existing Active Account baseline decision 未解决。
+Flow Approval Process availability 或 approval routing 无法确认。
+Checklist idempotency 无法在不增加未批准 unique-key field 或 Apex 的情况下并发安全。
+Contract / File 或 Closed Won prerequisite 无法在不越过 A-IMP-04 / A-IMP-05 范围的情况下证明。
+任何更改会影响 Client User / Data Subject separation、Consent、Departure、Report Request 或 external isolation。
+需要自定义 onboarding object、LWC、Apex service、Account record type 或 custom metadata type。
+Phase 1 中任何 metadata source file 被修改。
+任何 DML、deployment、activation、production action 或 UAT 被要求。
+14. 可直接复制到 Cursor 的完整启动提示词
+在 Cursor 中打开 Salesforce project root 和本文件包的 controlled-documents 后，完整复制以下内容。首次运行必须仅执行 Phase 1 并停止。
+你正在执行 CBS Salesforce Category A 的 A-IMP-03：客户账户生命周期与客户入驻（Account Lifecycle and Client Onboarding）。【权威来源与技术基线】1. Category A Solution Design v1.4，重点读取 Sections 13、15、18。2. A-IMP-01 v1.1 Corrected，工作流 A-IMP-01.2。3. 本 A-IMP-03 中文受控执行提示词 v1.0。4. A-IMP-02 v1.1 Impact Report 与 Exact Manifest，作为前置依赖与组件冲突控制。5. 技术基线：Credit Bureau Sandbox 20260715.zip。6. 预期 SHA-256：a3c337d997a556dca2cd53492a5621dce09a39b4f9454ac0d24e7d88a6a93a80。7. Salesforce source API：67.0。【本轮授权】本轮只执行 Phase 1 Analysis Only。禁止修改任何 metadata 源文件；禁止 Salesforce DML；禁止 write-capable anonymous Apex；禁止运行会更新记录的 Flow；禁止 deploy、activate、deactivate；禁止 Production 操作和 UAT。【来源优先级】A-IMP-03 已确认项目决定 > Solution Design v1.4 > A-IMP-01 v1.1 规范技术命名与边界 > 本提示词 > A-IMP-02 依赖文件 > metadata / runtime current-state evidence。【必须先确认】- ZIP SHA-256、API 67.0、sfdx-project.json、force-app/main/default、Git branch 与 clean baseline commit；- 本次分析使用 20260715 baseline 还是批准的 post-A-IMP-02 retrieve；- A-IMP-02 当前状态、重叠组件与 Phase 2 rebase 要求；- 所有受控文件的名称、版本和优先级；- 本轮不会修改任何 source file。【Phase 1 工作】1. 扫描全部 Account、Task、Opportunity、Contract、Salesforce Files、Flow、Approval、Apex、Layout、FlexiPage、Compact Layout、List View、Quick Action、Profile、Permission Set / Group、Role、Queue 与 Application 依赖。2. 搜索并校验 Client_Status__c、Client_Code__c、Notification_Email__c、Email_Domain__c、SLA_Days__c、Approval_Required__c 以及全部 A-IMP-03 规范字段和 Flow 名称。3. 对每个规范 API 名称和 file path 执行 collision check；不得自行创造替代名称。4. 执行 R01–R12 只读 SOQL / Setup evidence；每项记录 Org ID、user、timestamp、query / check、row count、masked output path 与 finding。5. 为每个 existing Account 建立 baseline decision register。任何 Active Account 不得被自动视为 Onboarding Approved。6. 完成：   - 01_pre_change_impact_report.md   - 02_exact_metadata_manifest.csv   - 03_runtime_query_pack.soql.md   - 04_runtime_evidence_register.csv   - 05_existing_account_baseline_decision_register.csv   - 06_candidate_file_change_list.csv   - 07_test_plan.md（T01–T24）   - 08_deployment_runbook_draft.md   - 09_rollback_runbook_draft.md   - 10_conflicts_and_decisions.md   - package-A-IMP-03-draft.xml   - destructiveChanges.xml（必须为空）7. Manifest 每行必须记录 current state、target state、action、disposition、runtime evidence、dependency、requirement、design decision、acceptance criterion、deployment wave 与 rollback。8. 使用受控 disposition：FOUND、NOT FOUND、NAME MISMATCH、READY、RUNTIME GATED、DEFERRED、HOLD、ANALYSIS ONLY。【不可协商的设计】- Account 为 authoritative onboarding record；标准 Task 为 checklist；不得创建 custom onboarding object。- Client_Status__c 目标值：Prospect、Onboarding、Active、Suspended、Terminated。- Onboarding_Status__c 目标值：Not Started、In Progress、Ready for Review、Pending Approval、Returned、Completed、Cancelled。- Business Development 发起与协调；不得审批自己的提交。- Start 前必须校验 Account Name、Owner、唯一 Client Code、Notification Email、非 Terminated、存在 Closed Won Opportunity、无 active cycle。- current cycle 每个清单项只能有一个 Task；必须幂等且并发安全。- Mandatory item 03–08 无非敏感 evidence reference 时不得完成。- Submit 前必须重新校验所有 current mandatory Task、progress、Opportunity、Contract 与 executed File evidence，以及 maker-checker separation。- 最终批准后才可设置 Onboarding_Approved__c=true、Onboarding Status=Completed、Client Status=Active。- A-IMP-03 不得激活 User、分配 Permission、修改 Experience Cloud sharing 或提前实施 A-IMP-04 至 A-IMP-11。【强制停止】若出现 baseline 不匹配、A-IMP-02 未 rebase、API name collision、Client Code / baseline decisions 未解决、approval feature 无法确认、幂等性需要未批准 field / Apex、越过其他 workstream 范围、影响 Category B–F、需要 custom object / LWC / Apex / Account Record Type，或任何 source file 已被修改，立即停止相关项并在 conflicts_and_decisions 中提出 options、impact、risk 与 recommendation。请先输出：识别到的受控文件与版本、来源优先级、baseline hash / API / branch / commit、A-IMP-02 dependency state、Phase 1 执行边界，以及你确认不会修改任何 source file 的声明。最终一行必须精确输出：AWAITING A-IMP-03 MANIFEST APPROVAL
+
+15. Phase 1 签署与状态记录
+控制项
+结果
+Baseline hash verified
+Pending Cursor / staff execution
+A-IMP-02 dependency state verified
+Pending
+R01–R12 completed
+Pending
+Exact Manifest completed
+Pending
+Existing Account baseline register completed
+Pending
+No source files changed
+Must be confirmed
+No DML / deployment / activation
+Must be confirmed
+Final stop statement
+AWAITING A-IMP-03 MANIFEST APPROVAL
+Project owner manifest approval
+Pending
+
+最终控制状态：本文件仅授权 Phase 1 分析，不授权 metadata implementation、Salesforce data remediation、Sandbox deployment、Production deployment 或 UAT。
+

@@ -1,0 +1,514 @@
+
+CBS Salesforce Category A
+A-IMP-02 - Client User and Data Subject Separation
+Cursor Execution Prompt
+StatusA-IMP-01 v1.1 approved. This prompt is authorised for controlled analysis and Sandbox implementation, subject to its two-gate execution model.
+Control
+Value
+Version
+1.0
+Approval date
+19 July 2026
+Authoritative target design
+CBS Category A Solution Design v1.4
+Approved implementation plan
+A-IMP-01 v1.1 - Corrected Implementation-Ready Baseline
+Technical baseline
+Credit Bureau Sandbox 20260715.zip
+Baseline SHA-256
+a3c337d997a556dca2cd53492a5621dce09a39b4f9454ac0d24e7d88a6a93a80
+Salesforce source API version
+67.0
+Scope
+Category A Sandbox only; production deployment and UAT are not authorised
+
+
+1. Approval Decision and Authority
+Approval item
+Decision
+A-IMP-01 v1.1
+Approved as the controlled Category A implementation mapping and deployment baseline.
+A-IMP-02 prompt
+Approved for use under the analysis-first and manifest-approval gates in this document.
+Sandbox implementation
+Authorised only after the Phase 1 impact report and exact manifest are explicitly approved.
+Production deployment
+Not authorised.
+UAT generation or execution
+Not authorised until a fresh metadata extraction and as-built reconciliation are approved.
+Design deviation
+Cursor must stop and request approval. It must not invent an alternative.
+
+Locked operating principleCategory first -> Requirements second -> Design third -> Visualise fourth -> Implement fifth -> Verify sixth -> Test last.
+2. Purpose, Scope and Traceability
+This document is the controlled Cursor prompt for the first Category A implementation workstream. Its purpose is to separate Client User Contacts from Data Subject Contacts without creating a new custom object, without destroying valid data-subject evidence and without regressing Categories B-F.
+Traceability domain
+Controlled references
+Approved design section
+Section 11 - A-WS-01 Client User and Data Subject Separation
+Implementation workstream
+A-IMP-01.1
+Requirements
+A-REQ-007, A-REQ-009, A-REQ-010, A-REQ-018
+Design decisions
+A-DD-001, A-DD-003, A-DD-004
+Acceptance criteria
+A-WS01-AC01 through A-WS01-AC15
+Related downstream workstreams
+A-IMP-01.5 access governance, A-IMP-01.7 internal roles and permissions, A-IMP-01.8 external isolation, A-IMP-01.10 pages
+
+2.1 In scope
+Contact purpose and record-type controls for Client_User, Data_Subject, Singpass and Non_Singpass.
+Field requiredness correction and record-type-specific validation.
+Client User and Data Subject layout/page separation.
+The P1 correction to contactApproveCreateConsentRequest, including purpose guard, duplicate prevention and durable fault evidence.
+Client User normalisation and role-consistency logic.
+Duplicate-control design for Client User business email plus Account.
+Selected non-PII Contact field history, subject to the org limit and A-IMP-01 Wave 0 capacity check.
+Non-destructive runtime inventory, remediation dry run, tests, deployment and rollback evidence.
+2.2 Out of scope
+Detailed Category B consent rules beyond preserving the current qualifying data-subject process.
+Client Access Request approval, User provisioning and quarterly access review.
+Final Business Development permission-set assignment and full Experience Cloud isolation, except for safe minimum corrections explicitly approved in the Phase 1 manifest.
+Production deployment, UAT, destructive deletion of legacy components or bulk clearing of personal data.
+3. Verified Current-State Metadata Baseline
+ID
+Verified current state
+Implementation consequence
+F01
+Four active Contact record types: Client_User, Data_Subject, Singpass and Non_Singpass.
+Retain the four-purpose model. Do not convert Client_User records into data-subject types.
+F02
+Full_Name__c, ID_Type__c, ID_Number__c and Employment_Status__c are object-level required.
+Set required=false and enforce data-subject completeness through validation.
+F03
+The Client User layout collects Full Name, DOB, ID Type, ID Number and Employment Status.
+Replace with minimum business identity and access-summary fields.
+F04
+Data-subject layouts expose Portal_Role__c and portal-oriented actions.
+Remove client-access attributes from data-subject experiences.
+F05
+Client User layout exposes portal administration, Login As, Delete, Change Owner, Change Record Type, Clone and Share.
+Remove these actions from routine Business Development experience.
+F06
+Active contactApproveCreateConsentRequest runs after every Contact creation with Email populated.
+P1: add a data-subject-family purpose guard; Client_User must never create Consent_Request_Item__c.
+F07
+The Flow fault path only assigns a text marker and terminates.
+Create durable fault evidence and authorised notification without sensitive payloads.
+F08
+Customer Community Plus layout assignment maps Client_User to a Singpass community layout.
+Correct the assignment after dependency analysis.
+F09
+Legacy partner permission sets grant broad Contact CRUD, all record types and sensitive FLS.
+Inventory dependencies; do not remove grants until replacement packages and B-F regression tests are ready.
+F10
+No dedicated Client_User internal Lightning record-page override exists.
+Create or assign the approved Client User record page.
+F11
+No Contact validation rules are retrieved; Contact history is disabled.
+Add staged validation and selected history after remediation.
+F12
+Standard duplicate rules allow create/update and include Lead matching.
+Add purpose-specific Client User duplicate governance; do not alter unrelated standard assets without approval.
+F13
+Contact sharing is Controlled by Parent.
+Record type is not a sharing boundary; full external isolation remains a downstream security gate.
+
+3.1 Mandatory starting component inventory
+Metadata domain
+Starting components to inspect
+Contact record types
+Client_User; Data_Subject; Singpass; Non_Singpass
+Layouts
+Contact-CBS Contact - Client User Layout; Contact-CBS Contact - Data Subject Layout; Contact-CBS Contact - SingPass.layout; Contact-CBS Contact - SingPass- Community User; Contact-CBS Contact - Non-SingPass.layout; Contact-CBS Contact - Non-SingPass - Community User; Contact-Contact Layout
+Lightning pages
+Contact_Record_Page; Contact_Record_Page1; Contact_Record_Page_Three_Column; all app/profile/page assignments
+Flows
+contactApproveCreateConsentRequest; ConsentInsertUpdateConsentRequestItem; InsertDeparturesUpdateContact; UpdateConsentRequestInsertCase; Update_Contact_Life_Cycle; all other Contact-triggered or Consent_Request_Item__c automation
+Permission assets
+CBS_Client_HR_User; CBS_Client_Approver; Set_Custom_Object_To_Partner; partner_community_User_Permissions_set; relevant profiles, permission-set groups and Network member groups
+Apex/LWC/Experience
+Every component that queries, creates, updates, serialises, displays or exports Contact or affected fields; include MyProfile, recent activity, batch upload, consent, departure, report and isolation tests
+Duplicate and sharing
+Contact duplicate rules, matching rules, Contact OWD, sharing rules, sharing sets, Account mappings and site routes
+Runtime data
+Counts and samples by record type, related Users, affected fields, duplicate emails, operational records, Files and integration ownership
+
+4. Non-Negotiable Target Design
+Control
+Required target
+Purpose model
+Contact remains standard. Client_User is the client-access identity; Data_Subject/Singpass/Non_Singpass are data-subject purposes.
+Same-person rule
+Use separate Contacts when one natural person has both purposes. Do not convert between Client_User and data-subject purposes.
+Client User minimum data
+FirstName, LastName, AccountId, business Email, Department, Portal_Role__c; Title and business Phone are optional.
+Prohibited Client User data
+DOB/Birthdate, ID/NRIC/FIN/passport, MyInfo, Employment Status, consent, report, departure and matching fields.
+Data-subject access fields
+Portal_Role__c, Can_Approve__c and Is_Active_Client_User__c are prohibited on the data-subject family.
+Portal roles
+Client HR User and Client Approver only. Client Admin is unavailable for new records unless separately approved.
+Can Approve
+System-derived from Portal_Role__c; users must not create contradictory combinations.
+Active Client User
+System-maintained from approved access/User state. Business Development cannot activate access by editing Contact.
+Standard-first
+No new custom business object. Use fields, record types, validation, Flow, layouts/pages, duplicate management, history and least privilege.
+Cross-category safety
+Preserve qualifying Category B processing and Categories B-F routes; no broad permission reduction without dependency evidence.
+
+5. Two-Gate Cursor Execution Model
+Gate 1 - Analysis onlyOn the first run, Cursor must not modify any source file. It must scan the repository and connected org, produce the pre-change impact report and exact manifest, then stop with the status AWAITING A-IMP-02 MANIFEST APPROVAL.
+Gate 2 - Controlled implementationCursor may modify files only after the user explicitly states APPROVE A-IMP-02 MANIFEST. It must then implement only the approved manifest, run verification, prepare deployment and rollback packages, and stop before any production deployment.
+6. Phase 1 - Required Pre-Change Analysis
+Verify the repository baseline, Salesforce API version, org alias, source format and active metadata against the 15 July 2026 snapshot. Record any drift.
+Build a complete dependency graph for all affected Contact fields, record types, layouts, pages, Flows, Apex, LWCs, reports, integrations, Experience routes, profiles, permission sets, sharing and tests.
+Query runtime counts and samples by Contact record type, including Client_User records with prohibited PII, data-subject records with access fields, duplicate business email plus Account, and Contacts with related Experience Cloud Users.
+Determine whether contactApproveCreateConsentRequest is referenced by tests, packages, subflows or deployment automation and whether it should be safely modified in place or replaced.
+Identify the current uniqueness rule for Consent_Request_Item__c and all automation that could create a duplicate.
+Assess Contact history-field capacity, existing tracking, Shield retention dependencies and whether the selected non-PII fields fit within the org limits.
+Assess every proposed layout/profile/page assignment change for Category B-F regression and external access impact.
+Produce an exact create/modify/retain/hide/deactivate/delete manifest. Deletion must normally be empty for this first release.
+Produce data-remediation dry-run files, before/after counts, test plan, deployment plan and rollback plan.
+Stop without changing source files.
+7. Phase 2 - Approved Implementation Specification
+7.1 Contact field requiredness and labels
+Component
+Action
+Rule
+Full_Name__c
+Modify
+Set required=false. Hide from Client User experience. Retain for applicable data-subject processing.
+ID_Type__c
+Modify
+Set required=false. Hide from Client User experience. Enforce only for qualifying data-subject types.
+ID_Number__c
+Modify
+Set required=false. Hide from Client User experience. Enforce only for qualifying data-subject types.
+Employment_Status__c
+Modify
+Set required=false. Hide from Client User experience. Enforce only where Category B requires it.
+Portal_Role__c
+Modify values/labels only after dependency check
+Client HR User and Client Approver are approved values. Do not silently rename stored values if integrations or formulas depend on HR/Approver; document migration or label-only approach.
+Can_Approve__c
+Retain and system-control
+Derive from approved portal role; remove routine manual edit.
+Is_Active_Client_User__c
+Retain and system-control
+Do not permit manual activation in this workstream.
+Can_Send_Reminder__c
+Retain but hide from Category A Client User layout
+Do not treat as an access grant. Category B owns future use.
+
+7.2 Validation rules
+API name
+Required logical behaviour
+CBS_CU_Required_Core
+For Client_User require AccountId, FirstName, LastName, Email, Department and Portal_Role__c.
+CBS_CU_Prohibit_Data_Subject_Data
+For Client_User block populated DOB, ID, passport, NRIC/FIN, MyInfo, employment-status, consent, report, departure or matching fields. Deploy inactive until remediation is approved.
+CBS_DS_Required_Identity
+For Data_Subject, Singpass and Non_Singpass enforce the Category B-approved identity fields. If Category B rules are not determinable, stop and request approval; do not guess.
+CBS_DS_Prohibit_Client_Access_Data
+For the data-subject family block Portal_Role__c, Can_Approve__c and Is_Active_Client_User__c.
+CBS_CU_Role_Approval_Consistency
+Enforce or derive Can_Approve__c from Portal_Role__c.
+Record-type transition control
+Remove Change Record Type from non-administrator experiences and restrict record-type visibility. Do not hard-code record-type IDs.
+
+7.3 Flow correction and normalisation
+Automation
+Required behaviour
+contactApproveCreateConsentRequest / CBS_Contact_Purpose_Guard
+Preferred: modify safely in place if references exist. Otherwise deploy a new inactive replacement, test, activate one flow and deactivate the old flow in the same controlled release. Never leave two active creators.
+Purpose guard
+Run only for RecordType.DeveloperName in Data_Subject, Singpass or Non_Singpass. Explicitly exclude Client_User. Keep Email and any Category B readiness criteria that are proven by current design.
+Duplicate prevention
+Before creating Consent_Request_Item__c, check the Category B-approved current-item uniqueness. If no authoritative rule can be determined, stop and request approval.
+Data copy
+Copy identity fields only from qualifying data-subject records. Never create or populate Consent_Request_Item__c from Client_User.
+Durable fault evidence
+Use the approved shared exception mechanism if it exists. Otherwise propose a standard Case/platform-event/custom logging alternative and stop for approval before adding a new object. Store Contact reference, timestamp, flow name and sanitised error summary; no sensitive payload.
+Client User normalisation
+Before-save logic may normalise portal role, derive Can_Approve__c, prevent manual Active status and clear disallowed fields only for new/edited Client_User records where no valid legacy evidence is destroyed. Existing populated PII requires approved remediation, not silent clearing.
+
+7.4 Layouts, record pages and actions
+Experience
+Required content
+Must not contain
+CBS Contact - Client User Layout
+Name, Account, business email, Department, Title, optional Phone; read-only Portal Role, Can Approve and Active summary where system-controlled; approved related access records.
+DOB, identity documents, MyInfo, employment-status, consent/report/departure/matching fields; Enable/Disable Portal, Login As, Delete, Change Owner, Change Record Type, Clone and Share for Business Development.
+CBS Client User Record Page
+Dedicated Client_User Lightning page in the Credit Bureau app using standard Lightning components and the approved minimum data.
+Data-subject Paths, consent/report components, PII sections or user-provisioning controls.
+Data Subject pages/layouts
+Retain Category B operational content pending later design; remove client-access fields and portal administration actions where safe and approved.
+Portal Role, Can Approve, Active Client User and client-user governance actions.
+Experience self-profile
+Do not publish a final redesign in this workstream. Preserve current route and document required own-profile-only fields for A-IMP-01.8/01.10.
+Generic Contact tab/list, other client-user Contacts, record-type change and portal administration.
+
+7.5 Duplicate management
+Preferred target: exact business Email plus Account, scoped to Client_User, blocks duplicate active client-user records or requires a documented administrator override. Cursor must verify what the metadata API and org feature set can enforce without affecting data-subject Contacts. If exact scoping is not technically reliable, Cursor must propose a deterministic unique-key alternative and stop for approval before implementing it.
+7.6 Permissions and sharing boundary
+Do not assign or remove user permissions in Phase 2 unless the approved manifest explicitly includes the assignment and rollback evidence.
+Do not retire Set_Custom_Object_To_Partner or partner_community_User_Permissions_set in this workstream. Produce the dependency and risk register for A-IMP-01.8.
+Correct an obviously wrong layout/profile assignment only when Phase 1 proves that Categories B-F will not regress and the manifest is approved.
+Client HR User and Client Approver must not gain generic Contact CRUD or access to other client-user Contacts as a result of this workstream.
+Contact sharing remains a downstream client-isolation decision. Do not change OWD or sharing sets here unless separately approved.
+7.7 Contact history and audit
+After the field-capacity and privacy check, enable history only for approved non-PII governance fields: Record Type, Account, Email, Department, Portal Role, Can Approve and Active Client User. Do not track DOB, ID numbers, passport or MyInfo fields in standard Contact history. If the limit is exceeded, stop and propose prioritisation; do not silently omit fields.
+8. Data Remediation Controls
+Step
+Required action
+Gate
+1. Export
+Export affected Contact fields, record type, Account, related User and operational record references. Create a checksum and secure backup.
+No data change.
+2. Classify
+Classify wrong-purpose records, Client_User with prohibited PII, data subjects with access fields and duplicate business-email-plus-Account pairs.
+Business/privacy owner review.
+3. Dry run
+Prepare reversible CSV/scripts with before values, proposed after values, rationale and excluded records.
+Reconcile record counts and exceptions.
+4. Approve
+Obtain explicit approval before clearing, splitting or reclassifying records.
+No silent destructive cleanup.
+5. Apply
+Run the approved data fix in Sandbox, preserve separate same-person purpose records and retain audit evidence.
+Validation activation only after successful reconciliation.
+6. Verify
+Requery affected records and compare before/after counts, exceptions and related User/operational links.
+Zero unintended data loss.
+
+9. Verification and Acceptance Tests
+Test ID
+Scenario
+Expected result
+T01
+Create minimal Client_User with Account, standard name, business email, Department and Client HR User role.
+Save succeeds without DOB, ID type, ID number or employment status.
+T02
+Create Client_User with prohibited data-subject field populated.
+Save blocked after remediation/validation activation.
+T03
+Create Client_User with Email.
+No Consent_Request_Item__c is created and no consent/report/departure lifecycle is entered.
+T04
+Create each qualifying data-subject type with the proven mandatory fields.
+Existing Category B-approved consent-item behaviour continues and no client-access fields are populated.
+T05
+Repeat the data-subject create/update condition.
+No duplicate current Consent_Request_Item__c is created according to the approved uniqueness rule.
+T06
+Force the Contact-create Flow fault in a test context.
+Durable sanitised error evidence and authorised notification are produced; no silent failure.
+T07
+Business Development permission context.
+Can create/edit Client_User minimum fields; cannot create data-subject types, access PII, delete, change record type or activate User.
+T08
+Client HR User and Client Approver contexts.
+No generic Contact list/CRUD, role change, active-status edit or access to other Client_User Contacts.
+T09
+Processing user context.
+Data-subject process remains operational; no Client User access-governance fields.
+T10
+Duplicate Client_User with same Account and business Email.
+Blocked or requires the approved auditable administrator override.
+T11
+Same person has both purposes.
+Two separate Contacts are supported; neither is converted to the other purpose.
+T12
+Metadata re-retrieval and diff.
+Only approved manifest changes exist; active Flow count, page assignments, required flags, validation and history match the design.
+T13
+Categories B-F regression suite.
+Consent creation, upload, departure, report and Experience routes show no unintended regression.
+T14
+Check-only deployment and local tests.
+All relevant Apex/Flow tests pass; no unresolved P1/P2 defect.
+
+10. Required Cursor Deliverables
+Required file
+Minimum content
+01_pre_change_impact_report.md
+Baseline verification, dependency graph, runtime queries, data profile, feature/licence findings, risks and stop conditions.
+02_exact_metadata_manifest.csv
+Component type, API name, action, current state, target state, requirement, design decision, dependency, deployment wave and rollback.
+03_data_remediation_dry_run.csv
+Record ID, purpose, affected fields, before value, proposed after value, reason, approval status and exception.
+04_implementation_log.md
+Approved manifest reference, file-by-file changes, decisions, commands and deviations.
+05_test_and_regression_report.md
+Test IDs T01-T14, evidence, results, failures, coverage and Category B-F regression.
+06_deployment_runbook.md
+Check-only and Sandbox deployment commands, activation order, assignments, post-deploy actions and verification.
+07_rollback_runbook.md
+Deactivation, metadata restore, data restore, assignment restore, verification and rollback authority.
+08_as_built_evidence.md
+Fresh metadata ZIP/hash, source diff, runtime evidence, requirement/decision/acceptance reconciliation.
+package-A-IMP-02.xml
+Exact deployable metadata for this approved workstream only.
+destructiveChanges.xml
+Must be empty unless a separately approved deletion is recorded.
+
+11. Mandatory Stop Conditions
+Any Client_User creation still creates or updates a Consent_Request_Item__c.
+Any proposed change risks deleting or overwriting valid data-subject identity, consent, report or departure evidence.
+Category B mandatory identity or consent-item uniqueness rules cannot be determined from approved sources.
+Permission or page changes would break Categories B-F or expose cross-client/PII data.
+Two active flows could create the same Consent_Request_Item__c.
+The org lacks capacity for the proposed history fields or metadata names conflict with existing components.
+A custom object, Apex service or Experience route would be required but is not explicitly approved.
+Check-only deployment, relevant tests or data reconciliation fail.
+Any production deployment or UAT action is requested.
+12. Copy/Paste Cursor Execution Prompt
+How to usePaste the full prompt below into Cursor while connected to the CBS Salesforce repository and Sandbox. On the first run it must perform Phase 1 only and stop for manifest approval.
+You are executing CBS Salesforce Category A workstream A-IMP-02: Client User and Data Subject Separation.
+
+AUTHORITY AND BASELINE
+- Authoritative target design: CBS Category A Solution Design v1.4, Section 11.
+- Approved implementation plan: A-IMP-01 v1.1.
+- Latest technical baseline: Credit Bureau Sandbox 20260715.zip.
+- Expected SHA-256: a3c337d997a556dca2cd53492a5621dce09a39b4f9454ac0d24e7d88a6a93a80.
+- Salesforce source API version: 67.0.
+- Scope: Sandbox only. Production deployment and UAT are prohibited.
+- Traceability: A-REQ-007, A-REQ-009, A-REQ-010, A-REQ-018; A-DD-001, A-DD-003, A-DD-004; A-WS01-AC01 to A-WS01-AC15.
+
+NON-NEGOTIABLE RULES
+1. Standard Salesforce configuration first. Do not create a new custom business object.
+2. Do not rename an existing API name, create an unapproved field/object/route, or delete metadata/data without explicit approval.
+3. Existing metadata is current-state evidence, not automatically the desired target state.
+4. Client_User and Data Subject purposes must remain separate. The same natural person may have two separate purpose-specific Contacts; do not convert one purpose into the other.
+5. Creating or editing a Client_User must never create a Consent_Request_Item__c or enter consent, report, departure or matching lifecycles.
+6. Preserve the approved Category B data-subject process and Categories B-F routes.
+7. Do not remove broad legacy external permissions until dependencies and replacement controls are approved in the later security workstream.
+8. Do not deploy to production and do not generate or execute UAT.
+9. On any conflict, stop and record a deviation. Do not invent an alternative.
+
+TWO-GATE EXECUTION
+PHASE 1 IS ANALYSIS ONLY. Do not modify any source file, metadata component or org configuration during Phase 1.
+After producing all Phase 1 outputs, stop and print exactly: AWAITING A-IMP-02 MANIFEST APPROVAL.
+Continue to Phase 2 only after I state exactly: APPROVE A-IMP-02 MANIFEST.
+
+PHASE 1 - PRE-CHANGE IMPACT ANALYSIS
+A. Verify the repository and connected Sandbox against the baseline and record all drift.
+B. Inspect at minimum:
+   - Contact record types: Client_User, Data_Subject, Singpass, Non_Singpass.
+   - All Contact fields, especially Full_Name__c, ID_Type__c, ID_Number__c, Employment_Status__c, DOB/Birthdate fields, NRIC/FIN/passport/MyInfo fields, Portal_Role__c, Can_Approve__c, Can_Send_Reminder__c and Is_Active_Client_User__c.
+   - Contact layouts, Lightning pages and assignments.
+   - Flows: contactApproveCreateConsentRequest, ConsentInsertUpdateConsentRequestItem, InsertDeparturesUpdateContact, UpdateConsentRequestInsertCase, Update_Contact_Life_Cycle and every other Contact/Consent_Request_Item automation.
+   - Apex, LWC, reports, integrations and Experience routes that query, create, update, display, export or serialise Contact or the affected fields.
+   - Profiles, permission sets/groups and Network member groups, including CBS_Client_HR_User, CBS_Client_Approver, Set_Custom_Object_To_Partner and partner_community_User_Permissions_set.
+   - Duplicate rules, matching rules, Contact OWD, sharing rules, sharing sets and Account mappings.
+C. Query runtime counts and samples by record type. Identify:
+   - Client_User records containing prohibited PII/data-subject fields.
+   - Data-subject records containing Portal Role, Can Approve or Active Client User values.
+   - Duplicate Client_User business email plus Account combinations.
+   - Related Experience Cloud Users and operational records.
+D. Determine the authoritative current Consent_Request_Item uniqueness and creation rules. If they cannot be proven, treat this as a stop condition.
+E. Assess Contact history-field capacity and privacy constraints.
+F. Produce these files under docs/category-a/A-IMP-02/:
+   01_pre_change_impact_report.md
+   02_exact_metadata_manifest.csv
+   03_data_remediation_dry_run.csv
+   05_test_and_regression_plan.md
+   06_deployment_runbook_draft.md
+   07_rollback_runbook_draft.md
+G. The exact manifest must state create/modify/retain/hide/deactivate/delete for every component. Deletion should be empty unless separately approved.
+H. Stop without changing source files and print: AWAITING A-IMP-02 MANIFEST APPROVAL.
+
+PHASE 2 - IMPLEMENT ONLY THE APPROVED MANIFEST
+1. Set Full_Name__c, ID_Type__c, ID_Number__c and Employment_Status__c to required=false at field metadata level.
+2. Add staged record-type-specific validation:
+   - CBS_CU_Required_Core: Client_User requires Account, standard First/Last Name, Email, Department and Portal Role.
+   - CBS_CU_Prohibit_Data_Subject_Data: Client_User cannot contain DOB, ID, passport, NRIC/FIN, MyInfo, employment-status, consent, report, departure or matching fields. Keep inactive until approved data remediation is complete.
+   - CBS_DS_Required_Identity: data-subject family uses only the Category B-approved mandatory identity rules. Do not guess.
+   - CBS_DS_Prohibit_Client_Access_Data: data-subject family cannot contain Portal Role, Can Approve or Active Client User.
+   - CBS_CU_Role_Approval_Consistency: derive or validate Can_Approve__c from Portal_Role__c.
+3. Correct contactApproveCreateConsentRequest safely:
+   - Modify in place when references require it; otherwise deploy a new inactive CBS_Contact_Purpose_Guard, test it, activate one creator and deactivate the old creator in the same controlled release.
+   - Trigger only for RecordType.DeveloperName Data_Subject, Singpass or Non_Singpass. Explicitly exclude Client_User. Do not hard-code record-type IDs.
+   - Preserve only proven Category B readiness criteria.
+   - Check the approved current Consent_Request_Item uniqueness before creation.
+   - Copy identity fields only from qualifying data-subject Contacts.
+   - Replace the silent fault marker with durable, sanitised operational evidence and authorised notification using an already approved shared mechanism. If a new object/service is needed, stop for approval.
+4. Add safe Client User before-save normalisation where approved:
+   - Normalise Portal Role.
+   - Derive Can_Approve__c.
+   - Prevent manual Is_Active_Client_User__c changes.
+   - Never silently clear legacy PII; use the approved remediation file.
+5. Create/assign the dedicated Client_User internal layout and Lightning record page using standard components. Include only approved business identity and read-only access summary. Remove routine destructive/admin actions.
+6. Remove client-access fields and portal administration actions from data-subject pages only where the approved manifest proves no Category B-F regression.
+7. Implement the approved Client_User duplicate control for exact business Email plus Account. If matching-rule scoping is not technically reliable, stop and request approval for a deterministic alternative.
+8. Enable selected non-PII Contact history only after the capacity/privacy gate: Record Type, Account, Email, Department, Portal Role, Can Approve and Active Client User. Never track DOB, IDs, passport or MyInfo in standard history.
+9. Do not retire legacy partner permission sets, change Contact OWD/sharing sets or publish the final Experience Cloud self-profile in this workstream unless separately approved in the exact manifest.
+10. Apply only approved non-destructive data remediation. Preserve backups, before/after values, counts and exceptions.
+
+TESTS AND ACCEPTANCE
+Execute and evidence at minimum:
+- Minimal Client_User creation succeeds without DOB/ID/employment fields.
+- Client_User with prohibited data is blocked after remediation and validation activation.
+- Client_User creation with Email creates no Consent_Request_Item__c.
+- Qualifying Data_Subject, Singpass and Non_Singpass processing continues.
+- Duplicate consent-request creation is prevented by the proven Category B rule.
+- Flow faults create durable sanitised evidence and notification.
+- Business Development can manage only approved Client_User fields and cannot create data subjects, view PII, delete, change record type or activate User.
+- External Client HR User/Approver has no generic Contact CRUD/list, cannot change role/active status and cannot browse other Client_User Contacts.
+- Processing user retains approved data-subject capabilities without Client User governance fields.
+- Duplicate Client_User business Email plus Account is blocked or uses the approved auditable override.
+- Same-person dual purpose uses separate Contacts.
+- Categories B-F regression suite passes.
+- Check-only deployment and all relevant Apex/Flow tests pass.
+- Fresh metadata retrieval matches the approved manifest.
+
+REQUIRED FINAL OUTPUTS
+Update/create under docs/category-a/A-IMP-02/:
+01_pre_change_impact_report.md
+02_exact_metadata_manifest.csv
+03_data_remediation_dry_run.csv
+04_implementation_log.md
+05_test_and_regression_report.md
+06_deployment_runbook.md
+07_rollback_runbook.md
+08_as_built_evidence.md
+package-A-IMP-02.xml
+destructiveChanges.xml (empty unless separately approved)
+
+Also provide:
+- Source-control diff and plain-language explanation for every changed component.
+- Check-only and Sandbox deployment commands using a TARGET_ORG placeholder.
+- Relevant test results and coverage.
+- Fresh metadata ZIP name and SHA-256.
+- Explicit deviation register.
+
+STOP CONDITIONS
+Stop immediately for P1 privacy, cross-client access, Client_User consent contamination, data loss, unproven Category B uniqueness/readiness, duplicate active creator flows, permission regression, metadata collision, failed check-only deployment or failed regression test.
+Do not proceed to the next Category A workstream. Do not deploy to production. Do not create or run UAT.
+Appendix A - Approval and Completion Checklist
+Gate
+Required approval evidence
+Status at issue
+A-IMP-01 v1.1 approval
+User approval recorded on 19 July 2026.
+Approved
+A-IMP-02 Phase 1
+Impact report, manifest, dry run, test plan and rollback draft.
+Pending Cursor analysis
+A-IMP-02 manifest approval
+Explicit user statement: APPROVE A-IMP-02 MANIFEST.
+Not yet approved
+Sandbox implementation
+Approved manifest, source changes, tests and check-only deploy.
+Not started
+As-built verification
+Fresh metadata/hash and complete reconciliation.
+Not started
+Production/UAT
+Separate later approvals.
+Not authorised
+

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- A-IMP-03 Phase 2 Wave 1 — inert Account onboarding fields only. Does not authorise activation or data remediation. -->
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <types>
+        <members>Account.Onboarding_Status__c</members>
+        <members>Account.Onboarding_Cycle__c</members>
+        <name>CustomField</name>
+    </types>
+    <version>67.0</version>
+</Package>

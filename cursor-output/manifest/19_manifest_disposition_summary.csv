@@ -1,0 +1,6 @@
+Disposition,Row_Count,Item_IDs,Build_After_Manifest_Approval,Additional_Gates,Notes
+READY,2,"A03-003,A03-004",YES - Wave 1 inert fields only,A-IMP-08 FLS and A-IMP-11 page exposure remain deferred,No validation/Flow/approval in Wave 1
+RUNTIME GATED,10,"A03-001,A03-002,A03-006,A03-007,A03-008,A03-009,A03-010,A03-011,A03-012,A03-015",NO until gates close,"Client Code remediation; status mapping; approval feature; Contract/File evidence; Task Type org support",Manifest approval alone is insufficient
+HOLD,11,"A03-005,A03-013,A03-014,A03-016,A03-P01,A03-P02,A03-P03,A03-P04,A03-P05,A03-P06,A03-P07",NO,"Idempotency design; Flow Approval confirmation; Manifest amendment approval",T22 blocker until idempotency approved
+DEFERRED,1,A03-P08,NO,A-IMP-08 and A-IMP-11 approvals,Minimum internal exposure deferred
+ANALYSIS ONLY,2,"A03-P09,A03-P10",NO,Separate remediation/retention approvals,Step 7 policy approved for A03-P09; no A-IMP-03 change to A-IMP-02 rows

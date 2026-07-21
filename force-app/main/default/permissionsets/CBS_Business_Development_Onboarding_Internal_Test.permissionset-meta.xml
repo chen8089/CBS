@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>A-IMP-03 A03-P08 minimum internal test exposure for Business Development. Read-only visibility on Wave 1 onboarding fields only. Not assigned to external users. Superseded by A-IMP-08 final CBS Business Development permission set.</description>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.Onboarding_Cycle__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.Onboarding_Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <hasActivationRequired>false</hasActivationRequired>
+    <label>CBS Business Development Onboarding Internal Test</label>
+</PermissionSet>

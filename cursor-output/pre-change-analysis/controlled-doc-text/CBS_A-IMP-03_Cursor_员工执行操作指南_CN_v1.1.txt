@@ -1,0 +1,397 @@
+Credit Bureau (Singapore)
+Category A — A-IMP-03
+Cursor 员工执行操作指南
+客户账户生命周期与客户入驻（Account Lifecycle and Client Onboarding）
+当前授权状态当前授权状态：仅批准执行 A-IMP-03 Phase 1 分析。允许核验受控文件、扫描元数据、准备只读查询、收集只读 Sandbox 证据、生成影响报告与精确 Manifest；禁止修改元数据源文件、禁止修改 Salesforce 业务数据、禁止部署或激活任何控制、禁止生产部署与 UAT。
+
+控制项
+内容
+文档编号
+CBS-A-IMP-03-OPS-CN
+版本
+v1.1
+日期
+2026年7月19日
+适用对象
+项目负责人、Cursor 操作人员、Salesforce Sandbox 操作人员、技术复核人员、CBS 业务/数据负责人
+执行基线
+Credit Bureau Sandbox 20260715.zip
+Git 分支
+feature/A-IMP-03-account-onboarding
+最终停止语句
+AWAITING A-IMP-03 MANIFEST APPROVAL
+
+机密性：仅限 CBS 项目内部使用
+1. 文档目的与执行原则
+本指南用于指导员工把 A-IMP-03 所需的最新受控文件提供给 Cursor，并按照固定顺序完成“账户生命周期与客户入驻”工作流的 Phase 1 分析。员工本轮只负责验证、取证、整理 Manifest 和提交审批，不得开始元数据实施。
+一句话原则：先确认 A-IMP-02 依赖与最新基线，再做只读分析；先形成精确 Manifest 和现有 Account 基线决策，再申请 Phase 2；未经书面批准，不修改、不部署、不激活。
+
+2. 本次应提供给 Cursor 的受控文件
+优先级
+文件名
+用途
+Cursor 处理方式
+1
+Credit Bureau Sandbox 20260715.zip
+权威技术基线
+解压到独立工作目录；不得直接在 ZIP 内修改。
+2
+CBS_Category_A_Solution_Design_v1.4_Visual_Approved_and_Implementation_Ready.docx
+批准的 Category A 目标设计
+重点读取第 13、15、18 节。
+3
+CBS_Category_A_A-IMP-01_Implementation_Mapping_and_Deployment_Plan_v1.1_Corrected.docx
+批准的实施治理与规范 API 名称
+重点读取 A-IMP-01.2、技术决策与部署门槛。
+4
+CBS_Category_A_A-IMP-02_Client_User_and_Data_Subject_Separation_Cursor_Execution_Prompt_v1.0.docx
+前置工作流范围与接口
+仅作依赖边界参考。
+5
+CBS_Category_A_A-IMP-02_Phase_1_Pre_Change_Impact_Report_v1.1_Revised_for_Final_Phase_2_Approval.docx
+A-IMP-02 最新影响分析
+用于识别 Account/Contact/Flow/权限重叠。
+6
+CBS_Category_A_A-IMP-02_Exact_Metadata_Manifest_v1.1_Revised.csv
+A-IMP-02 组件级变更范围
+用于防止 API 名称和文件冲突。
+7
+CBS_Category_A_A-IMP-03_客户账户生命周期与客户入驻_Cursor受控执行提示词_CN_v1.0.docx
+本工作流受控 Cursor 提示词
+本轮执行的直接指令。
+
+说明：员工应直接使用本 ZIP 文件包中的文件，不得从聊天记录、个人电脑或旧项目目录寻找同名文件。
+3. 不得提供或混用的文件
+不得使用的材料
+原因
+Category A Solution Design v0.5–v1.3
+已由 v1.4 替代。
+A-IMP-01 v1.0
+已由 v1.1 Corrected 替代。
+A-IMP-02 v1.0 Impact/Manifest
+已由 v1.1 修订版替代。
+早期截图、蒙太奇、未批准 UI 稿
+不是当前目标设计依据。
+A-IMP-03 以外的个人提示词或 Cursor 自动建议
+未经批准，可能扩大范围。
+旧 Sandbox retrieve 或来源不明的 metadata
+无法确认与受控基线一致。
+包含未遮蔽 PII/合同内容的公开文件
+违反数据保护与项目保密要求。
+
+4. 文档优先级与冲突处理
+顺序
+来源
+控制作用
+1
+本指南及 A-IMP-03 已确认执行规则
+最高工作流执行优先级。
+2
+Category A Solution Design v1.4
+批准的功能目标与视觉意图。
+3
+A-IMP-01 v1.1 Corrected
+规范 API 名称、技术决定、工作流边界和部署门槛。
+4
+A-IMP-03 Cursor Prompt v1.0
+本轮 Phase 1 的具体执行指令。
+5
+A-IMP-02 v1.1 影响报告与 Manifest
+前置依赖和组件冲突控制。
+6
+Salesforce metadata 与只读运行时证据
+只代表当前状态，不能覆盖批准的目标状态。
+
+冲突处理：发现文档之间、文档与 metadata 之间、规范 API 名称与现有组件之间、A-IMP-02 与 A-IMP-03 之间存在冲突时，必须停止相关项并形成“冲突—选项—影响—风险—建议”记录。Cursor 和员工不得自行选取替代名称或扩大范围。
+
+5. 角色与职责
+角色
+职责
+项目负责人/批准人
+批准文件包、Phase 1 影响报告、精确 Manifest、Account 基线决策及后续 Phase 2。
+Cursor 操作人员
+建立隔离分支、加载文件、运行只读分析、整理输出；不得修改源文件或部署。
+Salesforce Sandbox 操作人员
+执行 R01–R12 只读 SOQL/Setup 检查，记录 Org ID、用户、时间和结果。
+技术复核人员
+复核 API 名称、依赖、Flow/Approval 可行性、Manifest、测试与回滚设计。
+CBS 业务/数据负责人
+逐条批准现有 Account 生命周期映射、Client Code 整改及已上线客户的入驻基线方式。
+
+6. 推荐工作目录结构
+CBS-A-IMP-03/├── force-app/main/default/...├── controlled-documents/│   ├── Category A Solution Design v1.4│   ├── A-IMP-01 v1.1 Corrected│   ├── A-IMP-02 Prompt / Impact v1.1 / Manifest v1.1│   └── A-IMP-03 Cursor Prompt v1.0├── cursor-output/│   ├── pre-change-analysis/│   ├── runtime-evidence/│   ├── manifest/│   ├── decision-registers/│   ├── test-plan/│   ├── deployment-draft/│   └── rollback-draft/└── README-A-IMP-03.md
+
+不得提交 .sf、.sfdx、认证令牌、浏览器缓存、完整 PII 导出或未加密合同附件。
+7. 员工逐步执行流程
+步骤 1　接收并核验文件包
+目标：确认只使用本次交付的唯一受控文件包。
+执行动作：
+解压 CBS_A-IMP-03_Cursor_员工执行文件包_CN_v1.1.zip。
+先阅读“00_请先阅读”中的本指南、README 和 Cursor 启动指令。
+使用 SHA256SUMS.txt 核对所有附件。
+任何文件缺失、同名异版或校验码不匹配时立即停止。
+必须产出：
+文件完整性核验记录、执行人员、日期和结果
+停止条件：
+校验码不匹配；文件来源不明；发现旧版混入
+步骤 2　建立隔离工作区与 Git 分支
+目标：确保 Phase 1 输出不污染受控 metadata。
+执行动作：
+将 metadata ZIP 解压到全新目录，确认 sfdx-project.json 与 force-app/main/default 存在。
+确认 Git 工作区干净；必要时创建只读基线提交。
+创建分支 feature/A-IMP-03-account-onboarding。
+建立 controlled-documents 与 cursor-output 目录并复制受控文件。
+必须产出：
+分支名称、基线 commit、文件清单
+停止条件：
+工作区存在无法解释的修改；项目结构缺失
+步骤 3　确认 A-IMP-02 前置依赖状态
+目标：防止 A-IMP-03 在旧分支上设计或构建。
+执行动作：
+记录 A-IMP-02 当前状态：仅 Manifest 已批准、正在构建、已合并或已完成 as-built。
+Phase 1 可以在 20260715 基线上分析，但必须标记所有与 A-IMP-02 重叠组件。
+Phase 2 开始前必须取得最新 post-A-IMP-02 metadata，并重新执行 diff 与 Manifest 校验。
+必须产出：
+A-IMP-02 状态记录、重叠组件清单、未来 rebase 要求
+停止条件：
+无法确认 A-IMP-02 分支/版本；拟直接在旧基线上实施
+步骤 4　在 Cursor 中加载受控执行规则
+目标：明确本轮仅做分析，不实施。
+执行动作：
+用 Cursor 打开 Salesforce 项目根目录。
+把“Cursor_启动指令_可直接复制.md”完整粘贴到 Cursor。
+要求 Cursor 先列出识别到的 7 个受控文件、版本、优先级、基线 hash、分支与 Phase 1 边界。
+明确最终停止语句为 AWAITING A-IMP-03 MANIFEST APPROVAL。
+必须产出：
+Cursor 启动确认、文件识别结果、权限边界声明
+停止条件：
+Cursor 读取旧版；提议直接修改/部署；未确认 A-IMP-02 依赖
+步骤 5　执行 metadata 全量扫描
+目标：验证当前组件、API 名称、引用与冲突。
+执行动作：
+扫描 Account、Task、Opportunity、Contract、Files、Flow、Approval、Apex、Layout、FlexiPage、StandardValueSet、Permission、Application。
+搜索 Client_Code__c、Client_Status__c、Notification_Email__c、SLA_Days__c、Approval_Required__c、Task Type/Status 及所有状态常量。
+逐项验证 A-IMP-03 Manifest 模板，标记 FOUND、NOT FOUND、NAME MISMATCH、DEPENDENCY。
+规范 API 名称冲突时停止，不得创建替代名称。
+必须产出：
+当前状态清单、依赖图、API 校验版 Manifest、候选文件变更清单
+停止条件：
+发现未记录自动化；名称冲突；需要新对象/Apex/LWC
+步骤 6　执行 R01–R12 只读证据收集
+目标：补足 metadata 无法证明的记录、文件、权限、功能和容量证据。
+执行动作：
+由 Sandbox 操作人员执行只读 SOQL/Setup 检查；Cursor 只生成脚本和分析结果。
+每项记录 Org ID、用户、时间、查询文本、行数和输出路径。
+评审副本必须遮蔽客户名称、用户名、联系人和合同信息。
+输出存入 cursor-output/runtime-evidence。
+必须产出：
+R01–R12 结果、Setup 截图/导出、运行时证据登记表
+停止条件：
+任何 DML；无法确认 Org/用户；基线与 Org 漂移未解释
+步骤 7　建立现有 Account 基线决策登记表
+目标：确保现有 Active/Inactive 客户不会被自动视为已完成入驻。
+执行动作：
+逐条记录 Account 当前状态、Client Code、Closed Won、Contract、File、Task 和活动外部 User 证据。
+为每个 Account 提出：重建证据并批准、授权 grandfather exception、启动新入驻周期、暂停待补证或排除为非 CBS 客户。
+Client Code 重复或缺失只形成建议，不自动修改。
+提交 CBS 业务/数据负责人审批。
+必须产出：
+现有 Account 基线决策表、Client Code 整改清单、未决例外
+停止条件：
+未取得业务负责人决定；拟批量自动设为 Approved/Active
+步骤 8　完成影响报告与精确 Manifest
+目标：将静态分析和运行时证据转化为可审批实施范围。
+执行动作：
+完成 01_pre_change_impact_report.md。
+完成 02_exact_metadata_manifest.csv，并为每行记录 READY、RUNTIME GATED、DEFERRED、HOLD 或 ANALYSIS ONLY。
+明确 metadata 部署与运行时激活/数据处理是不同门槛。
+生成 T01–T24 测试计划、部署草案和回滚草案。
+所有 Manifest 外组件只能作为“待批准新增项”，不得实施。
+必须产出：
+影响报告、精确 Manifest、测试计划、部署/回滚草案、冲突决策表
+停止条件：
+存在未决 P1/P2；无法保证幂等性；需要跨工作流修改
+步骤 9　提交审批并停止
+目标：将完整 Phase 1 证据包交项目负责人审批。
+执行动作：
+把全部输出放入 cursor-output 对应目录。
+记录 branch、baseline commit 和 latest commit；Phase 1 不应包含 metadata 源文件改动。
+Cursor 最后一行必须精确写：AWAITING A-IMP-03 MANIFEST APPROVAL。
+收到书面 Manifest 批准前，不得开始 Phase 2。
+必须产出：
+完整审批包、Git 记录、最终停止语句
+停止条件：
+无书面批准；证据不完整；源文件已被修改
+8. R01–R12 只读检查清单
+编号
+检查内容
+目的
+R01
+Account 生命周期与必填资料分布
+确认状态、Client Code、通知邮箱、Owner 和非 CBS Account 范围。
+R02
+重复 Client Code
+识别完全重复及大小写/空格规范化重复。
+R03
+现有 Account 基线
+汇总 Opportunity、Contract、Files、Tasks、Contacts 和活动外部 User。
+R04
+Closed Won 前置条件
+识别没有 Closed Won 证据的现有客户。
+R05
+Contract 就绪证据
+检查状态、Start Date、Term、End Date 和候选 Contract。
+R06
+Contract Files
+确认已签合同文件的关联与命名。
+R07
+现有 Task 使用情况
+评估 Task Type/Status、类似入驻 Task 及普通 Task 冲突。
+R08
+活动外部 User
+识别已在未建立入驻基线前获得访问的 Account。
+R09
+角色、权限与审批人
+确认提交人/审批人候选、权限和队列；不得分配权限。
+R10
+功能与容量
+确认 Flow Approval、历史字段容量、Task 能力、通知和错误日志。
+R11
+自动化与配置漂移
+识别 ZIP 外的活动 Flow、Trigger、Workflow、页面/应用分配。
+R12
+最新基线比较
+对比 20260715、最新 Org retrieve 和 post-A-IMP-02 基线。
+
+完整建议查询与 Setup 检查位于附件 CBS_Category_A_A-IMP-03_R01-R12_只读查询计划_CN_v1.0.md。员工不得把任何写操作添加到脚本中。
+9. Cursor 必须遵守的禁止事项
+不得修改 force-app、manifest、config 或任何 metadata 源文件。
+不得执行 INSERT、UPDATE、DELETE、UPSERT、MERGE、写入型匿名 Apex、Data Loader 更新或会更新记录的 Flow。
+不得部署或激活 Flow、Approval、Validation、History、Permission、Page 或 Standard Value。
+不得创建自定义 Onboarding 对象、Account Record Type、自定义 LWC、Apex 服务、Checklist Custom Metadata 或 Opportunity-to-Contract Lookup。
+不得替换或重命名 A-IMP-01 的规范 API 名称。
+不得提前实施 A-IMP-04 至 A-IMP-11 的工作内容。
+不得自动把现有 Active Account 标记为 Onboarding Approved。
+不得自动修改 Client Code、Account Status、Task、Contract、Opportunity 或 User。
+不得改变 A-IMP-02 Client User/Data Subject 分离和 Category B–F 有效逻辑。
+不得将未遮蔽的客户、用户、联系人或合同数据放入公开仓库、聊天或非受控文件夹。
+10. 员工必须返回的成果
+成果
+格式
+最低内容
+基线与依赖确认
+Markdown
+ZIP/hash/API、branch/commit、A-IMP-02 状态、最新 retrieve 状态。
+Pre-change Impact Report
+Markdown/PDF
+当前状态、依赖、R01–R12、风险、停止条件。
+精确 Metadata Manifest
+CSV/XLSX
+每个组件的 API、路径、动作、处置、依赖、部署波次、回滚。
+只读查询与证据
+SOQL/MD + CSV/XLSX + 截图
+Org ID、用户、时间、行数、遮蔽说明。
+现有 Account 基线决策表
+CSV/XLSX
+每个 Account 的证据、目标状态、基线选项、负责人和批准。
+候选文件变更清单
+CSV
+Create/Modify/Retain/Defer/Hold/Analysis Only。
+T01–T24 测试计划
+Markdown/XLSX
+前置条件、用户上下文、步骤、期望结果和证据。
+部署与回滚草案
+Markdown
+仅草案；不得执行。
+冲突与决策清单
+Markdown
+选项、风险、建议、审批状态。
+最终状态
+固定文本
+AWAITING A-IMP-03 MANIFEST APPROVAL
+
+11. 最终验收检查表
+☐ 已确认使用 Category A Solution Design v1.4。
+☐ 已确认使用 A-IMP-01 v1.1 Corrected。
+☐ 已确认使用 A-IMP-02 v1.1 依赖文件。
+☐ 已确认使用 A-IMP-03 Cursor Prompt v1.0。
+☐ metadata ZIP SHA-256 完全匹配。
+☐ 已创建 feature/A-IMP-03-account-onboarding 分支。
+☐ 已记录 A-IMP-02 当前状态及 Phase 2 rebase 要求。
+☐ Manifest 模板全部行已验证。
+☐ R01–R12 已完成或明确说明无法完成原因。
+☐ 现有 Account 基线决策表已提交业务负责人。
+☐ 未修改任何 metadata 源文件。
+☐ 未执行任何 DML、部署、激活或 UAT。
+☐ 最终输出以指定停止语句结束。
+12. 可直接复制给 Cursor 的启动指令
+你正在执行 CBS Category A 的 A-IMP-03：Account Lifecycle and Client Onboarding。一、当前授权本轮仅执行 Phase 1 分析。禁止修改 metadata 源文件、禁止 DML、禁止部署或激活、禁止生产操作和 UAT。二、受控来源优先级1. A-IMP-03 已确认执行规则；2. Category A Solution Design v1.4；3. A-IMP-01 v1.1 Corrected；4. A-IMP-03 Cursor Prompt v1.0；5. A-IMP-02 v1.1 Impact Report 与 Exact Manifest；6. 现有 metadata 与运行时证据仅代表当前状态。三、必须先确认- ZIP SHA-256、API 67.0、项目结构、Git branch/commit；- 当前工作树是 20260715 基线还是最新 post-A-IMP-02 retrieve；- 7 个受控文件及版本；- A-IMP-02 与 A-IMP-03 的重叠组件；- 本轮不会修改任何源文件。四、本轮工作- 扫描 Account、Task、Opportunity、Contract、Files、Flow、Approval、Apex、Layout、FlexiPage、权限和应用依赖；- 校验 A-IMP-03 Manifest 模板的全部 API 名称与文件路径；- 生成并执行 R01–R12 只读查询/Setup 检查；- 建立现有 Account 基线决策登记表；- 输出影响报告、精确 Manifest、候选变更文件清单、T01–T24 测试计划、部署/回滚草案和冲突决策表。五、禁止事项- 不得创建自定义 Onboarding 对象、Account Record Type、LWC、Apex 服务、Checklist Custom Metadata 或未批准字段；- 不得提前实施 A-IMP-04 至 A-IMP-11；- 不得自动修改 Client Code、Account Status、Task、Contract、Opportunity 或 User；- 不得自动把现有 Active Account 标记为已批准入驻；- 不得改变 A-IMP-02 及 Category B–F 逻辑；- 发现冲突必须停止相关项并报告选项，不得自行决定。六、最终停止语句最后一行必须精确输出：AWAITING A-IMP-03 MANIFEST APPROVAL请先输出你识别到的文件版本、优先级、基线/hash、branch/commit、A-IMP-02 依赖状态和执行边界。未经确认，不要修改任何文件。
+
+13. 附件清单与 SHA-256
+序号
+文件名
+SHA-256
+1
+Credit Bureau Sandbox 20260715.zip
+a3c337d997a556dca2cd53492a5621dce09a39b4f9454ac0d24e7d88a6a93a80
+2
+CBS_Category_A_Solution_Design_v1.4_Visual_Approved_and_Implementation_Ready.docx
+33313a37c49ce45a2aceb2bd2306269e6e028388419c29470844edfe93922081
+3
+CBS_Category_A_A-IMP-01_Implementation_Mapping_and_Deployment_Plan_v1.1_Corrected.docx
+f687aaf47cb594ed78fc7b8b61f7ffc4bd982d6d2e0b0e448fb3c88f97e79c41
+4
+CBS_Category_A_A-IMP-02_Client_User_and_Data_Subject_Separation_Cursor_Execution_Prompt_v1.0.docx
+35fd3f76c7e05d5c0612ae3b9d3fce9bc43fac66151c6c082410a9b19bdde646
+5
+CBS_Category_A_A-IMP-02_Phase_1_Pre_Change_Impact_Report_v1.1_Revised_for_Final_Phase_2_Approval.docx
+25dfa3a27503b840461c0c2aafea9b893187920b1f687a60522cfcf1b56aa95f
+6
+CBS_Category_A_A-IMP-02_Exact_Metadata_Manifest_v1.1_Revised.csv
+3ef139987a3887ef960874126ed419314b95f651e271b7449a42eb29ef3be77e
+7
+CBS_Category_A_A-IMP-03_客户账户生命周期与客户入驻_Cursor受控执行提示词_CN_v1.0.docx
+e5ec19ac46f3fe7104d5ae0c18668e3cf625c192feef61d9bdc80fb050712590
+8
+CBS_Category_A_A-IMP-03_精确Metadata_Manifest模板_CN_v1.0.csv
+b4f084daaf5f67e4c2763453bf2bb6e76f0f8b476dd46a5b928f2700df606f60
+9
+CBS_Category_A_A-IMP-03_运行时证据登记表模板_CN_v1.0.csv
+c9276e397423c493a910a2667ea08fc5c47aac61f9f050d2e72a533236434270
+10
+CBS_Category_A_A-IMP-03_现有Account基线决策登记表模板_CN_v1.0.csv
+3ef5cb996c7196ebb963c9d37fc74c3b5d1ca38200bb1259d051d3a6ccd0f1df
+11
+CBS_Category_A_A-IMP-03_R01-R12_只读查询计划_CN_v1.0.md
+b1f3f552cc746dd13df026fd31e84c6a271cd787c49f9e6891d0b794b24131c6
+
+14. 执行签收记录
+记录项
+填写内容
+执行人员姓名
+
+执行日期
+
+Sandbox Org ID
+
+Git 分支
+feature/A-IMP-03-account-onboarding
+基线 commit
+
+最新 commit
+
+A-IMP-02 状态
+
+R01–R12 是否完成
+是 / 否 / 部分完成
+是否修改源文件
+必须为“否”
+是否发现停止条件
+是 / 否
+提交审批日期
+
+项目负责人审批
+待审批
+
+最终控制状态本指南不构成 Phase 2 实施批准。员工完成 Phase 1 后，必须提交完整影响报告、精确 Manifest、运行时证据和 Account 基线决策，并等待书面批准。
+

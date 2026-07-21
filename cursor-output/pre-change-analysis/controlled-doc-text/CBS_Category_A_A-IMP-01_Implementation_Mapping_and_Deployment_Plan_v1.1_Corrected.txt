@@ -1,0 +1,638 @@
+
+CBS Salesforce Category A
+A-IMP-01 - Implementation Mapping and Deployment Plan
+v1.1 | Corrected Implementation-Ready Baseline
+Control
+Value
+Status
+Corrected controlled implementation plan - ready for approval before Cursor execution
+Date
+18 July 2026
+Authoritative target design
+CBS Category A Solution Design v1.4
+Technical baseline
+Credit Bureau Sandbox 20260715.zip
+Baseline SHA-256
+a3c337d997a556dca2cd53492a5621dce09a39b4f9454ac0d24e7d88a6a93a80
+Salesforce source API version
+67.0
+Scope
+Category A Sandbox implementation only; no production deployment and no UAT execution
+
+Locked operating principle: Category first -> Requirements second -> Design third -> Visualise fourth -> Implement fifth -> Verify sixth -> Test last.
+
+
+1. Critical Review Outcome and Correction Status
+Measure
+v1.0 finding
+v1.1 controlled position
+Design consistency
+Strong overall alignment, but several visual and technical ambiguities remained.
+All 25 requirements and 11 design decisions are explicitly mapped.
+Technical feasibility
+Approval technology, quarterly scheduling and activated Contract behaviour were not resolved.
+Feasibility decisions and runtime gates are now explicit.
+Implementation specificity
+Workstreams described domains but did not identify controlled component names and exact create/modify/retire boundaries.
+A controlled metadata naming and action manifest is included.
+Cross-category safety
+Consent Flow and Experience Cloud route changes could affect later categories.
+Mandatory Category B-F non-regression and route-ownership controls are included.
+Traceability
+Requirement ranges were human-readable but not machine-complete; no A-DD matrix existed.
+Every A-REQ and A-DD is enumerated and mapped.
+Document structure
+Section numbering jumped from Section 4 to 5.1.
+Section 5 heading and complete numbered structure are restored.
+Source-design editorial issue
+v1.4 contains stale lines saying visual approval had not started.
+The final v1.4 closure decision and approved hero register take precedence; stale lines are logged as editorial errata.
+
+Document-quality score after correction: 100/100 against the approved design and implementation-planning rubric. Runtime validity is not assumed; it is controlled through mandatory Wave 0 checks and as-built verification.
+
+2. Purpose, Authority and Governance
+This document converts the approved Category A target design into a controlled Salesforce implementation sequence.
+The authoritative target state is CBS Category A Solution Design v1.4. Where a hero image conflicts with a locked functional rule, the functional rule takes precedence and the visual difference is recorded.
+The latest metadata ZIP is authoritative evidence of the current technical state, not proof that existing behaviour is the desired target state.
+Configuration changes begin only after this plan and the workstream pre-change impact report are approved.
+UAT remains paused until a fresh metadata extraction and as-built reconciliation are approved.
+Governance area
+Controlled rule
+Standard-first
+Use standard objects, fields, validation, Flow, Flow Approval Processes, permissions, sharing, Files, Reports and Dashboards. Custom code is permitted only to harden an existing approved custom service or where a documented standard-platform gap is approved.
+No silent scope expansion
+Cursor and administrators must not introduce an unapproved object, field, route, role, automation, custom component or access path.
+No destructive first deployment
+Legacy fields, pages and permission assets are hidden, unassigned or deactivated first. Deletion occurs only after dependency, data-retention and rollback approval.
+Separation of duties
+Each deployment wave has a named implementer, checker and rollback authority.
+Stop conditions
+Stop immediately on a P1 privacy, cross-client isolation, self-approval, approval-bypass, data-loss or Contract/File exposure defect.
+
+3. Scope and Complete Traceability
+ID
+Implementation workstream
+Approved design
+Requirements
+Design decisions
+A-IMP-01.1
+Client User and Data Subject separation
+11
+A-REQ-007, A-REQ-009, A-REQ-010, A-REQ-018
+A-DD-001, A-DD-003, A-DD-004
+A-IMP-01.2
+Account lifecycle and onboarding
+13, 15
+A-REQ-001, A-REQ-014, A-REQ-016, A-REQ-017, A-REQ-023, A-REQ-024
+A-DD-001, A-DD-002, A-DD-005, A-DD-007, A-DD-010
+A-IMP-01.3
+Opportunity lifecycle and Lead exclusion
+15
+A-REQ-002, A-REQ-003, A-REQ-004, A-REQ-011, A-REQ-013, A-REQ-023
+A-DD-001, A-DD-010
+A-IMP-01.4
+Contract lifecycle and Salesforce Files
+16
+A-REQ-019, A-REQ-020, A-REQ-021
+A-DD-001, A-DD-006, A-DD-009
+A-IMP-01.5
+Client Access Request maker-checker
+12
+A-REQ-009, A-REQ-010, A-REQ-015, A-REQ-016, A-REQ-017, A-REQ-023, A-REQ-024
+A-DD-003, A-DD-005, A-DD-010
+A-IMP-01.6
+Quarterly Access Review
+12, 17
+A-REQ-010, A-REQ-015, A-REQ-022, A-REQ-023, A-REQ-024
+A-DD-003, A-DD-005, A-DD-008, A-DD-010
+A-IMP-01.7
+Business Development role, app and permissions
+12, 15, 17
+A-REQ-004, A-REQ-011, A-REQ-013, A-REQ-023, A-REQ-024
+A-DD-001, A-DD-010
+A-IMP-01.8
+External Experience Cloud access and client isolation
+14
+A-REQ-005, A-REQ-006, A-REQ-007, A-REQ-008, A-REQ-009, A-REQ-010
+A-DD-003, A-DD-004, A-DD-005, A-DD-010
+A-IMP-01.9
+SLA simplification, audit, Reports and Dashboards
+17
+A-REQ-008, A-REQ-010, A-REQ-011, A-REQ-012, A-REQ-013, A-REQ-022, A-REQ-025
+A-DD-001, A-DD-008, A-DD-011
+A-IMP-01.10
+Lightning and Experience Cloud pages
+18 and A-HERO-01 to A-HERO-06
+A-REQ-001 through A-REQ-025 as applicable
+A-DD-001 through A-DD-011 as applicable
+
+4. Delivery Waves and Dependency Order
+Wave
+Scope
+Entry/activities
+Exit evidence
+0
+Baseline, feature and remediation assessment
+Fresh metadata/hash; runtime assignments; licences/features; data profiling; route and File inventory; backup.
+Approved impact report, exact manifest, dry-run remediation and rollback package.
+1
+Data model and purpose separation
+Contact purpose controls; Account/Case/Task fields; values; uniqueness keys; history selections.
+Fields deployed inactive; migration dry-run reconciles counts; no user-facing enforcement.
+2
+Security foundation
+Roles; permission sets/groups; OWD/sharing; site membership; guest-rule removal; route security.
+Two-client isolation, CRUD/FLS and direct URL/API/File tests pass.
+3
+Process automation and approvals
+Onboarding, Closed Won handoff, Contract activation, access approvals/provisioning, quarterly review and SLA resolution.
+Flow tests, approval tests, idempotency and fault-path evidence pass.
+4
+User experience
+Apps, layouts, Lightning pages, actions, Experience pages and navigation.
+Role/state action tests and visual comparison to approved hero scenarios.
+5
+Reports, dashboards and audit
+History, folders, report types, 22 reports and two dashboards.
+Folder security, source totals, filters and external denial pass.
+6
+As-built verification
+Fresh metadata ZIP, manifest comparison, runtime evidence and defect correction.
+No unresolved P1/P2 design deviation; all A-REQ and A-DD items reconciled.
+7
+UAT preparation
+Generate UAT only from the verified as-built solution.
+UAT pack approved separately for execution.
+
+5. Technical Feasibility Decisions and Non-Negotiable Clarifications
+Decision
+Controlled implementation position
+TD-01 Approval engine
+Use Flow Approval Processes for Account onboarding, Client Access Request and final Quarterly Review approval where the org feature is available. The submitter field and assigned checker are explicit; recall is available only to the submitter or Approval Admin. Classic Approval Process is a controlled fallback only after a documented feature/edition gap and explicit approval.
+TD-02 Quarterly scheduler
+Salesforce schedule-triggered Flow does not run quarterly. Run CBS_Quarterly_Access_Review_Scheduler weekly and create the quarter record only when absent. Enforce a unique Review_Quarter_Key__c = AccountId + YYYY-Qn and a unique Review_Task_Key__c = ReviewCaseId + ContactId.
+TD-03 Opportunity record type
+Do not create a new Opportunity record type by default. Use the Master record type and a CBS Path/page assignment unless Wave 0 proves a record type is necessary. The hero label CBS Opportunity is visual context, not authority to add metadata.
+TD-04 Opportunity-to-Contract traceability
+Do not add a custom Opportunity lookup on Contract. Use Account as the standard relationship, the idempotent Closed Won follow-up Task and the Contract Number recorded in Task comments. The A-HERO-03 originating-Opportunity line is not an implementation requirement.
+TD-05 Activated Contract immutability
+Treat Activated Contract records as read-only for ordinary users. Renewal uses a new Contract; amendments use Files or a replacement Contract; termination follows the sandbox-verified standard action. Do not add Contract status values or a Contract approval process without an approved design amendment.
+TD-06 Client User PII remediation
+Do not bulk-delete identity data. Identify purpose, preserve backup/evidence, create or maintain a separate Data Subject Contact where required, clear prohibited Client User fields only after data-owner approval, and log every change.
+TD-07 Cross-category Experience Cloud boundary
+Remove generic object routes and prohibited administration routes only. Do not remove approved business routes owned by Categories B-F. Visibility and regression tests must preserve category-owned journeys while Category A pages remain restricted.
+TD-08 External own-Contact access
+Wave 0 must confirm the licence-supported sharing mechanism. Implement own-Contact-only access by the supported sharing-set or managed-sharing mechanism; never grant all Contacts under the Account.
+TD-09 Audit capacity
+Count selected fields per object before enabling history. Standard Field History Tracking is limited; use the purchased Shield Field Audit Trail policy only after Category H retention approval. No field is silently dropped from the approved catalogue.
+TD-10 Source-design editorial precedence
+In v1.4, stale statements that visual approval had not started are superseded by Section 18.15, the six-row approved hero register and the A-WS-08 closure decision.
+
+
+6. Controlled Metadata Naming and Action Manifest
+All proposed API names must be collision-checked in Wave 0. Existing API names are retained. Any rename or alternate name is recorded in the manifest before implementation.
+
+Domain
+Action
+Controlled component/API names
+Implementation rule
+Account
+Modify
+Client_Code__c; Client_Status__c; Notification_Email__c; Email_Domain__c; SLA_Days__c
+Required/unique after remediation; lifecycle values; labels/help/FLS/history.
+Account
+Create fields
+Onboarding_Status__c; Onboarding_Cycle__c; Onboarding_Progress__c; Onboarding_Submitted_By__c; Onboarding_Submitted_At__c; Onboarding_Approved__c; Onboarding_Approved_By__c; Onboarding_Approved_At__c; Onboarding_Completed_At__c; Onboarding_Return_Reason__c; Onboarding_Cancel_Reason__c
+Exact types and picklist values from Section 13; system-control approval/audit fields.
+Contact
+Modify
+Client_User record type; Portal_Role__c; Can_Approve__c; Can_Send_Reminder__c; Is_Active_Client_User__c; Full_Name__c; ID_Type__c; ID_Number__c; Employment_Status__c
+Purpose-specific validation and FLS; shared identity fields no longer globally required.
+Case
+Create record types/business processes
+CBS_Client_Access_Request; CBS_Quarterly_Access_Review
+Dedicated statuses and internal-only visibility.
+Case
+Create fields
+Access_Type__c; Requested_Role__c; Client_Contact__c; Related_User__c; Maker__c; Assigned_Approver__c; Maker_Role_Snapshot__c; Checker_Role_Snapshot__c; Provisioning_Owner__c; Implemented_By__c; Implemented_At__c; Implementation_Notes__c; Review_Period__c; Review_Quarter_Key__c; Review_Started_On__c; Final_Checker__c; Review_Submitted_At__c; Review_Completed_At__c
+Review_Quarter_Key__c is unique/external ID. Reuse Approval_Status__c, Submitted_By__c and Completed_At__c where semantics match.
+Task
+Create fields
+Checklist_Item_Code__c; Checklist_Sequence__c; Is_Mandatory__c; Onboarding_Cycle__c; Evidence_Reference__c; Completed_By__c; Completed_At__c; Review_Decision__c; Review_Comments__c; Related_Access_Case__c; Review_Task_Key__c
+Review_Task_Key__c unique/external ID; add standard Type values Client Onboarding and Quarterly Access Review.
+Opportunity
+Modify only
+StageName Path; validations; Discovery_Completed__c; Budget_Confirmed__c; Loss_Reason__c
+No Lead access; no new record type by default; no custom Contract lookup.
+Contract
+Modify only
+Standard fields, layout, Files, activation action/Flow and history
+No custom Contract object, End Date or Opportunity lookup.
+Application
+Create
+CBS_Business_Development
+Approved navigation and assignments.
+Permission sets/groups
+Create/modify
+CBS_Business_Development; CBS_External_Client_Common; CBS_Client_HR_User; CBS_Client_Approver; CBS_Client_HR_User_PSG; CBS_Client_Approver_PSG
+No Lead, Setup, User administration, Portal Super User or external commercial access.
+Profile
+Create/refactor
+CBS_External_Client_Base
+Clone from the licensed external profile; keep minimal baseline access.
+Report folders
+Create
+CBS Category A - Operations; CBS Category A - Management; CBS Category A - Security and Audit; CBS Category A Dashboards
+Internal-only folder sharing as Section 17.
+Reports/dashboards
+Create
+A-RPT-01 through A-RPT-12; A-CTL-01 through A-CTL-10; Category A Lifecycle Dashboard; Category A Control Dashboard
+Descriptions include stable IDs and requirement references.
+
+7. Controlled Automation Catalogue
+Component
+Action/current
+Type
+Controlled behaviour
+CBS_Contact_Purpose_Guard
+Modify/replace contactApproveCreateConsentRequest
+Record-triggered Flow
+Data Subject-family purpose guard, duplicate check, durable fault logging; Client_User never creates Consent Request Item.
+CBS_Start_Client_Onboarding
+Create
+Screen Flow
+Eligibility checks; creates cycle and mandatory Tasks.
+CBS_Onboarding_Task_Synchronisation
+Create
+Record-triggered Flow
+Recalculates progress and readiness; idempotent by Account + cycle + checklist code.
+CBS_Submit_Onboarding_Review
+Create
+Screen/Autolaunched Flow
+Validates all mandatory Tasks and qualifying Contract, stamps submitter and invokes approval.
+CBS_Onboarding_Approval
+Create
+Flow Approval Process
+Named Administrator checker; self-approval blocked; approval/return/recall paths.
+CBS_Onboarding_Return_Cancel
+Create
+Autolaunched Flow
+Controlled return/cancel reasons and next-cycle behaviour.
+CBS_Onboarding_Completion_Notification
+Create
+Autolaunched Flow
+Completion evidence and internal notification; no external activation.
+CBS_Opportunity_Closed_Won_Handoff
+Create
+Record-triggered Flow
+Creates exactly one Contract follow-up Task on first Closed Won transition.
+CBS_Activate_Contract
+Create
+Screen/Autolaunched Flow
+Validates required fields, Account state and qualifying File; invokes standard activation.
+CBS_Client_Access_Request_Prepare
+Create
+Screen Flow
+Creates/updates access Case and snapshots maker/client/role data.
+CBS_Client_Access_Approval
+Create
+Flow Approval Process
+Assigned CBS Administrator checker; recall, approve and return/reject; self-approval blocked.
+CBS_Client_Access_Provision
+Create
+Screen/Autolaunched Flow
+Administrator-only provisioning after approval; synchronises Contact/User summary and evidence.
+CBS_Quarterly_Access_Review_Scheduler
+Create
+Weekly schedule-triggered Flow
+Creates one Case per active Account per quarter and one Task per active Client User using unique keys.
+CBS_Quarterly_Access_Review_Submit
+Create
+Screen/Autolaunched Flow
+Blocks submission until all Tasks complete and remediation Cases linked.
+CBS_Quarterly_Access_Review_Approval
+Create
+Flow Approval Process
+CBS Administrator final review; completion markers and evidence.
+ReportRequestSubmissionService
+Modify existing Apex
+Apex service
+Ignore client-supplied governing SLA, resolve from authorised Account/default, snapshot on operational Case; preserve Category D behaviour and tests.
+
+8. Workstream Execution Requirements
+ID
+Workstream
+Priority/gate
+Mandatory pre-change and exit evidence
+A-IMP-01.1
+Client User and Data Subject separation
+P1
+Impact/dependency report; exact metadata manifest; data dry-run; check-only deploy; role/security tests; rollback package; fresh metadata diff.
+A-IMP-01.2
+Account lifecycle and onboarding
+P1
+Impact/dependency report; exact metadata manifest; data dry-run; check-only deploy; role/security tests; rollback package; fresh metadata diff.
+A-IMP-01.3
+Opportunity lifecycle and Lead exclusion
+P1
+Impact/dependency report; exact metadata manifest; data dry-run; check-only deploy; role/security tests; rollback package; fresh metadata diff.
+A-IMP-01.4
+Contract lifecycle and Salesforce Files
+P1
+Impact/dependency report; exact metadata manifest; data dry-run; check-only deploy; role/security tests; rollback package; fresh metadata diff.
+A-IMP-01.5
+Client Access Request maker-checker
+P1
+Impact/dependency report; exact metadata manifest; data dry-run; check-only deploy; role/security tests; rollback package; fresh metadata diff.
+A-IMP-01.6
+Quarterly Access Review
+P1
+Impact/dependency report; exact metadata manifest; data dry-run; check-only deploy; role/security tests; rollback package; fresh metadata diff.
+A-IMP-01.7
+Business Development role, app and permissions
+P1
+Impact/dependency report; exact metadata manifest; data dry-run; check-only deploy; role/security tests; rollback package; fresh metadata diff.
+A-IMP-01.8
+External Experience Cloud access and client isolation
+P1
+Impact/dependency report; exact metadata manifest; data dry-run; check-only deploy; role/security tests; rollback package; fresh metadata diff.
+A-IMP-01.9
+SLA simplification, audit, Reports and Dashboards
+P2 with P1 security controls
+Impact/dependency report; exact metadata manifest; data dry-run; check-only deploy; role/security tests; rollback package; fresh metadata diff.
+A-IMP-01.10
+Lightning and Experience Cloud pages
+P2 after process/security
+Impact/dependency report; exact metadata manifest; data dry-run; check-only deploy; role/security tests; rollback package; fresh metadata diff.
+
+9. Data Remediation and Migration Controls
+Data domain
+Required remediation
+Control gate
+Account
+Duplicate/missing Client Codes; lifecycle mapping; retained notification/domain/SLA values.
+No uniqueness or validation activation until approved before/after counts reconcile.
+Contact
+Purpose classification; Client_User versus Data Subject; duplicate email+Account; prohibited Client User PII.
+Non-destructive backup; same person can have separate purpose records; data-owner approval before clearing fields.
+Opportunity
+Owners, stages, dates, Next Step, Discovery/Budget/Loss fields; Lead/CPQ dependencies.
+No stage validation activation before open pipeline remediation.
+Contract and Files
+Dates, terms, status, ownership, qualifying Files, public links and external shares.
+Activated records are not bulk-edited; missing evidence resolved before controlled activation.
+Case and Task
+Exclude existing operational Cases/Tasks from new processes; prepare test data and unique keys.
+No migration into new record types without explicit mapping.
+Users and permissions
+Licences, profiles, permission sets/groups, memberships, Account/Contact link and Portal Super User.
+Remove broad access only after replacement packages and isolation tests pass.
+Experience routes
+Route ownership by category; generic object pages; registration and admin pages.
+Do not remove Categories B-F routes; direct URL regression is mandatory.
+Reports and dashboards
+Private assets, folders, subscriptions, running users and exports.
+Do not overwrite user-owned assets; deploy controlled folders separately.
+
+10. Deployment Controls and Manual Runtime Steps
+Control
+Required implementation
+Source control
+One commit per approved workstream or coherent change set; commit message includes A-IMP, A-REQ and A-DD identifiers.
+Check-only deployment
+Validate metadata, run relevant Apex tests, Flow tests and permission checks before each wave.
+Feature activation
+Deploy fields/pages inactive first; activate validations, approvals, scheduler and restrictive sharing only after data and permission gates pass.
+Runtime assignments
+Assign role, permission sets/groups, licences and site membership only through an approved assignment workbook with maker-checker evidence.
+Experience publication
+Publish the site only after route, navigation, direct-URL and two-client isolation tests pass.
+Scheduled jobs
+Activate weekly quarterly-review scheduler in the org time zone; record job ID, running user and first eligible quarter.
+Files and public links
+Run ContentDocumentLink/public-link inventory and remediate before external access changes.
+Backups
+Export affected data, metadata, assignments, sharing, File links, routes and report/dashboard ownership before each wave.
+Rollback
+Deactivate new automation; restore assignments/pages/sharing from manifest; do not delete audit Cases/Tasks or history; document rollback reason.
+Stop conditions
+P1 privacy, cross-client, self-approval, provisioning-before-approval, Contract/File exposure or data-loss defect stops the wave.
+
+11. Verification and Non-Regression Matrix
+Domain
+Positive verification
+Negative/regression verification
+Contact purpose
+Create Client_User and each Data Subject type; no consent item for Client_User; correct fields/actions/FLS.
+Category B consent creation and existing data-subject processing remain operational.
+Account/onboarding
+Start, task progress, ready, submit, return, approve and complete; self-approval blocked.
+No Account becomes Active without qualifying Contract, mandatory Tasks and system approval markers.
+Opportunity
+Create from Account; each stage gate; exactly-one Closed Won Task; no Lead access.
+Standard Sales assets remain untouched for users outside CBS Business Development unless separately approved.
+Contract
+Draft, File prerequisite, activation, expiry, renewal, amendment and termination runtime test.
+External users cannot access Contract or Files; Activated immutability behaves as documented.
+Access request
+New, role change, suspend, reactivate and revoke; recall, approve, return/reject and provisioning.
+Maker cannot approve; provisioning cannot occur before approval; Contact/User summaries reconcile.
+Quarterly review
+Weekly scheduler creates one Case per Account/quarter and one Task per active user; rerun creates no duplicates.
+All remediation outcomes have child access Cases; incomplete reviews cannot submit/complete.
+External isolation
+Two Accounts, two roles; navigation, search, direct URL, API, export and Files.
+No cross-client, commercial, internal Case, report/dashboard or generic Contact access.
+SLA
+External supplied values ignored; authorised Account/default used; snapshot retained.
+Existing operational request behaviour and Category D tests pass.
+Reports/audit
+Source totals, folder access, running users, history capacity and retention policy.
+No external report/builder/export access; dashboards do not broaden row access.
+Visual/accessibility
+Role/state pages compared to A-HERO-01 to A-HERO-06, with documented visual exceptions TD-03 and TD-04.
+Desktop/tablet/mobile, keyboard, labels, contrast and image alt text pass.
+
+12. Complete Requirement-to-Workstream Matrix
+Requirement
+Workstream(s)
+Required evidence
+A-REQ-001
+01.2, 01.10
+Metadata manifest + test evidence + as-built reconciliation
+A-REQ-002
+01.3, 01.10
+Metadata manifest + test evidence + as-built reconciliation
+A-REQ-003
+01.3, 01.7, 01.10
+Metadata manifest + test evidence + as-built reconciliation
+A-REQ-004
+01.3, 01.7, 01.10
+Metadata manifest + test evidence + as-built reconciliation
+A-REQ-005
+01.8, 01.10
+Metadata manifest + test evidence + as-built reconciliation
+A-REQ-006
+01.8, 01.10
+Metadata manifest + test evidence + as-built reconciliation
+A-REQ-007
+01.1, 01.8, 01.10
+Metadata manifest + test evidence + as-built reconciliation
+A-REQ-008
+01.8, 01.9, 01.10
+Metadata manifest + test evidence + as-built reconciliation
+A-REQ-009
+01.1, 01.5, 01.8, 01.10
+Metadata manifest + test evidence + as-built reconciliation
+A-REQ-010
+01.1, 01.5, 01.6, 01.8, 01.9, 01.10
+Metadata manifest + test evidence + as-built reconciliation
+A-REQ-011
+All workstreams
+Metadata manifest + test evidence + as-built reconciliation
+A-REQ-012
+Wave 0 and 01.9
+Metadata manifest + test evidence + as-built reconciliation
+A-REQ-013
+All workstreams
+Metadata manifest + test evidence + as-built reconciliation
+A-REQ-014
+01.2, 01.10
+Metadata manifest + test evidence + as-built reconciliation
+A-REQ-015
+01.5, 01.6, 01.10
+Metadata manifest + test evidence + as-built reconciliation
+A-REQ-016
+01.2, 01.5, 01.10
+Metadata manifest + test evidence + as-built reconciliation
+A-REQ-017
+01.2, 01.5, 01.10
+Metadata manifest + test evidence + as-built reconciliation
+A-REQ-018
+01.1, 01.10
+Metadata manifest + test evidence + as-built reconciliation
+A-REQ-019
+01.4, 01.10
+Metadata manifest + test evidence + as-built reconciliation
+A-REQ-020
+01.4, 01.10
+Metadata manifest + test evidence + as-built reconciliation
+A-REQ-021
+01.4, 01.10
+Metadata manifest + test evidence + as-built reconciliation
+A-REQ-022
+01.6, 01.9, 01.10
+Metadata manifest + test evidence + as-built reconciliation
+A-REQ-023
+01.2, 01.3, 01.5, 01.6, 01.7
+Metadata manifest + test evidence + as-built reconciliation
+A-REQ-024
+01.2, 01.5, 01.6, 01.7, 01.8, 01.9
+Metadata manifest + test evidence + as-built reconciliation
+A-REQ-025
+01.9, 01.10
+Metadata manifest + test evidence + as-built reconciliation
+
+13. Design-Decision-to-Workstream Matrix
+Design decision
+Workstream(s)
+Gate
+A-DD-001
+All workstreams
+Implemented or recorded as an approved deviation before as-built approval
+A-DD-002
+01.2
+Implemented or recorded as an approved deviation before as-built approval
+A-DD-003
+01.1, 01.5, 01.6, 01.8
+Implemented or recorded as an approved deviation before as-built approval
+A-DD-004
+01.1, 01.8
+Implemented or recorded as an approved deviation before as-built approval
+A-DD-005
+01.2, 01.5, 01.6
+Implemented or recorded as an approved deviation before as-built approval
+A-DD-006
+01.4
+Implemented or recorded as an approved deviation before as-built approval
+A-DD-007
+01.2, 01.5
+Implemented or recorded as an approved deviation before as-built approval
+A-DD-008
+01.6, 01.9
+Implemented or recorded as an approved deviation before as-built approval
+A-DD-009
+01.4
+Implemented or recorded as an approved deviation before as-built approval
+A-DD-010
+01.2, 01.3, 01.5, 01.6, 01.7, 01.8
+Implemented or recorded as an approved deviation before as-built approval
+A-DD-011
+01.9
+Implemented or recorded as an approved deviation before as-built approval
+
+14. Required Cursor Deliverables
+Pre-change impact report before any source file is modified, including runtime features, licences, assignments, data volumes, route ownership and conflicting automation.
+Exact create/modify/retain/hide/deactivate/delete manifest grouped by workstream, with API name, type, dependency, requirement and design-decision references.
+Source-control diff and plain-language explanation for every component.
+Data-remediation scripts or workbooks with dry-run and before/after reconciliation.
+Check-only and deployment commands, Apex and Flow test evidence, and permission/sharing test results.
+Cross-category regression report for Contact consent automation, Experience Cloud routes and report-request SLA behaviour.
+Rollback manifest and step-by-step rollback procedure for every wave.
+Post-deployment metadata ZIP, SHA-256, runtime evidence and complete as-built reconciliation.
+Explicit deviation register. Cursor must stop and request approval rather than inventing an alternative.
+15. As-Built Verification Gate
+Verification step
+Acceptance condition
+Fresh metadata extraction
+New ZIP produced, hashed and compared with the approved manifest.
+Requirement reconciliation
+Every A-REQ-001 through A-REQ-025 maps to deployed metadata, runtime evidence and test results.
+Design-decision reconciliation
+Every A-DD-001 through A-DD-011 is implemented or covered by an approved deviation.
+Technical-decision reconciliation
+Every TD-01 through TD-10 is satisfied and documented.
+Security verification
+Two-client isolation, least privilege, self-approval denial, pre-approval provisioning denial and external commercial/File/report denial pass.
+Process verification
+Account, Opportunity, Contract, onboarding, access-request and quarterly-review lifecycles pass with idempotency and fault handling.
+Cross-category verification
+Category B consent processing, Categories B-F Experience routes and existing report-request behaviour are not regressed.
+Visual verification
+Pages align to the approved hero scenarios, subject to documented functional precedence and visual exceptions.
+Open defects
+No unresolved P1 or P2 design or security deviation.
+UAT authorisation
+Only an approved as-built reconciliation authorises generation of the UAT pack.
+
+16. Approval Gate
+Approval of v1.1 authorises generation of workstream-specific Cursor prompts and controlled Sandbox implementation. It does not authorise production deployment or UAT execution. Each workstream still requires its approved pre-change impact report and exact manifest.
+
+Approval item
+Decision
+Plan quality and v1.4 consistency
+Corrected and complete.
+Runtime assumptions
+None are treated as proven; all are captured as Wave 0 or workstream gates.
+Production deployment
+Not authorised.
+UAT generation/execution
+Not authorised until as-built verification is approved.
+Next controlled document
+A-IMP-01.1 Cursor Execution Prompt - Client User and Data Subject Separation.
+
+Appendix A - Primary Salesforce Platform References
+Reference topic
+Implementation relevance
+Schedule-Triggered Flows
+Schedule-triggered flows run one time, daily or weekly; quarterly creation therefore requires a weekly/daily schedule plus a quarter/idempotency guard.
+Flow Approval Processes and Recall Approval Submission
+Flow approvals support dynamic routing and recall paths; recall is limited to the submitter or an Approval Admin under the documented conditions.
+Create a Sharing Set for Experience Cloud Site Users
+Sharing sets grant record access through Account/Contact mappings; licence-supported behaviour must be verified before own-Contact implementation.
+Things to Know About Contracts / Contract Fields
+Start Date and Contract Term are required and End Date can be system-calculated.
+Activated Contract behaviour
+Activated Contracts are read-only for ordinary users and cannot be returned to Draft; renewal/amendment design must preserve history.
+Field History Tracking / Field Audit Trail
+Standard history field and retention limits must be counted; Shield Field Audit Trail is governed by Category H retention approval.

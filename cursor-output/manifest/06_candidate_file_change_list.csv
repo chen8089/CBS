@@ -1,0 +1,45 @@
+Candidate_ID,File_Path,Component,Proposed_Action,Disposition,Approval_Needed,Notes
+C001,force-app/main/default/objects/Account/fields/Client_Code__c.field-meta.xml,Account.Client_Code__c,MODIFY,RUNTIME GATED,Exact Manifest plus runtime remediation approval,"Step 8 finalized; do not enable uniqueness before R01-R03 remediation"
+C002,force-app/main/default/objects/Account/fields/Client_Status__c.field-meta.xml,Account.Client_Status__c,MODIFY,RUNTIME GATED,Exact Manifest plus status mapping approval,"Step 8 finalized; retain Inactive until mapping complete"
+C003,force-app/main/default/objects/Account/fields/Onboarding_Status__c.field-meta.xml,Account.Onboarding_Status__c,CREATE,READY,Exact Manifest approval,Phase 2 Wave 1 built in source 2026-07-21 (re-authorised)
+C004,force-app/main/default/objects/Account/fields/Onboarding_Cycle__c.field-meta.xml,Account.Onboarding_Cycle__c,CREATE,READY,Exact Manifest approval,Phase 2 Wave 1 built in source 2026-07-21 (re-authorised)
+C005,force-app/main/default/objects/Account/fields/Onboarding_Progress__c.field-meta.xml,Account.Onboarding_Progress__c,CREATE,HOLD,Progress/idempotency decision,Step 8 finalized; T22 blocker
+C006,force-app/main/default/objects/Account/fields/Onboarding_Submitted_By__c.field-meta.xml,Account.Onboarding_Submitted_By__c,CREATE,RUNTIME GATED,Approval feature/FLS confirmation,Step 8 finalized
+C007,force-app/main/default/objects/Account/fields/Onboarding_Submitted_At__c.field-meta.xml,Account.Onboarding_Submitted_At__c,CREATE,RUNTIME GATED,Approval feature confirmation,Step 8 finalized
+C008,force-app/main/default/objects/Account/fields/Onboarding_Approved__c.field-meta.xml,Account.Onboarding_Approved__c,CREATE,RUNTIME GATED,Approval and A-IMP-06 interface confirmation,"Step 8 finalized; no automatic backfill"
+C009,force-app/main/default/objects/Account/fields/Onboarding_Approved_By__c.field-meta.xml,Account.Onboarding_Approved_By__c,CREATE,RUNTIME GATED,Approver confirmation,Step 8 finalized
+C010,force-app/main/default/objects/Account/fields/Onboarding_Approved_At__c.field-meta.xml,Account.Onboarding_Approved_At__c,CREATE,RUNTIME GATED,Approval feature confirmation,Step 8 finalized
+C011,force-app/main/default/objects/Account/fields/Onboarding_Completed_At__c.field-meta.xml,Account.Onboarding_Completed_At__c,CREATE,RUNTIME GATED,Completion gate confirmation,Step 8 finalized
+C012,force-app/main/default/standardValueSets/TaskType.standardValueSet-meta.xml,Task.Type,MODIFY,RUNTIME GATED,R07/R12 evidence,"Step 8 finalized; add Client Onboarding only"
+C013,force-app/main/default/flows/CBS_Start_Client_Onboarding.flow-meta.xml,CBS_Start_Client_Onboarding,CREATE,HOLD,Idempotency and prerequisite decisions,Step 8 finalized
+C014,force-app/main/default/flows/CBS_Onboarding_Task_Synchronisation.flow-meta.xml,CBS_Onboarding_Task_Synchronisation,CREATE,HOLD,Idempotency/progress decision,Step 8 finalized
+C015,force-app/main/default/flows/CBS_Submit_Onboarding_Review.flow-meta.xml,CBS_Submit_Onboarding_Review,CREATE,RUNTIME GATED,R04-R06/R09-R10 evidence,Step 8 finalized
+C016,force-app/main/default/approvalProcesses/CBS_Onboarding_Approval.approvalProcess-meta.xml,CBS_Onboarding_Approval,CREATE,HOLD,Feature/metadata/routing confirmation,Step 8 finalized
+C017,force-app/main/default/objects/Account/fields/Onboarding_Return_Reason__c.field-meta.xml,Account.Onboarding_Return_Reason__c,PROPOSED CREATE,HOLD,Manifest amendment,Outside supplied template
+C018,force-app/main/default/objects/Account/fields/Onboarding_Cancel_Reason__c.field-meta.xml,Account.Onboarding_Cancel_Reason__c,PROPOSED CREATE,HOLD,Manifest amendment,Outside supplied template
+C019,force-app/main/default/objects/Task/fields/Checklist_Item_Code__c.field-meta.xml,Task.Checklist_Item_Code__c,PROPOSED CREATE,HOLD,Manifest amendment and type decision,Outside supplied template
+C020,force-app/main/default/objects/Task/fields/Checklist_Sequence__c.field-meta.xml,Task.Checklist_Sequence__c,PROPOSED CREATE,HOLD,Manifest amendment,Outside supplied template
+C021,force-app/main/default/objects/Task/fields/Is_Mandatory__c.field-meta.xml,Task.Is_Mandatory__c,PROPOSED CREATE,HOLD,Manifest amendment,Outside supplied template
+C022,force-app/main/default/objects/Task/fields/Onboarding_Cycle__c.field-meta.xml,Task.Onboarding_Cycle__c,PROPOSED CREATE,HOLD,Manifest amendment,Outside supplied template
+C023,force-app/main/default/objects/Task/fields/Evidence_Reference__c.field-meta.xml,Task.Evidence_Reference__c,PROPOSED CREATE,HOLD,Manifest amendment and non-sensitive evidence policy,Outside supplied template
+C024,force-app/main/default/objects/Task/fields/Completed_By__c.field-meta.xml,Task.Completed_By__c,PROPOSED CREATE,HOLD,Manifest amendment,Outside supplied template
+C025,force-app/main/default/objects/Task/fields/Completed_At__c.field-meta.xml,Task.Completed_At__c,PROPOSED CREATE,HOLD,Manifest amendment,Outside supplied template
+C026,force-app/main/default/flows/CBS_Onboarding_Return_Cancel.flow-meta.xml,CBS_Onboarding_Return_Cancel,PROPOSED CREATE,HOLD,Manifest amendment,Outside supplied template
+C027,force-app/main/default/flows/CBS_Onboarding_Completion_Notification.flow-meta.xml,CBS_Onboarding_Completion_Notification,PROPOSED CREATE,HOLD,Manifest amendment and notification choice,Outside supplied template
+C028,force-app/main/default/objects/Account/validationRules/,Account protected lifecycle validation rules,PROPOSED CREATE,HOLD,Exact names/formulas and Manifest amendment,Outside supplied template
+C029,force-app/main/default/objects/Account/Account.object-meta.xml,Account history enablement,PROPOSED MODIFY,HOLD,R10 capacity and A-IMP-10 boundary,Outside supplied template
+C030,force-app/main/default/permissionsets/CBS_Business_Development_Onboarding_Internal_Test.permissionset-meta.xml;CBS_Administrator_Onboarding_Internal_Test.permissionset-meta.xml,Onboarding field FLS (BD read-only; Admin edit via permission set),BUILD,READY,A03-P08 amendment 2026-07-21,Profile deploy blocked by org tab drift; use permission sets
+C031,force-app/main/default/layouts/Account-CBS Account Layout.layout-meta.xml,Minimum Account onboarding section (internal test),BUILD,READY,A03-P08 amendment 2026-07-21,FLS gate prevents external visibility
+C032,force-app/main/default/flexipages/Account_CBS_Onboarding_Internal_Test.flexipage-meta.xml,Layout-driven internal test Account page,BUILD,READY,A03-P08 amendment 2026-07-21,Manual org assignment only; not full A-IMP-11
+C033,force-app/main/default/applications/,Application navigation/assignment,DEFER,DEFERRED,A-IMP-08 approval,Outside supplied template
+C034,force-app/main/default/objectTranslations/Account-en_US/Client_Code__c.fieldTranslation-meta.xml,Account.Client_Code__c English translation,PROPOSED MODIFY,HOLD,Manifest amendment and approved label/help,Supporting artifact
+C035,force-app/main/default/objectTranslations/Account-en_US/Client_Status__c.fieldTranslation-meta.xml,Account.Client_Status__c English translation,PROPOSED MODIFY,HOLD,Manifest amendment and approved labels,Supporting artifact
+C036,force-app/main/default/flowDefinitions/CBS_*.flowDefinition-meta.xml,Companion Flow definitions,PROPOSED CREATE,HOLD,Confirm API 67.0 retrieval/deployment requirement,"Exact files only if required by target-org metadata format"
+C037,force-app/main/default/flows/contactApproveCreateConsentRequest.flow-meta.xml,A-IMP-02 Contact purpose guard,RETAIN,ANALYSIS ONLY,A-IMP-02 regression,"No A-IMP-03 modification"
+C038,force-app/main/default/flows/Consent_Request_Item_Maintain_Active_Key.flow-meta.xml,A-IMP-02 active-request key maintenance,RETAIN,ANALYSIS ONLY,A-IMP-02 regression,"No A-IMP-03 modification"
+C039,force-app/main/default/flows/ConsentRequestResolveActiveRequest.flow-meta.xml,A-IMP-02 active-request resolver,RETAIN,ANALYSIS ONLY,A-IMP-02 regression,"No A-IMP-03 modification"
+C040,force-app/main/default/classes/BatchExcelUploadController.cls,A-IMP-02 Data Subject role separation,RETAIN,ANALYSIS ONLY,A-IMP-02 regression,"No A-IMP-03 modification"
+C041,force-app/main/default/layouts/Contact-CBS Contact - Client User Layout.layout-meta.xml,A-IMP-02 Client User layout,RETAIN,ANALYSIS ONLY,A-IMP-02 regression,"No A-IMP-03 modification"
+C042,force-app/main/default/flexipages/CBS_Client_User_Record_Page.flexipage-meta.xml,A-IMP-02 Client User Lightning page,RETAIN,ANALYSIS ONLY,A-IMP-02 regression,"No A-IMP-03 modification"
+C043,force-app/main/default/applications/Credit_Bureau.app-meta.xml,A-IMP-02 Contact page overrides,RETAIN,ANALYSIS ONLY,A-IMP-02 and A-IMP-08 boundary,"Any future Account navigation requires separate approval"
+C044,force-app/main/default/objects/Contact/validationRules/,A-IMP-02 Contact purpose validation rules,RETAIN,ANALYSIS ONLY,A-IMP-02 regression,"No A-IMP-03 modification"

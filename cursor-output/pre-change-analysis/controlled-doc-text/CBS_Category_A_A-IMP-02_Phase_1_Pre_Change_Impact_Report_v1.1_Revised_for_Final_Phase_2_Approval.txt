@@ -1,0 +1,281 @@
+A-IMP-02 Phase 1
+Client User and Data Subject Separation
+Revised Pre-Change Impact Report and Exact Metadata Manifest
+Prepared for Final Phase 2 Approval
+Control
+Value
+Version
+v1.1
+Date
+19 July 2026
+Status
+Decision complete - final approval and runtime evidence gate pending
+Baseline
+Credit Bureau Sandbox 20260715.zip
+SHA-256
+a3c337d997a556dca2cd53492a5621dce09a39b4f9454ac0d24e7d88a6a93a80
+Authority
+Category A Solution Design v1.4; A-IMP-01 v1.1; A-IMP-02 v1.0; confirmed pre-Phase 2 decisions
+Source changes
+None
+
+
+1. Executive Decision
+All eight pre-Phase 2 design decisions have been incorporated into the revised exact manifest. The prior design holds for Client User core data, Data Subject validation scope, consent-request uniqueness, repeat invitations, completed-request immutability, Flow-fault evidence, non-destructive remediation, Business Development sequencing and Experience Cloud sequencing are resolved.
+The static metadata conclusion remains unchanged: the active Contact-created Flow currently creates a Consent_Request_Item__c for every new Contact with an Email, including Client_User Contacts. This is a P1 purpose-contamination defect and must be corrected before Category A is treated as implemented.
+No metadata or Salesforce records were modified. The revised manifest is technically complete for final approval. Rows marked READY may be implemented only after final Phase 2 approval. Rows marked runtime-gated may be built in an isolated branch but must not be activated or deployed until the specified read-only Sandbox evidence and owner-approved remediation register are available.
+A connected Salesforce Sandbox is not available in this execution environment. The authorised read-only runtime queries therefore remain an explicit external evidence gate rather than a completed analysis result.
+1.1 Approval recommendation
+Approval scope
+Recommendation
+Effect
+Phase 2 metadata build
+Approve conditionally
+Cursor may implement READY and runtime-gated components in an isolated branch after the manifest is approved.
+Activation/deployment of runtime-gated controls
+Hold
+Requires read-only query evidence R01-R09 and approved remediation dispositions.
+Automatic data remediation
+Reject
+No automatic clear, delete, merge, deactivation or record-type conversion is permitted.
+Production deployment
+Not authorised
+Requires Sandbox verification, as-built reconciliation and a later production release approval.
+
+
+2. Confirmed Pre-Phase 2 Decisions
+ID
+Decision
+Controlled interpretation
+D01
+Client User core profile
+Account, First Name, Last Name and Email only. Department optional. Portal Role required only by the access-request/provisioning process when portal access is requested.
+D02
+Data Subject validation
+Use record-type- and processing-stage-specific rules. Do not use global Contact requiredness across all purposes.
+D03
+Active consent uniqueness
+Only one active request for the same Data Subject Contact, Account and consent purpose.
+D04
+Repeat invitations
+Reuse the existing active request; do not create another Consent_Request_Item__c.
+D05
+Completed requests
+Submitted, declined, withdrawn, expired and no-action records remain immutable historical records. A new request is allowed only for a new valid cycle.
+D06
+Flow faults
+Use an existing durable logging framework where available; none was found in the static metadata, so use a sanitised internal Case owned by CBS Processing Queue as the interim control.
+D07
+Runtime analysis/remediation
+Read-only Sandbox analysis is authorised. Existing PII and duplicates are reported for owner decision; no automatic destructive action.
+D08
+Workstream boundaries
+Business Development target permissions remain A-IMP-08. Current-state Experience Cloud regression is included now; full external redesign remains A-IMP-09.
+
+
+3. Revised Impact Assessment
+ID
+Severity
+Finding
+Impact
+F01
+P1
+Contact-created consent contamination
+Active Flow runs after every Contact creation with Email and has no purpose guard.
+F02
+P1
+Global required fields
+Full_Name__c, ID_Type__c, ID_Number__c and Employment_Status__c prevent the approved minimal Client User model.
+F03
+P1
+Client User PII exposure
+Client User layout currently requires or exposes identity and processing data prohibited by the approved design.
+F04
+P1
+Data Subject access-role contamination
+Data Subject layouts and upload code populate/expose Portal_Role__c.
+F05
+P1
+No active-request uniqueness
+Consent request item has no purpose snapshot or active uniqueness key.
+F06
+P1
+Non-durable fault handling
+Flow fault path terminates after setting a transient variable.
+F07
+P1
+External current-state exposure
+Legacy external permissions and generic Contact routes remain; redesign is deferred but no-regression testing is mandatory.
+F08
+P2
+Client User duplicate governance
+Standard duplicate rules allow duplicates and include Lead matching.
+F09
+P2
+No Contact history
+History is disabled and governance changes are not auditable.
+F10
+Gate
+Runtime evidence unavailable
+Record counts, PII rows, duplicate pairs, effective assignments and active consent duplicates require a connected Sandbox.
+
+3.1 Scope boundary
+A-IMP-02 corrects Contact-purpose separation, Client User presentation, Data Subject role contamination, consent-request reuse controls and durable fault evidence.
+A-IMP-02 does not implement the Business Development permission model, maker-checker provisioning, external sharing redesign or Experience Cloud route redesign.
+Any confirmed active external data exposure discovered during regression must be escalated for urgent containment; it must not be silently reclassified as normal A-IMP-02 scope.
+4. Revised Exact Metadata Manifest
+Disposition
+Count
+READY - implement after final Phase 2 approval
+19
+READY - build now; activate/deploy only after runtime gate
+13
+DEFERRED - later approved workstream
+4
+ANALYSIS ONLY - no metadata change
+1
+
+The revised manifest contains 37 controlled component rows. It is delivered separately as CBS_Category_A_A-IMP-02_Exact_Metadata_Manifest_v1.1_Revised.csv. The manifest is authoritative for Phase 2 scope; Cursor must not infer additional components or broaden a row without a new approval.
+4.1 High-impact changes
+Control area
+Approved implementation
+Client User core
+Scoped validation requires only Account, First Name, Last Name and Email. Portal Role remains optional on Contact.
+Data Subject requiredness
+Remove global required flags and replace them atomically with record-type/stage-scoped active rules.
+Client User prohibited data
+Use three scoped validation rules and remove fields from layout/page; activation follows owner-approved remediation.
+Consent uniqueness
+Add immutable consent-purpose snapshot, unique active-request key, maintenance Flow and reuse branch.
+Fault evidence
+Create a sanitised internal Case owned by CBS Processing Queue; no PII in Description.
+External access
+Regression only in A-IMP-02; full redesign remains A-IMP-09.
+
+
+5. Runtime Evidence Gate
+The following read-only queries and setup checks are authorised. Cursor must export results without modifying data. Each result must include query time, org identifier, row count and the executing user. Personally identifiable values must be masked in review copies; full values may be retained only in the controlled remediation working file.
+R01 - Contact counts by record type
+SELECT RecordType.DeveloperName, COUNT(Id) total FROM Contact GROUP BY RecordType.DeveloperName
+R02 - Client User records containing prohibited data
+SELECT Id, AccountId, Email, Birthdate, Date_of_Birth__c, DOB__c, NRIC_FIN_Number__c, Passport_Number__c, ID_Type__c, ID_Number__c, MyInfo_Retrieval_Status__c, Consent_Type__c, Employment_Status__c, Report_Request_Status__c, Departure_Reason__c FROM Contact WHERE RecordType.DeveloperName = 'Client_User' AND (Birthdate != NULL OR Date_of_Birth__c != NULL OR DOB__c != NULL OR NRIC_FIN_Number__c != NULL OR Passport_Number__c != NULL OR ID_Type__c != NULL OR ID_Number__c != NULL OR MyInfo_Retrieval_Status__c != NULL OR Consent_Type__c != NULL OR Employment_Status__c != NULL OR Report_Request_Status__c != NULL OR Departure_Reason__c != NULL)
+R03 - Legacy Client Admin role usage
+SELECT Id, AccountId, Email, Portal_Role__c, Is_Active_Client_User__c FROM Contact WHERE RecordType.DeveloperName = 'Client_User' AND Portal_Role__c = 'Client Admin'
+R04 - Data Subject-family access fields
+SELECT Id, RecordType.DeveloperName, AccountId, Email, Portal_Role__c, Can_Approve__c, Is_Active_Client_User__c FROM Contact WHERE RecordType.DeveloperName IN ('Data_Subject','Singpass','Non_Singpass') AND (Portal_Role__c != NULL OR Can_Approve__c = TRUE OR Is_Active_Client_User__c = TRUE)
+R05 - Duplicate Client Users by Account and Email
+SELECT AccountId, Email, COUNT(Id) duplicateCount FROM Contact WHERE RecordType.DeveloperName = 'Client_User' AND Email != NULL GROUP BY AccountId, Email HAVING COUNT(Id) > 1
+R06 - Active consent-request duplicates and status distribution
+SELECT Data_Subject__c, Data_Subject__r.AccountId, Data_Subject__r.Consent_Type__c, Current_Status__c, COUNT(Id) itemCount FROM Consent_Request_Item__c WHERE Current_Status__c IN ('Pending','Sent','Viewed') GROUP BY Data_Subject__c, Data_Subject__r.AccountId, Data_Subject__r.Consent_Type__c, Current_Status__c HAVING COUNT(Id) > 1
+R07 - Linked Experience Cloud users
+SELECT Id, ContactId, Username, IsActive, Profile.Name, UserType FROM User WHERE ContactId != NULL
+R08 - Effective legacy permission assignments
+SELECT AssigneeId, Assignee.Username, PermissionSet.Name FROM PermissionSetAssignment WHERE PermissionSet.Name IN ('Set_Custom_Object_To_Partner','partner_community_User_Permissions_set')
+R09 - Setup capacity and ownership checks
+Manual read-only checks: Contact field-history tracked-field capacity; Shield retention policy; CBS Processing Queue active membership; deployment user Case create permission; relevant licence availability.
+
+5.1 Required runtime outputs
+Output
+Minimum acceptance content
+Runtime inventory workbook
+Counts and masked record-level extracts for R01-R08, plus R09 screenshots or setup exports.
+PII remediation register
+Record Id, current record type, prohibited-field categories, business owner, retain/reclassify/clear decision, approval date.
+Duplicate disposition register
+Duplicate pair, related User/Case/Consent dependencies, survivor recommendation, owner approval. No automatic merge.
+Active request remediation register
+Duplicate active request group, status history, retained active record, terminalisation decision and owner approval.
+Permission and portal evidence
+Effective assignment list and current-state no-regression screenshots/tests.
+
+
+6. Phase 2 Deployment Controls
+Wave
+Content
+Entry gate
+Exit evidence
+0
+Read-only runtime analysis
+Final manifest approval
+R01-R09 evidence and owner-approved remediation registers
+1
+Build metadata in isolated branch
+Final Phase 2 approval
+Static validation, code review and deploy-validation success
+2
+Data preparation under separate approval
+Approved record-level remediation register
+Backup exports and signed execution log
+3
+Activate scoped validation and uniqueness controls
+Dry-run has zero unexplained failures
+All A-IMP-02 automated tests pass
+4
+Sandbox user-context and portal regression
+Wave 3 complete
+Admin, Data Subject-family and current external-context evidence
+5
+As-built reconciliation
+All defects resolved
+Metadata diff and A-IMP-02 closure recommendation
+
+6.1 Mandatory stop conditions
+The connected Sandbox baseline differs materially from the approved ZIP and the difference is not reconciled.
+A Client_User record contains mixed-purpose Data Subject evidence and no data owner has approved its disposition.
+Active consent-request duplicates exist and no retained active record has been approved.
+CBS Processing Queue has no active member or the deployment context cannot create the fault Case.
+Any Category B-I regression fails, including batch upload, consent status progression, report processing or Singpass staging.
+Experience Cloud regression reveals broader access than the approved current-state baseline.
+Cursor proposes a new object, API-name rename, automatic merge/delete or scope change not listed in the manifest.
+7. Acceptance and Verification Matrix
+Test
+Scenario
+Expected result
+T01
+Create minimal Client_User
+Account, First Name, Last Name and Email save successfully; no PII required.
+T02
+Create Client_User with Email
+No Consent_Request_Item__c is created or reused.
+T03
+Attempt Client User PII entry
+Scoped validation blocks identity/MyInfo/consent/report/departure data after remediation gate.
+T04
+Create/upload Data Subject-family records
+Approved upload and consent journeys continue with stage-scoped requiredness.
+T05
+Batch upload
+No Portal_Role__c, Can_Approve__c or Is_Active_Client_User__c is populated.
+T06
+Repeat invitation
+Existing Pending/Sent/Viewed request is reused; no second active item is created.
+T07
+Completed request/new cycle
+Terminal request remains unchanged; new valid cycle creates a new request with a new active key.
+T08
+Concurrent active request attempt
+Unique Active_Request_Key__c prevents the duplicate.
+T09
+Flow failure
+One sanitised High-priority Case is assigned to CBS Processing Queue with no PII.
+T10
+Client User duplicate
+Email + Account duplicate is blocked after existing duplicates are resolved.
+T11
+Data Subject layout/page
+No Client User access-role fields are visible.
+T12
+Current external user regression
+A-IMP-02 does not broaden Contact access or expose newly added controls.
+T13
+Business Development dependency
+Recorded as pending for A-IMP-08; A-IMP-02 does not create the role or permission package.
+T14
+Rollback rehearsal
+Prior Flow, Apex, layouts and validation state can be restored; data backups are usable.
+
+8. Final Approval Statement
+The revised manifest resolves the previously open design questions and is internally consistent with Category A Solution Design v1.4 and A-IMP-01 v1.1. It is suitable for final conditional Phase 2 approval: metadata build may begin in an isolated branch, but runtime-gated controls must not be activated or deployed until R01-R09 evidence and owner-approved remediation registers are completed.
+Recommended approval wording:
+APPROVE A-IMP-02 MANIFEST v1.1 FOR CONDITIONAL PHASE 2 BUILD. Cursor may implement the READY and runtime-gated manifest rows in an isolated branch. No gated control may be activated or deployed, and no Salesforce record may be changed, until the authorised read-only runtime evidence and record-level remediation decisions are reviewed and approved. Production deployment remains unauthorised.
+AWAITING A-IMP-02 FINAL PHASE 2 APPROVAL
