@@ -1,0 +1,13 @@
+﻿证据ID,范围,Org_ID,执行人,执行时间,Query或Setup检查,行数,输出文件,是否脱敏,发现,风险,关联Manifest条目,复核人,复核状态
+R01,Account lifecycle profile,,,,,,,是,,,,,待复核
+R02,Duplicate Client Code,,,,,,,是,,,,,待复核
+R03,Existing Account baseline,,,,,,,是,,,,,待复核
+R04,Opportunity prerequisite,,,,,,,是,,,,,待复核
+R05,Contract readiness,,,,,,,是,,,,,待复核
+R06,Contract Files,,,,,,,是,,,,,待复核
+R07,Existing Task usage,,,,,,,是,,,,,待复核
+R08,External Users,,,,,,,是,,,,,待复核
+R09,Roles and permissions,,,,,,,是,,,,,待复核
+R10,Feature and capacity,,,,,,,是,,,,,待复核
+R11,Automation/configuration drift,,,,,,,是,,,,,待复核
+R12,Latest-baseline comparison,,,,,,,是,,,,,待复核
